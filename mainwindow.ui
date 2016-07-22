@@ -51,6 +51,7 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
+    <addaction name="actionExport_as_PDF"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -68,6 +69,11 @@
   <action name="actionSave_as">
    <property name="text">
     <string>Sa&amp;ve as ...</string>
+   </property>
+  </action>
+  <action name="actionExport_as_PDF">
+   <property name="text">
+    <string>Export as .PDF</string>
    </property>
   </action>
  </widget>
