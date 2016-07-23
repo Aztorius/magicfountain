@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTextBlock>
 #include <QPrinter>
+#include <QPrintDialog>
 #include <QFile>
 #include <QFileDialog>
 
@@ -26,7 +27,11 @@ private:
 public slots:
     void refreshPreview();
     void exportAsPDF();
+    void print();
     void openFile();
+    void setBold();
+    void setItalic();
+    void setUnderline();
 };
 
 #endif // MAINWINDOW_H
