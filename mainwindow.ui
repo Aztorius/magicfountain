@@ -30,6 +30,19 @@
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
+      <property name="lineWrapMode">
+       <enum>QTextEdit::FixedColumnWidth</enum>
+      </property>
+      <property name="lineWrapColumnOrWidth">
+       <number>55</number>
+      </property>
+      <property name="html">
+       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier 10 Pitch'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="tabStopWidth">
        <number>80</number>
       </property>
@@ -57,6 +70,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="actionExport_as_PDF"/>
+    <addaction name="actionExport_as_HTML"/>
     <addaction name="actionPrint"/>
    </widget>
    <addaction name="menuFile"/>
@@ -82,6 +96,7 @@
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
    <addaction name="actionExport_as_PDF"/>
+   <addaction name="actionExport_as_HTML"/>
    <addaction name="actionPrint"/>
   </widget>
   <widget class="QToolBar" name="toolBar_2">
@@ -118,7 +133,7 @@
   </action>
   <action name="actionExport_as_PDF">
    <property name="text">
-    <string>&amp;Export as .PDF</string>
+    <string>&amp;Export as PDF</string>
    </property>
   </action>
   <action name="actionPrint">
@@ -148,6 +163,14 @@
    </property>
    <property name="toolTip">
     <string>Underline</string>
+   </property>
+  </action>
+  <action name="actionExport_as_HTML">
+   <property name="text">
+    <string>Export as HTML</string>
+   </property>
+   <property name="toolTip">
+    <string>Export as HTML</string>
    </property>
   </action>
  </widget>

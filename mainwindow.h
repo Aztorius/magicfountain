@@ -29,6 +29,7 @@ private:
 public slots:
     void refreshPreview();
     void exportAsPDF();
+    void exportAsHTML();
     void print();
     void openFile();
     void quickSave();

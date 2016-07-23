@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
+    connect(ui->actionExport_as_HTML, SIGNAL(triggered()), this, SLOT(exportAsHTML()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(quickSave()));
     connect(ui->actionSave_as, SIGNAL(triggered()), this, SLOT(saveAs()));
@@ -31,25 +32,73 @@ void MainWindow::refreshPreview()
     QTextDocument* document = ui->plainTextEdit->document();
     QTextBlock block;
     QString text;
-    QString content = "";
+    QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
+    content += "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">";
+    content += "p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }";
+    content += "</style></head><body style=\" font-family:'Courier 10 Pitch'; font-size:12pt; font-weight:400; font-style:normal;\">";
+
     int blockcount = ui->plainTextEdit->blockCount();
     int i = 0;
 
     while(i < blockcount){
         block = document->findBlockByNumber(i);
-        text = block.text();
+        text = block.text().trimmed();
 
         if(text.left(1) == "!"){ //Forced action
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
         }
+        else if(text.left(6) == "Title:"){ //Title
+            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(6).trimmed()));
+            i++;
+            block = document->findBlockByNumber(i);
+            text = block.text();
+
+            while(text.left(1) == "\t" && i < blockcount){
+                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+
+                i++;
+                block = document->findBlockByNumber(i);
+                text = block.text();
+            }
+            i--;
+            content.append("<br/></p>");
+        }
+        else if(text.left(7) == "Credit:"){ //Credit
+            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "</p>");
+        }
+        else if(text.left(7) == "Author:"){ //Author
+            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "<br/></p>");
+        }
+        else if(text.left(7) == "Source:"){ //Source
+            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "<br/></p>");
+        }
+        else if(text.left(11) == "Draft date:"){ //Draft date
+            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()) + "</p>");
+        }
+        else if(text.left(8) == "Contact:"){ //Contact
+            content.append("<p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(8).trimmed()));
+            i++;
+            block = document->findBlockByNumber(i);
+            text = block.text();
+
+            while(text.left(1) == "\t" && i < blockcount){
+                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+
+                i++;
+                block = document->findBlockByNumber(i);
+                text = block.text();
+            }
+            i--;
+            content.append("<br/></p>");
+        }
         else if(text.left(2) == "# "){ //Act
-            content.append("<h1>" + checkBoldItalicUnderline(text.mid(2)) + "</h1>");
+            content.append("<p>" + checkBoldItalicUnderline(text.mid(2)) + "</p>");
         }
         else if(text.left(3) == "## "){ //Sequence
-            content.append("<h2>" + checkBoldItalicUnderline(text.mid(3)) + "</h2>");
+            content.append("<p>" + checkBoldItalicUnderline(text.mid(3)) + "</p>");
         }
         else if(text.left(4) == "### "){ //Scene
-            content.append("<h3>" + checkBoldItalicUnderline(text.mid(4)) + "</h3>");
+            content.append("<p>" + checkBoldItalicUnderline(text.mid(4)) + "</p>");
         }
         else if(text.left(3).toLower() == "int" || text.left(3).toLower() == "ext" || text.left(8).toLower() == "int./ext" || text.left(7).toLower() == "int/ext" || text.left(3).toLower() == "i/e"){ //Scene heading
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
@@ -69,20 +118,20 @@ void MainWindow::refreshPreview()
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
         }
         else if(text.toUpper() == text && !text.isEmpty()){ //Dialogue
-            content.append("<pre>                     " + checkBoldItalicUnderline(text) + "</pre>"); //Character name
+            content.append("<p>                     " + checkBoldItalicUnderline(text) + "</p>"); //Character name
             i++;
             block = document->findBlockByNumber(i);
-            text = block.text();
+            text = block.text().trimmed();
 
             while(!text.isEmpty() && i < blockcount){
                 block = document->findBlockByNumber(i);
-                text = block.text();
+                text = block.text().trimmed();
 
                 if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical
-                    content.append("<pre>               " + checkBoldItalicUnderline(text) + "</pre>");
+                    content.append("<p>               " + checkBoldItalicUnderline(text) + "</p>");
                 }
                 else{ //Text
-                    content.append("<pre>           " + checkBoldItalicUnderline(text) + "</pre>");
+                    content.append("<p>           " + checkBoldItalicUnderline(text) + "</p>");
                 }
 
                 i++;
@@ -95,6 +144,8 @@ void MainWindow::refreshPreview()
 
         i++;
     }
+
+    content += "</body></html>";
 
     ui->textBrowser->setHtml(content);
 }
@@ -111,6 +162,22 @@ void MainWindow::exportAsPDF(){
         printer.setOutputFileName(fileName);
 
         ui->textBrowser->document()->print(&printer);
+    }
+}
+
+void MainWindow::exportAsHTML(){
+    QString fileName = QFileDialog::getSaveFileName(this, "Export HTML", QString(), "HTML files (*.html)");
+    if (!fileName.isEmpty()) {
+        if (QFileInfo(fileName).suffix().isEmpty()){
+             fileName.append(".html");
+        }
+
+        QFile file(fileName);
+        if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
+             QTextStream stream(&file);
+             stream << ui->textBrowser->toHtml();
+             file.close();
+        }
     }
 }
 
@@ -136,6 +203,10 @@ void MainWindow::openFile(){
         ui->plainTextEdit->appendPlainText(file.readAll());
         filepath = filename;
         file.close();
+
+        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        cursor.movePosition(QTextCursor::Start);
+        ui->plainTextEdit->setTextCursor(cursor);
     }
 }
 
