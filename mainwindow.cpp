@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(quickSave()));
+    connect(ui->actionSave_as, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(print()));
 
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
@@ -50,10 +52,42 @@ void MainWindow::refreshPreview()
             content.append("<h3>" + checkBoldItalicUnderline(text.mid(4)) + "</h3>");
         }
         else if(text.left(3).toLower() == "int" || text.left(3).toLower() == "ext" || text.left(8).toLower() == "int./ext" || text.left(7).toLower() == "int/ext" || text.left(3).toLower() == "i/e"){ //Scene heading
-            content.append("<p><b>" + checkBoldItalicUnderline(text) + "</b></p>");
+            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
+        }
+        else if(text.left(1) == ">"){
+            if(text.right(1) == "<"){ //Centered
+                content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
+            }
+            else{ //Transition
+                content.append("<p style=\"text-align:right;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+            }
+        }
+        else if(text.right(3) == "TO:"){ //Transition
+            content.append("<p style=\"text-align: right;\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == "." && text.mid(1, 1) != "."){ //Forced scene heading
-            content.append("<p><b>" + checkBoldItalicUnderline(text.mid(1)) + "</b></p>");
+            content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+        }
+        else if(text.toUpper() == text && !text.isEmpty()){ //Dialogue
+            content.append("<pre>                     " + checkBoldItalicUnderline(text) + "</pre>"); //Character name
+            i++;
+            block = document->findBlockByNumber(i);
+            text = block.text();
+
+            while(!text.isEmpty() && i < blockcount){
+                block = document->findBlockByNumber(i);
+                text = block.text();
+
+                if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical
+                    content.append("<pre>               " + checkBoldItalicUnderline(text) + "</pre>");
+                }
+                else{ //Text
+                    content.append("<pre>           " + checkBoldItalicUnderline(text) + "</pre>");
+                }
+
+                i++;
+            }
+            i--;
         }
         else{ //Default action
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
@@ -72,14 +106,17 @@ void MainWindow::exportAsPDF(){
                  fileName.append(".pdf");
         }
         QPrinter printer(QPrinter::HighResolution);
+        printer.setPageMargins(30.0, 25.0, 25.0, 25.0, QPrinter::Millimeter);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(fileName);
+
         ui->textBrowser->document()->print(&printer);
     }
 }
 
 void MainWindow::print(){
         QPrinter printer(QPrinter::HighResolution);
+        printer.setPageMargins(30.0, 25.0, 25.0, 25.0, QPrinter::Millimeter);
 
         QPrintDialog dialog(&printer, this);
         dialog.setWindowTitle(tr("Print Document"));
@@ -92,11 +129,42 @@ void MainWindow::print(){
 }
 
 void MainWindow::openFile(){
-    QString filename = QFileDialog::getOpenFileName(this, "Open Fountain file", QString(), "Text files (*.txt *.fountain *.markdown *.md)");
+    QString filename = QFileDialog::getOpenFileName(this, "Open Fountain file", QString(), "Text files (*.fountain *.txt *.markdown *.md)");
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         ui->plainTextEdit->clear();
         ui->plainTextEdit->appendPlainText(file.readAll());
+        filepath = filename;
+        file.close();
+    }
+}
+
+void MainWindow::saveAs(){
+    QString filename = QFileDialog::getSaveFileName(this, "Save Fountain file", QString(), "Text files (*.fountain *.txt *.markdown *.md)");
+    if (filename.isEmpty()){
+        return;
+    }
+
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QTextStream stream(&file);
+        stream << ui->plainTextEdit->toPlainText();
+        file.close();
+        filepath = filename;
+    }
+}
+
+void MainWindow::quickSave(){
+    if(filepath.isEmpty()){
+        saveAs();
+        return;
+    }
+
+    QFile file(filepath);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QTextStream stream(&file);
+        stream << ui->plainTextEdit->toPlainText();
+        file.close();
     }
 }
 

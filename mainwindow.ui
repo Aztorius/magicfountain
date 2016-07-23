@@ -23,7 +23,12 @@
       <property name="font">
        <font>
         <family>Courier 10 Pitch</family>
+        <pointsize>12</pointsize>
+        <stylestrategy>PreferDefault</stylestrategy>
        </font>
+      </property>
+      <property name="acceptDrops">
+       <bool>false</bool>
       </property>
       <property name="tabStopWidth">
        <number>80</number>

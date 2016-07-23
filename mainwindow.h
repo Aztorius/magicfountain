@@ -7,6 +7,7 @@
 #include <QPrintDialog>
 #include <QFile>
 #include <QFileDialog>
+#include <QTextStream>
 
 namespace Ui {
 class MainWindow;
@@ -23,12 +24,15 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QString filepath;
 
 public slots:
     void refreshPreview();
     void exportAsPDF();
     void print();
     void openFile();
+    void quickSave();
+    void saveAs();
     void setBold();
     void setItalic();
     void setUnderline();
