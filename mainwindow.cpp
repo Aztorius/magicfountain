@@ -9,6 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("Magic Fountain Alpha 1.0.0");
 
+    courierfont = QFont("Courier");
+    courierfont.setPointSize(12);
+
+    ui->plainTextEdit->setFont(courierfont);
+
     connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
     connect(ui->actionExport_as_HTML, SIGNAL(triggered()), this, SLOT(exportAsHTML()));
@@ -27,137 +32,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::refreshPreview()
-{
-    QTextDocument* document = ui->plainTextEdit->document();
-    QTextBlock block;
-    QString text;
-    QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
-    content += "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">";
-    content += "p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }";
-    content += "</style></head><body style=\" font-family:'Courier 10 Pitch'; font-size:12pt; font-weight:400; font-style:normal;\">";
+void MainWindow::refreshPreview(){
+    Script currentscript(ui->plainTextEdit->toPlainText());
 
-    int blockcount = ui->plainTextEdit->blockCount();
-    int i = 0;
+    ui->textBrowser->setHtml(currentscript.toHtml());
 
-    while(i < blockcount){
-        block = document->findBlockByNumber(i);
-        text = block.text().trimmed();
-
-        if(text.left(1) == "!"){ //Forced action
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
-        }
-        else if(text.left(6) == "Title:"){ //Title
-            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(6).trimmed()));
-            i++;
-            block = document->findBlockByNumber(i);
-            text = block.text();
-
-            while(text.left(1) == "\t" && i < blockcount){
-                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
-
-                i++;
-                block = document->findBlockByNumber(i);
-                text = block.text();
-            }
-            i--;
-            content.append("<br/></p>");
-        }
-        else if(text.left(7) == "Credit:"){ //Credit
-            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "</p>");
-        }
-        else if(text.left(7) == "Author:"){ //Author
-            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "<br/></p>");
-        }
-        else if(text.left(7) == "Source:"){ //Source
-            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "<br/></p>");
-        }
-        else if(text.left(11) == "Draft date:"){ //Draft date
-            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()) + "</p>");
-        }
-        else if(text.left(8) == "Contact:"){ //Contact
-            content.append("<p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(8).trimmed()));
-            i++;
-            block = document->findBlockByNumber(i);
-            text = block.text();
-
-            while(text.left(1) == "\t" && i < blockcount){
-                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
-
-                i++;
-                block = document->findBlockByNumber(i);
-                text = block.text();
-            }
-            i--;
-            content.append("<br/></p>");
-        }
-        else if(text.left(2) == "# "){ //Act
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(2)) + "</p>");
-        }
-        else if(text.left(3) == "## "){ //Sequence
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(3)) + "</p>");
-        }
-        else if(text.left(4) == "### "){ //Scene
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(4)) + "</p>");
-        }
-        else if(text.left(3).toLower() == "int" || text.left(3).toLower() == "ext" || text.left(8).toLower() == "int./ext" || text.left(7).toLower() == "int/ext" || text.left(3).toLower() == "i/e"){ //Scene heading
-            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
-        }
-        else if(text.left(1) == ">"){
-            if(text.right(1) == "<"){ //Centered
-                content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
-            }
-            else{ //Transition
-                content.append("<p style=\"text-align:right;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
-            }
-        }
-        else if(text.right(3) == "TO:"){ //Transition
-            content.append("<p style=\"text-align: right;\">" + checkBoldItalicUnderline(text) + "</p>");
-        }
-        else if(text.left(1) == "." && text.mid(1, 1) != "."){ //Forced scene heading
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
-        }
-        else if(text.toUpper() == text && !text.isEmpty()){ //Dialogue
-            content.append("<p>                     " + checkBoldItalicUnderline(text) + "</p>"); //Character name
-            i++;
-            block = document->findBlockByNumber(i);
-            text = block.text().trimmed();
-
-            while(!text.isEmpty() && i < blockcount){
-                block = document->findBlockByNumber(i);
-                text = block.text().trimmed();
-
-                if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical
-                    content.append("<p>               " + checkBoldItalicUnderline(text) + "</p>");
-                }
-                else{ //Text
-                    content.append("<p>           " + checkBoldItalicUnderline(text) + "</p>");
-                }
-
-                i++;
-            }
-            i--;
-        }
-        else{ //Default action
-            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
-        }
-
-        i++;
-    }
-
-    content += "</body></html>";
-
-    ui->textBrowser->setHtml(content);
+    ui->textBrowser->setCurrentFont(courierfont);
 }
 
 void MainWindow::exportAsPDF(){
-    QString fileName = QFileDialog::getSaveFileName(this, "Export PDF", QString(), "*.pdf");
+    QString fileName = QFileDialog::getSaveFileName(this, "Export PDF", QString(), "PDF files (*.pdf)");
     if (!fileName.isEmpty()) {
         if (QFileInfo(fileName).suffix().isEmpty()){
                  fileName.append(".pdf");
         }
-        QPrinter printer(QPrinter::HighResolution);
-        printer.setPageMargins(30.0, 25.0, 25.0, 25.0, QPrinter::Millimeter);
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setPageMargins(25.0, 25.0, 10.0, 25.0, QPrinter::Millimeter);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setOutputFileName(fileName);
 
@@ -182,8 +72,8 @@ void MainWindow::exportAsHTML(){
 }
 
 void MainWindow::print(){
-        QPrinter printer(QPrinter::HighResolution);
-        printer.setPageMargins(30.0, 25.0, 25.0, 25.0, QPrinter::Millimeter);
+        QPrinter printer(QPrinter::ScreenResolution);
+        printer.setPageMargins(25.0, 25.0, 10.0, 25.0, QPrinter::Millimeter);
 
         QPrintDialog dialog(&printer, this);
         dialog.setWindowTitle(tr("Print Document"));

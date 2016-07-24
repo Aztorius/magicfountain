@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include <QTextStream>
 
+#include "script.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -25,6 +27,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QString filepath;
+    QFont courierfont;
 
 public slots:
     void refreshPreview();
