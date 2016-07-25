@@ -6,20 +6,21 @@ Script::Script(QString script)
     QString text;
 
     QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
-    content += "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">";
-    content += "p, li { white-space: normal; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }";
-    content += "</style></head><body>";
+    content.append("<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">");
+    content.append("p, li { white-space: normal; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }");
+    content.append("</style></head><body>");
 
     int blockcount = lines.size();
     int i = 0;
-    bool wasAnAction = false;
 
     while(i < blockcount){
         text = lines.at(i).trimmed();
 
         if(text.left(1) == "!"){ //Forced action
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
-            wasAnAction = true;
+        }
+        else if(text.left(2) == "= "){ //Synopses
+            //Not used yet
         }
         else if(text.left(6) == "Title:"){ //Title
             content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(6).trimmed()));
@@ -65,50 +66,43 @@ Script::Script(QString script)
             i--;
             content.append("<br/></p>");
         }
-        else if(text.left(2) == "# "){ //Act
+        else if(text.left(4) == "### "){ //Scene
             //Not used yet
         }
         else if(text.left(3) == "## "){ //Sequence
             //Not used yet
         }
-        else if(text.left(4) == "### "){ //Scene
+        else if(text.left(2) == "# "){ //Act
             //Not used yet
         }
         else if(text.left(3).toLower() == "int" || text.left(3).toLower() == "ext" || text.left(8).toLower() == "int./ext" || text.left(7).toLower() == "int/ext" || text.left(3).toLower() == "i/e"){ //Scene heading
-            content.append("<p><br/>" + checkBoldItalicUnderline(text) + "</p>");
-
-            wasAnAction = false;
+            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == ">"){
             if(text.right(1) == "<"){ //Centered
-                content.append("<p \"text-align:center;\">");
-                if(!wasAnAction){
-                    content.append("<br/>");
-                }
-                content.append(checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
+                content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
             }
             else if(text.toUpper() == text){ //Transition
-                content.append("<p style=\"margin-left: 384px;\"><br/>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+                content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
             }
-            wasAnAction = false;
         }
         else if(text.right(3) == "TO:" && text.toUpper() == text){ //Transition
-            content.append("<p style=\"margin-left: 384px;\"><br/>" + checkBoldItalicUnderline(text) + "</p>");
-
-            wasAnAction = false;
+            content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == "." && text.mid(1, 1) != "."){ //Forced scene heading
-            content.append("<p><br/>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
-
-            wasAnAction = false;
+            content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
         }
         else if(text.toUpper() == text && !text.isEmpty()){ //Dialogue
-            content.append("<p style=\"margin-left: 192px;\"><br/>" + checkBoldItalicUnderline(text) + "</p>"); //Character name : 2 inches from left side
+            content.append("<p style=\"margin-left: 192px;\">" + checkBoldItalicUnderline(text) + "</p>"); //Character name : 2 inches from left side
             i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
             text = lines.at(i).trimmed();
 
             while(!text.isEmpty() && i < blockcount){
-                text = lines.at(i).trimmed();
 
                 if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical : 1.5 inches from left side
                     content.append("<p style=\"margin-left: 144px; margin-right: 192px;\">" + checkBoldItalicUnderline(text) + "</p>");
@@ -118,27 +112,30 @@ Script::Script(QString script)
                 }
 
                 i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
+                text = lines.at(i).trimmed();
             }
+
             i--;
-
-            wasAnAction = false;
         }
-        else if(!text.isEmpty()){ //Default action
-            content.append("<p>");
-            if(!wasAnAction){
-                content.append("<br/>");
-            }
-
+        else if(!lines.at(i).isEmpty()){ //Default action
             text = lines.at(i);
-            content.append(checkBoldItalicUnderline(text) + "</p>");
 
-            wasAnAction = true;
+            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
+        }
+        else{ //Blank action
+            text = lines.at(i);
+            content.append("<p style=\"white-space:pre-warp;\"> </p>"); //Add blank line
         }
 
         i++;
     }
 
-    content += "</body></html>";
+    content.append("</body></html>");
 
     htmlScript = content;
 }

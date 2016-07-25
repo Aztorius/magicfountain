@@ -22,7 +22,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QString checkBoldItalicUnderline(QString text);
 
 private:
     Ui::MainWindow *ui;

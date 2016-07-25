@@ -138,36 +138,6 @@ void MainWindow::quickSave(){
     }
 }
 
-QString MainWindow::checkBoldItalicUnderline(QString text){
-    QString result = text;
-
-    //Check Bold with Italic, ex: ***something***
-    while(result.contains("***") && result.mid(result.indexOf("***") + 3).contains("***")){
-        result.replace(result.indexOf("***"), 3, "<b><i>");
-        result.replace(result.indexOf("***"), 3, "</i></b>");
-    }
-
-    //Check Bold, ex: **something**
-    while(result.contains("**") && result.mid(result.indexOf("**") + 2).contains("**")){
-        result.replace(result.indexOf("**"), 2, "<b>");
-        result.replace(result.indexOf("**"), 2, "</b>");
-    }
-
-    //Check Italic, ex: *something*
-    while(result.contains("*") && result.mid(result.indexOf("*") + 1).contains("*")){
-        result.replace(result.indexOf("*"), 1, "<i>");
-        result.replace(result.indexOf("*"), 1, "</i>");
-    }
-
-    //Check Underline, ex: _something_
-    while(result.contains("_") && result.mid(result.indexOf("_") + 1).contains("_")){
-        result.replace(result.indexOf("_"), 1, "<u>");
-        result.replace(result.indexOf("_"), 1, "</u>");
-    }
-
-    return result;
-}
-
 void MainWindow::setBold(){
     if(ui->plainTextEdit->textCursor().selectedText().isEmpty()){
         ui->plainTextEdit->insertPlainText("****");
