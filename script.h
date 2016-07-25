@@ -13,7 +13,7 @@ public:
 
 private:
     QString title, credit, author, source, draftDate, contact;
-    QString html;
+    QString htmlScript;
 
 };
 

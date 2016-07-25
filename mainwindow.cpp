@@ -46,9 +46,12 @@ void MainWindow::exportAsPDF(){
         if (QFileInfo(fileName).suffix().isEmpty()){
                  fileName.append(".pdf");
         }
-        QPrinter printer(QPrinter::ScreenResolution);
-        printer.setPageMargins(25.0, 25.0, 10.0, 25.0, QPrinter::Millimeter);
+
+        QPrinter printer;
         printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setFullPage(true);
+        printer.setResolution(96);
+        printer.setPageMargins(1.5, 1.0, 1.0, 1.0, QPrinter::Inch);
         printer.setOutputFileName(fileName);
 
         ui->textBrowser->document()->print(&printer);
@@ -72,8 +75,10 @@ void MainWindow::exportAsHTML(){
 }
 
 void MainWindow::print(){
-        QPrinter printer(QPrinter::ScreenResolution);
-        printer.setPageMargins(25.0, 25.0, 10.0, 25.0, QPrinter::Millimeter);
+        QPrinter printer;
+        printer.setFullPage(true);
+        printer.setResolution(96);
+        printer.setPageMargins(1.5, 1.0, 1.0, 1.0, QPrinter::Inch);
 
         QPrintDialog dialog(&printer, this);
         dialog.setWindowTitle(tr("Print Document"));
@@ -87,6 +92,10 @@ void MainWindow::print(){
 
 void MainWindow::openFile(){
     QString filename = QFileDialog::getOpenFileName(this, "Open Fountain file", QString(), "Text files (*.fountain *.txt *.markdown *.md)");
+    if(filename.isEmpty()){
+        return;
+    }
+
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         ui->plainTextEdit->clear();
@@ -101,7 +110,7 @@ void MainWindow::openFile(){
 }
 
 void MainWindow::saveAs(){
-    QString filename = QFileDialog::getSaveFileName(this, "Save Fountain file", QString(), "Text files (*.fountain *.txt *.markdown *.md)");
+    QString filename = QFileDialog::getSaveFileName(this, "Save Fountain file", QString(), "Fountain files (*.fountain);; Text files (*.txt);; Markdown files (*.md *.markdown)");
     if (filename.isEmpty()){
         return;
     }
@@ -130,7 +139,7 @@ void MainWindow::quickSave(){
 }
 
 QString MainWindow::checkBoldItalicUnderline(QString text){
-    QString temp, result = text;
+    QString result = text;
 
     //Check Bold with Italic, ex: ***something***
     while(result.contains("***") && result.mid(result.indexOf("***") + 3).contains("***")){

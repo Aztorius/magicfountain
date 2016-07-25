@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>450</height>
+    <width>909</width>
+    <height>564</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,10 +31,10 @@
        <bool>false</bool>
       </property>
       <property name="lineWrapMode">
-       <enum>QTextEdit::FixedColumnWidth</enum>
+       <enum>QTextEdit::FixedPixelWidth</enum>
       </property>
       <property name="lineWrapColumnOrWidth">
-       <number>55</number>
+       <number>649</number>
       </property>
       <property name="html">
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>700</width>
+     <width>909</width>
      <height>21</height>
     </rect>
    </property>

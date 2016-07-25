@@ -7,7 +7,7 @@ Script::Script(QString script)
 
     QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
     content += "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">";
-    content += "p, li { white-space: pre-wrap; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }";
+    content += "p, li { white-space: normal; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }";
     content += "</style></head><body>";
 
     int blockcount = lines.size();
@@ -76,40 +76,45 @@ Script::Script(QString script)
         }
         else if(text.left(3).toLower() == "int" || text.left(3).toLower() == "ext" || text.left(8).toLower() == "int./ext" || text.left(7).toLower() == "int/ext" || text.left(3).toLower() == "i/e"){ //Scene heading
             content.append("<p><br/>" + checkBoldItalicUnderline(text) + "</p>");
+
             wasAnAction = false;
         }
         else if(text.left(1) == ">"){
             if(text.right(1) == "<"){ //Centered
-                content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
+                content.append("<p \"text-align:center;\">");
+                if(!wasAnAction){
+                    content.append("<br/>");
+                }
+                content.append(checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
             }
-            else{ //Transition
-                content.append("<p style=\"text-align:right;\"><br/>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+            else if(text.toUpper() == text){ //Transition
+                content.append("<p style=\"margin-left: 384px;\"><br/>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
             }
             wasAnAction = false;
         }
-        else if(text.right(3) == "TO:"){ //Transition
-            content.append("<p style=\"text-align: right;\"><br/>" + checkBoldItalicUnderline(text) + "</p>");
+        else if(text.right(3) == "TO:" && text.toUpper() == text){ //Transition
+            content.append("<p style=\"margin-left: 384px;\"><br/>" + checkBoldItalicUnderline(text) + "</p>");
 
             wasAnAction = false;
         }
         else if(text.left(1) == "." && text.mid(1, 1) != "."){ //Forced scene heading
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+            content.append("<p><br/>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
 
             wasAnAction = false;
         }
         else if(text.toUpper() == text && !text.isEmpty()){ //Dialogue
-            content.append("<p><br/>                     " + checkBoldItalicUnderline(text) + "</p>"); //Character name
+            content.append("<p style=\"margin-left: 192px;\"><br/>" + checkBoldItalicUnderline(text) + "</p>"); //Character name : 2 inches from left side
             i++;
             text = lines.at(i).trimmed();
 
             while(!text.isEmpty() && i < blockcount){
                 text = lines.at(i).trimmed();
 
-                if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical
-                    content.append("<p>               " + checkBoldItalicUnderline(text) + "</p>");
+                if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical : 1.5 inches from left side
+                    content.append("<p style=\"margin-left: 144px; margin-right: 192px;\">" + checkBoldItalicUnderline(text) + "</p>");
                 }
-                else if(!text.isEmpty()){ //Text
-                    content.append("<p>           " + checkBoldItalicUnderline(text) + "</p>");
+                else if(!text.isEmpty()){ //Dialogue : 1 inche from left side
+                    content.append("<p style=\"margin-left: 96px; margin-right: 144px;\">" + checkBoldItalicUnderline(text) + "</p>");
                 }
 
                 i++;
@@ -135,7 +140,7 @@ Script::Script(QString script)
 
     content += "</body></html>";
 
-    html = content;
+    htmlScript = content;
 }
 
 QString Script::checkBoldItalicUnderline(QString text){
@@ -169,5 +174,5 @@ QString Script::checkBoldItalicUnderline(QString text){
 }
 
 QString Script::toHtml(){
-    return html;
+    return htmlScript;
 }
