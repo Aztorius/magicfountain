@@ -6,5 +6,7 @@
         <file>data/exportashtml.png</file>
         <file>data/print.png</file>
         <file>data/open.png</file>
+        <file>data/new.png</file>
+        <file>data/default.fountain</file>
     </qresource>
 </RCC>

@@ -34,6 +34,7 @@ public slots:
     void exportAsPDF();
     void exportAsHTML();
     void print();
+    void newFile();
     void openFile();
     void quickSave();
     void saveAs();

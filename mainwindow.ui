@@ -76,6 +76,8 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
+    <addaction name="actionNew"/>
+    <addaction name="separator"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
@@ -118,6 +120,7 @@ p, li { white-space: pre-wrap; }
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
@@ -222,6 +225,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Export as HTML</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/new.png</normaloff>:/data/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="toolTip">
+    <string>New file</string>
    </property>
   </action>
  </widget>

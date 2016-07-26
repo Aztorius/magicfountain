@@ -104,12 +104,12 @@ Script::Script(QString script)
         else if(text.left(2) == "# "){ //Act
             //Not used yet
         }
-        else if(validStartHeaders.contains(text.split(".").first().toUpper()) || validStartHeaders.contains(text.split(" ").first().toUpper())){ //Scene heading
+        else if((validStartHeaders.contains(text.split(".").first().toUpper()) || validStartHeaders.contains(text.split(" ").first().toUpper())) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Scene heading
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == ">"){
             if(text.right(1) == "<"){ //Centered
-                content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2)) + "</p>");
+                content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2).trimmed()) + "</p>");
             }
             else if(text.toUpper() == text){ //Transition
                 content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
@@ -118,7 +118,7 @@ Script::Script(QString script)
         else if(text.right(3) == "TO:" && text.toUpper() == text){ //Transition
             content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text) + "</p>");
         }
-        else if(text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1))){ //Forced scene heading
+        else if(text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Forced scene heading
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
         }
         else if(((text.toUpper() == text && !text.isEmpty()) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)){ //Dialogue and forced dialogue

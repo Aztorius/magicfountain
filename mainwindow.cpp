@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
     connect(ui->actionExport_as_HTML, SIGNAL(triggered()), this, SLOT(exportAsHTML()));
+    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(quickSave()));
     connect(ui->actionSave_as, SIGNAL(triggered()), this, SLOT(saveAs()));
@@ -88,6 +89,25 @@ void MainWindow::print(){
         }
 
         ui->textBrowser->document()->print(&printer);
+}
+
+void MainWindow::newFile(){
+    QString filename = ":/data/default.fountain";
+    if(filename.isEmpty()){
+        return;
+    }
+
+    QFile file(filename);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        ui->plainTextEdit->clear();
+        ui->plainTextEdit->appendPlainText(file.readAll());
+        filepath.clear();
+        file.close();
+
+        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        cursor.movePosition(QTextCursor::Start);
+        ui->plainTextEdit->setTextCursor(cursor);
+    }
 }
 
 void MainWindow::openFile(){
