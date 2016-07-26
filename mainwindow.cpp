@@ -33,9 +33,9 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::refreshPreview(){
-    Script currentscript(ui->plainTextEdit->toPlainText());
+    currentScript = Script(ui->plainTextEdit->toPlainText());
 
-    ui->textBrowser->setHtml(currentscript.toHtml());
+    ui->textBrowser->setHtml(currentScript.toHtml());
 
     ui->textBrowser->setCurrentFont(courierfont);
 }
@@ -68,7 +68,7 @@ void MainWindow::exportAsHTML(){
         QFile file(fileName);
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
              QTextStream stream(&file);
-             stream << ui->textBrowser->toHtml();
+             stream << currentScript.toHtml();
              file.close();
         }
     }

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/save.png</file>
+        <file>data/saveas.png</file>
+        <file>data/exportaspdf.png</file>
+        <file>data/exportashtml.png</file>
+        <file>data/print.png</file>
+        <file>data/open.png</file>
+    </qresource>
+</RCC>

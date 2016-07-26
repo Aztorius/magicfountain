@@ -79,11 +79,21 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
     <addaction name="actionExport_as_PDF"/>
     <addaction name="actionExport_as_HTML"/>
     <addaction name="actionPrint"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionBold"/>
+    <addaction name="actionItalic"/>
+    <addaction name="actionUnderline"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -92,6 +102,12 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="movable">
     <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
    </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonIconOnly</enum>
@@ -105,6 +121,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
+   <addaction name="separator"/>
    <addaction name="actionExport_as_PDF"/>
    <addaction name="actionExport_as_HTML"/>
    <addaction name="actionPrint"/>
@@ -127,26 +144,46 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionUnderline"/>
   </widget>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/open.png</normaloff>:/data/open.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Open</string>
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/save.png</normaloff>:/data/save.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
   </action>
   <action name="actionSave_as">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/saveas.png</normaloff>:/data/saveas.png</iconset>
+   </property>
    <property name="text">
     <string>Sa&amp;ve as ...</string>
    </property>
   </action>
   <action name="actionExport_as_PDF">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/exportaspdf.png</normaloff>:/data/exportaspdf.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Export as PDF</string>
    </property>
   </action>
   <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/print.png</normaloff>:/data/print.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Print</string>
    </property>
@@ -176,6 +213,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionExport_as_HTML">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/exportashtml.png</normaloff>:/data/exportashtml.png</iconset>
+   </property>
    <property name="text">
     <string>Export as HTML</string>
    </property>
@@ -185,6 +226,8 @@ p, li { white-space: pre-wrap; }
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

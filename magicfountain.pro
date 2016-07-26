@@ -20,3 +20,8 @@ HEADERS  += mainwindow.h \
     script.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    ressources.qrc

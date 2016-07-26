@@ -1,13 +1,21 @@
 #include "script.h"
 
+Script::Script()
+{
+
+}
+
 Script::Script(QString script)
 {
     QStringList lines = script.split("\n");
     QString text;
+    QRegExp regAlphaNumeric("[A-Z]|[a-z]|[0-9]*");
+    QStringList validStartHeaders;
+    validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I/E";
 
     QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
     content.append("<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">");
-    content.append("p, li { white-space: normal; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; }");
+    content.append("p, li { white-space: normal; margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; } body { width: 576px; }");
     content.append("</style></head><body>");
 
     int blockcount = lines.size();
@@ -26,6 +34,11 @@ Script::Script(QString script)
             content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(6).trimmed()));
             title.append(text.mid(6).trimmed());
             i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
             text = lines.at(i);
 
             while(text.left(1) == "\t" && i < blockcount){
@@ -33,6 +46,11 @@ Script::Script(QString script)
                 title.append(text.trimmed());
 
                 i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
                 text = lines.at(i);
             }
             i--;
@@ -55,15 +73,26 @@ Script::Script(QString script)
             contact.append(text.mid(8).trimmed());
 
             i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
             text = lines.at(i);
 
             while(text.left(1) == "\t" && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
 
                 i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
                 text = lines.at(i);
             }
             i--;
+
             content.append("<br/></p>");
         }
         else if(text.left(4) == "### "){ //Scene
@@ -75,7 +104,7 @@ Script::Script(QString script)
         else if(text.left(2) == "# "){ //Act
             //Not used yet
         }
-        else if(text.left(3).toLower() == "int" || text.left(3).toLower() == "ext" || text.left(8).toLower() == "int./ext" || text.left(7).toLower() == "int/ext" || text.left(3).toLower() == "i/e"){ //Scene heading
+        else if(validStartHeaders.contains(text.split(".").first().toUpper()) || validStartHeaders.contains(text.split(" ").first().toUpper())){ //Scene heading
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == ">"){
@@ -89,10 +118,14 @@ Script::Script(QString script)
         else if(text.right(3) == "TO:" && text.toUpper() == text){ //Transition
             content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text) + "</p>");
         }
-        else if(text.left(1) == "." && text.mid(1, 1) != "."){ //Forced scene heading
+        else if(text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1))){ //Forced scene heading
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
         }
-        else if(text.toUpper() == text && !text.isEmpty()){ //Dialogue
+        else if(((text.toUpper() == text && !text.isEmpty()) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)){ //Dialogue and forced dialogue
+            if(text.left(1) == "@"){
+                text.remove(0,1);
+            }
+
             content.append("<p style=\"margin-left: 192px;\">" + checkBoldItalicUnderline(text) + "</p>"); //Character name : 2 inches from left side
             i++;
 
@@ -172,4 +205,19 @@ QString Script::checkBoldItalicUnderline(QString text){
 
 QString Script::toHtml(){
     return htmlScript;
+}
+
+bool Script::isABlankLine(int i, QStringList lines){
+    if(i >= lines.size()){
+        return true;
+    }
+    else if(i < 0){
+        return true;
+    }
+    else if(i >= 0 && lines.at(i).isEmpty()){
+        return true;
+    }
+    else{
+        return false;
+    }
 }

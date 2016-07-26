@@ -7,9 +7,12 @@
 class Script
 {
 public:
+    Script();
     Script(QString script);
     QString checkBoldItalicUnderline(QString text);
     QString toHtml();
+
+    bool isABlankLine(int i, QStringList lines);
 
 private:
     QString title, credit, author, source, draftDate, contact;
