@@ -8,5 +8,9 @@
         <file>data/open.png</file>
         <file>data/new.png</file>
         <file>data/default.fountain</file>
+        <file>data/bold.png</file>
+        <file>data/italic.png</file>
+        <file>data/underline.png</file>
+        <file>data/icon.png</file>
     </qresource>
 </RCC>

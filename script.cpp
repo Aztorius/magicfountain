@@ -25,9 +25,15 @@ Script::Script(QString script)
         text = lines.at(i).trimmed();
 
         if(text.left(1) == "!"){ //Forced action
-            content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+            text = lines.at(i);
+            text.remove(text.indexOf("!"), 1);
+            text.replace("\t", "    ");
+            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(2) == "= "){ //Synopses
+            //Not used yet
+        }
+        else if(text.left(1) == "~"){
             //Not used yet
         }
         else if(text.left(6) == "Title:"){ //Title
@@ -41,7 +47,7 @@ Script::Script(QString script)
 
             text = lines.at(i);
 
-            while(text.left(1) == "\t" && i < blockcount){
+            while((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
                 title.append(text.trimmed());
 
@@ -57,16 +63,108 @@ Script::Script(QString script)
             content.append("<br/></p>");
         }
         else if(text.left(7) == "Credit:"){ //Credit
-            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "</p>");
+            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()));
+            credit.append(text.mid(7).trimmed());
+            i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
+            text = lines.at(i);
+
+            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+                credit.append(text.trimmed());
+
+                i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
+                text = lines.at(i);
+            }
+            i--;
+            content.append("<br/></p>");
         }
         else if(text.left(7) == "Author:"){ //Author
-            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "<br/></p>");
+            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()));
+            author.append(text.mid(7).trimmed());
+            i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
+            text = lines.at(i);
+
+            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+                author.append(text.trimmed());
+
+                i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
+                text = lines.at(i);
+            }
+            i--;
+            content.append("<br/></p>");
         }
         else if(text.left(7) == "Source:"){ //Source
-            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()) + "<br/></p>");
+            content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()));
+            source.append(text.mid(7).trimmed());
+            i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
+            text = lines.at(i);
+
+            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+                source.append(text.trimmed());
+
+                i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
+                text = lines.at(i);
+            }
+            i--;
+            content.append("<br/></p>");
         }
         else if(text.left(11) == "Draft date:"){ //Draft date
-            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()) + "</p>");
+            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()));
+            draftDate.append(text.mid(11).trimmed());
+            i++;
+
+            if(i >= blockcount){
+                break;
+            }
+
+            text = lines.at(i);
+
+            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+                content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+                draftDate.append(text.trimmed());
+
+                i++;
+
+                if(i >= blockcount){
+                    break;
+                }
+
+                text = lines.at(i);
+            }
+            i--;
+            content.append("</p>");
         }
         else if(text.left(8) == "Contact:"){ //Contact
             content.append("<p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(8).trimmed()));
@@ -80,8 +178,9 @@ Script::Script(QString script)
 
             text = lines.at(i);
 
-            while(text.left(1) == "\t" && i < blockcount){
+            while((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
+                contact.append(text.trimmed());
 
                 i++;
 
@@ -104,24 +203,24 @@ Script::Script(QString script)
         else if(text.left(2) == "# "){ //Act
             //Not used yet
         }
-        else if((validStartHeaders.contains(text.split(".").first().toUpper()) || validStartHeaders.contains(text.split(" ").first().toUpper())) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Scene heading
+        else if((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Scene heading
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == ">"){
-            if(text.right(1) == "<"){ //Centered
+            if(text.right(1) == "<"){ //Centered text
                 content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2).trimmed()) + "</p>");
             }
-            else if(text.toUpper() == text){ //Transition
+            else{ //Forced transition
                 content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
             }
         }
-        else if(text.right(3) == "TO:" && text.toUpper() == text){ //Transition
+        else if(lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Transition
             content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Forced scene heading
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
         }
-        else if(((text.toUpper() == text && !text.isEmpty()) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)){ //Dialogue and forced dialogue
+        else if(((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)){ //Dialogue and forced dialogue
             if(text.left(1) == "@"){
                 text.remove(0,1);
             }
@@ -157,6 +256,7 @@ Script::Script(QString script)
         }
         else if(!lines.at(i).isEmpty()){ //Default action
             text = lines.at(i);
+            text.replace("\t", "    ");
 
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
@@ -174,33 +274,60 @@ Script::Script(QString script)
 }
 
 QString Script::checkBoldItalicUnderline(QString text){
-    QString result = text;
+    QStringList result = text.split("\\*");
+    int firstindex = -1, secondindex = -1;
 
     //Check Bold with Italic, ex: ***something***
-    while(result.contains("***") && result.mid(result.indexOf("***") + 3).contains("***")){
-        result.replace(result.indexOf("***"), 3, "<b><i>");
-        result.replace(result.indexOf("***"), 3, "</i></b>");
+    firstindex = result.indexOf(QRegularExpression(".*\\*\\*\\*\\S.*"));
+    secondindex = result.indexOf(QRegularExpression(".*\\S\\*\\*\\*.*"));
+
+    while(firstindex >= 0 && secondindex >=0 && (secondindex > firstindex || (firstindex == secondindex && result.at(firstindex).indexOf(QRegularExpression("\\*\\*\\*\\S.*")) != result.at(secondindex).indexOf(QRegularExpression("\\S\\*\\*\\*.*"))))){
+        result[firstindex].replace(result.at(firstindex).indexOf("***"), 3, "<b><i>");
+        result[secondindex].replace(result.at(secondindex).indexOf("***"), 3, "</i></b>");
+
+        firstindex = result.indexOf(QRegularExpression(".*\\*\\*\\*\\S.*"));
+        secondindex = result.indexOf(QRegularExpression(".*\\S\\*\\*\\*.*"));
     }
 
     //Check Bold, ex: **something**
-    while(result.contains("**") && result.mid(result.indexOf("**") + 2).contains("**")){
-        result.replace(result.indexOf("**"), 2, "<b>");
-        result.replace(result.indexOf("**"), 2, "</b>");
+    firstindex = result.indexOf(QRegularExpression(".*\\*\\*\\S.*"));
+    secondindex = result.indexOf(QRegularExpression(".*\\S\\*\\*.*"));
+
+    while(firstindex >= 0 && secondindex >=0 && (secondindex > firstindex || (firstindex == secondindex && result.at(firstindex).indexOf(QRegularExpression("\\*\\*\\S.*")) != result.at(secondindex).indexOf(QRegularExpression("\\S\\*\\*.*"))))){
+        result[firstindex].replace(result.at(firstindex).indexOf("**"), 2, "<b>");
+        result[secondindex].replace(result.at(secondindex).indexOf("**"), 2, "</b>");
+
+        firstindex = result.indexOf(QRegularExpression(".*\\*\\*\\S.*"));
+        secondindex = result.indexOf(QRegularExpression(".*\\S\\*\\*.*"));
     }
 
     //Check Italic, ex: *something*
-    while(result.contains("*") && result.mid(result.indexOf("*") + 1).contains("*")){
-        result.replace(result.indexOf("*"), 1, "<i>");
-        result.replace(result.indexOf("*"), 1, "</i>");
+    firstindex = result.indexOf(QRegularExpression(".*\\*\\S.*"));
+    secondindex = result.indexOf(QRegularExpression(".*\\S\\*.*"));
+
+    while(firstindex >= 0 && secondindex >=0 && (secondindex > firstindex || (firstindex == secondindex && result.at(firstindex).indexOf(QRegularExpression("\\*\\S.*")) != result.at(secondindex).indexOf(QRegularExpression("\\S\\*.*"))))){
+        result[firstindex].replace(result.at(firstindex).indexOf("*"), 1, "<i>");
+        result[secondindex].replace(result.at(secondindex).indexOf("*"), 1, "</i>");
+
+        firstindex = result.indexOf(QRegularExpression(".*\\*\\S.*"));
+        secondindex = result.indexOf(QRegularExpression(".*\\S\\*.*"));
     }
+
+    result = result.join("*").split("\\_");
 
     //Check Underline, ex: _something_
-    while(result.contains("_") && result.mid(result.indexOf("_") + 1).contains("_")){
-        result.replace(result.indexOf("_"), 1, "<u>");
-        result.replace(result.indexOf("_"), 1, "</u>");
+    firstindex = result.indexOf(QRegularExpression(".*_\\S.*"));
+    secondindex = result.indexOf(QRegularExpression(".*\\S_.*"));
+
+    while(firstindex >= 0 && secondindex >=0 && (secondindex > firstindex || (firstindex == secondindex && result.at(firstindex).indexOf(QRegularExpression("_\\S.*")) != result.at(secondindex).indexOf(QRegularExpression("\\S_.*"))))){
+        result[firstindex].replace(result.at(firstindex).indexOf("_"), 1, "<u>");
+        result[secondindex].replace(result.at(secondindex).indexOf("_"), 1, "</u>");
+
+        firstindex = result.indexOf(QRegularExpression(".*_\\S.*"));
+        secondindex = result.indexOf(QRegularExpression(".*\\S_.*"));
     }
 
-    return result;
+    return result.join("_");
 }
 
 QString Script::toHtml(){

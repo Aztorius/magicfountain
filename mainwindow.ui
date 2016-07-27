@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="ressources.qrc">
+    <normaloff>:/data/icon.png</normaloff>:/data/icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -121,6 +125,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </attribute>
    <addaction name="actionNew"/>
+   <addaction name="separator"/>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
@@ -192,6 +197,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionBold">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/bold.png</normaloff>:/data/bold.png</iconset>
+   </property>
    <property name="text">
     <string>Bold</string>
    </property>
@@ -200,6 +209,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionItalic">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/italic.png</normaloff>:/data/italic.png</iconset>
+   </property>
    <property name="text">
     <string>Italic</string>
    </property>
@@ -208,6 +221,10 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionUnderline">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/data/underline.png</normaloff>:/data/underline.png</iconset>
+   </property>
    <property name="text">
     <string>Underline</string>
    </property>

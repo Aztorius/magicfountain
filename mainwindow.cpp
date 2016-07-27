@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     courierfont.setPointSize(12);
 
     ui->plainTextEdit->setFont(courierfont);
+    ui->plainTextEdit->setFocus();
 
     connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
@@ -39,6 +40,8 @@ void MainWindow::refreshPreview(){
     ui->textBrowser->setHtml(currentScript.toHtml());
 
     ui->textBrowser->setCurrentFont(courierfont);
+
+    ui->plainTextEdit->setFocus();
 }
 
 void MainWindow::exportAsPDF(){

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QRegularExpression>
 
 class Script
 {
