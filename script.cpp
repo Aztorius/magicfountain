@@ -33,11 +33,11 @@ Script::Script(QString script)
         else if(text.left(2) == "= "){ //Synopses
             //Not used yet
         }
-        else if(text.left(1) == "~"){
-            //Not used yet
+        else if(text.left(1) == "~"){ //Lyrics
+            content.append("<p>" + text.mid(1) + "</p>");
         }
         else if(text.left(6) == "Title:"){ //Title
-            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(6).trimmed()));
+            content.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + checkBoldItalicUnderline(text.mid(6).trimmed()));
             title.append(text.mid(6).trimmed());
             i++;
 
@@ -167,7 +167,7 @@ Script::Script(QString script)
             content.append("</p>");
         }
         else if(text.left(8) == "Contact:"){ //Contact
-            content.append("<p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(8).trimmed()));
+            content.append("<p style=\"text-align: left; page-break-after: always;\">" + checkBoldItalicUnderline(text.mid(8).trimmed()));
             contact.append(text.mid(8).trimmed());
 
             i++;
