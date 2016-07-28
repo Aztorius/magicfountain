@@ -30,6 +30,9 @@ Script::Script(QString script)
             text.replace("\t", "    ");
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
         }
+        else if(text.left(3) == "==="){ //Page breaks
+            content.append("<p style=\"white-space:pre-warp; page-break-after: always;\" > </p>");
+        }
         else if(text.left(2) == "= "){ //Synopses
             //Not used yet
         }
@@ -73,7 +76,7 @@ Script::Script(QString script)
 
             text = lines.at(i);
 
-            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+            while((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
                 credit.append(text.trimmed());
 
@@ -99,7 +102,7 @@ Script::Script(QString script)
 
             text = lines.at(i);
 
-            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+            while((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
                 author.append(text.trimmed());
 
@@ -125,7 +128,7 @@ Script::Script(QString script)
 
             text = lines.at(i);
 
-            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+            while((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
                 source.append(text.trimmed());
 
@@ -151,7 +154,7 @@ Script::Script(QString script)
 
             text = lines.at(i);
 
-            while((text.left(1) == "\t" && text.left(3) == "   ") && i < blockcount){
+            while((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount){
                 content.append("<br/>" + checkBoldItalicUnderline(text.trimmed()));
                 draftDate.append(text.trimmed());
 
@@ -234,13 +237,16 @@ Script::Script(QString script)
 
             text = lines.at(i).trimmed();
 
-            while(!text.isEmpty() && i < blockcount){
+            while((!text.isEmpty() || lines.at(i) == "  ") && i < blockcount){
 
                 if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical : 1.5 inches from left side
                     content.append("<p style=\"margin-left: 144px; margin-right: 192px;\">" + checkBoldItalicUnderline(text) + "</p>");
                 }
                 else if(!text.isEmpty()){ //Dialogue : 1 inche from left side
                     content.append("<p style=\"margin-left: 96px; margin-right: 144px;\">" + checkBoldItalicUnderline(text) + "</p>");
+                }
+                else{
+                    content.append("<p style=\"white-space: pre-warp;\" > </p>");
                 }
 
                 i++;
