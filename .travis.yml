@@ -6,6 +6,9 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
+   exclude:
+    - os: linux
+      dist: precise
 
 addons:
   apt:
@@ -13,8 +16,6 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - qt5-default qttools5-dev-tools
-    - g++-6 gcc-6
-env: COMPILER=g++-6 CXX=g++-6 CC=gcc-6
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
@@ -29,9 +30,9 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir ./magicfountain/usr/bin ; fi
 
 script:
-- qmake magicfountain.pro
-- make CXX=$COMPILER
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp ./magicfountain ./magicfountain/usr/bin ; fi
+- qmake MagicFountain.pro
+- make
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./MagicFountain ./magicfountain/usr/bin/magicfountain ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dpkg-deb --build magicfountain ; fi
 
 before_deploy:
