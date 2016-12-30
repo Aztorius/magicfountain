@@ -30,7 +30,7 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir ./magicfountain/usr/bin ; fi
 
 script:
-- qmake MagicFountain.pro
+- qmake magicfountain.pro
 - make
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./MagicFountain ./magicfountain/usr/bin/magicfountain ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dpkg-deb --build magicfountain ; fi
