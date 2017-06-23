@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>916</width>
-    <height>564</height>
+    <width>1000</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,6 +24,12 @@
     </property>
     <item row="0" column="1">
      <widget class="QTextBrowser" name="textBrowser">
+      <property name="minimumSize">
+       <size>
+        <width>654</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <family>Courier</family>
@@ -48,7 +54,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Courier New';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="tabStopWidth">
-       <number>80</number>
+       <number>72</number>
       </property>
       <property name="textInteractionFlags">
        <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -72,8 +78,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>916</width>
-     <height>21</height>
+     <width>1000</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -202,7 +208,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/data/bold.png</normaloff>:/data/bold.png</iconset>
    </property>
    <property name="text">
-    <string>Bold</string>
+    <string>&amp;Bold</string>
    </property>
    <property name="toolTip">
     <string>Bold</string>
@@ -214,7 +220,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/data/italic.png</normaloff>:/data/italic.png</iconset>
    </property>
    <property name="text">
-    <string>Italic</string>
+    <string>&amp;Italic</string>
    </property>
    <property name="toolTip">
     <string>Italic</string>
@@ -226,7 +232,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/data/underline.png</normaloff>:/data/underline.png</iconset>
    </property>
    <property name="text">
-    <string>Underline</string>
+    <string>&amp;Underline</string>
    </property>
    <property name="toolTip">
     <string>Underline</string>
@@ -238,7 +244,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/data/exportashtml.png</normaloff>:/data/exportashtml.png</iconset>
    </property>
    <property name="text">
-    <string>Export as HTML</string>
+    <string>Export as &amp;HTML</string>
    </property>
    <property name="toolTip">
     <string>Export as HTML</string>
@@ -250,7 +256,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/data/new.png</normaloff>:/data/new.png</iconset>
    </property>
    <property name="text">
-    <string>New</string>
+    <string>&amp;New</string>
    </property>
    <property name="toolTip">
     <string>New file</string>

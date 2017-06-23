@@ -53,9 +53,11 @@ void MainWindow::exportAsPDF(){
 
         QPrinter printer;
         printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setPageSize(QPrinter::Letter);
+        printer.setColorMode(QPrinter::GrayScale);
         printer.setFullPage(true);
         printer.setResolution(96);
-        printer.setPageMargins(1.5, 1.0, 1.0, 1.0, QPrinter::Inch);
+        printer.setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
         printer.setOutputFileName(fileName);
 
         ui->textBrowser->document()->print(&printer);
@@ -80,9 +82,11 @@ void MainWindow::exportAsHTML(){
 
 void MainWindow::print(){
         QPrinter printer;
+        printer.setPageSize(QPrinter::Letter);
+        printer.setColorMode(QPrinter::GrayScale);
         printer.setFullPage(true);
         printer.setResolution(96);
-        printer.setPageMargins(1.5, 1.0, 1.0, 1.0, QPrinter::Inch);
+        printer.setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
 
         QPrintDialog dialog(&printer, this);
         dialog.setWindowTitle(tr("Print Document"));

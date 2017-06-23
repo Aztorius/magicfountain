@@ -15,7 +15,7 @@ Script::Script(QString script)
 
     QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
     content.append("<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">");
-    content.append("p, li { white-space: normal; margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; } body { width: 576px; }");
+    content.append("p, li { white-space: normal; margin: 0px; padding: 0px; } body { width: 624px; letter-spacing: 0px; }");
     content.append("</style></head><body>");
 
     int blockcount = lines.size();
@@ -40,7 +40,7 @@ Script::Script(QString script)
             content.append("<p>" + text.mid(1) + "</p>");
         }
         else if(text.left(6) == "Title:"){ //Title
-            content.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + checkBoldItalicUnderline(text.mid(6).trimmed()));
+            content.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + checkBoldItalicUnderline(text.mid(6).trimmed()));
             title.append(text.mid(6).trimmed());
             i++;
 
@@ -144,7 +144,7 @@ Script::Script(QString script)
             content.append("<br/></p>");
         }
         else if(text.left(11) == "Draft date:"){ //Draft date
-            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()));
+            content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()));
             draftDate.append(text.mid(11).trimmed());
             i++;
 
@@ -207,18 +207,18 @@ Script::Script(QString script)
             //Not used yet
         }
         else if((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Scene heading
-            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
+            content.append("<p style=\"margin-left: 5em\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == ">"){
             if(text.right(1) == "<"){ //Centered text
                 content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2).trimmed()) + "</p>");
             }
             else{ //Forced transition
-                content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
+                content.append("<p style=\"margin-left: 480px;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
             }
         }
         else if(lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Transition
-            content.append("<p style=\"margin-left: 384px;\">" + checkBoldItalicUnderline(text) + "</p>");
+            content.append("<p style=\"margin-left: 480px;\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if(text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)){ //Forced scene heading
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
@@ -228,7 +228,7 @@ Script::Script(QString script)
                 text.remove(0,1);
             }
 
-            content.append("<p style=\"margin-left: 192px;\">" + checkBoldItalicUnderline(text) + "</p>"); //Character name : 2 inches from left side
+            content.append("<p style=\"margin-left: 19em;\">" + checkBoldItalicUnderline(text) + "</p>"); //Character name : 1.9 inches from left side
             i++;
 
             if(i >= blockcount){
@@ -239,14 +239,14 @@ Script::Script(QString script)
 
             while((!text.isEmpty() || lines.at(i) == "  ") && i < blockcount){
 
-                if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical : 1.5 inches from left side
-                    content.append("<p style=\"margin-left: 144px; margin-right: 192px;\">" + checkBoldItalicUnderline(text) + "</p>");
+                if(text.left(1) == "(" && text.right(1) == ")"){ //Parenthetical : 2.6 inches from left side
+                    content.append("<p style=\"margin-left: 15em; margin-right: 6em;\">" + checkBoldItalicUnderline(text) + "</p>");
                 }
                 else if(!text.isEmpty()){ //Dialogue : 1 inche from left side
-                    content.append("<p style=\"margin-left: 96px; margin-right: 144px;\">" + checkBoldItalicUnderline(text) + "</p>");
+                    content.append("<p style=\"margin-left: 12em; margin-right: 144px;\">" + checkBoldItalicUnderline(text) + "</p>");
                 }
                 else{
-                    content.append("<p style=\"white-space: pre-warp;\" > </p>");
+                    content.append("<p style=\"white-space:pre-warp;\"> </p>");
                 }
 
                 i++;
@@ -264,10 +264,9 @@ Script::Script(QString script)
             text = lines.at(i);
             text.replace("\t", "    ");
 
-            content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
+            content.append("<p style=\"margin-left: 5em\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else{ //Blank action
-            text = lines.at(i);
             content.append("<p style=\"white-space:pre-warp;\"> </p>"); //Add blank line
         }
 
