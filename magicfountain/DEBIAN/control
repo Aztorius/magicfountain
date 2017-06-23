@@ -1,0 +1,9 @@
+Package: magicfountain
+Version: 1.0-alpha
+Section: base
+Priority: optional
+Architecture: all
+Depends: qt5-default
+Maintainer: William Bonnaventure <william.bonnaventure@gmail.com>
+Description: A Fountain syntax editor and viewer
+Homepage: http://github.com/Aztorius/magicfountain

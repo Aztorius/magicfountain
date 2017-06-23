@@ -1,0 +1,51 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: osx
+  exclude:
+    - os: linux
+      dist: precise
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - qt5-default qttools5-dev-tools
+
+before_script:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install qt5 ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force qt5 ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:beineri/opt-qt562-trusty --yes; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --yes qt56base ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source /opt/qt56/bin/qt56-env.sh ; fi
+- qmake -v
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir ./magicfountain/usr ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir ./magicfountain/usr/bin ; fi
+
+script:
+- qmake magicfountain.pro
+- make
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./MagicFountain ./magicfountain/usr/bin/magicfountain ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dpkg-deb --build magicfountain ; fi
+
+before_deploy:
+- echo $TRAVIS_TAG
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./magicfountain.deb ./magicfountain-$TRAVIS_TAG.deb ; fi
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ZbgyWaHzXU9FkGYBs0osFuIusooGYpmd9B1CU+07GAUB2QPMQpYVnvYnR9pImxXvyZNcA3JbzH9x6T5IcpPwAnBf7rKyb673Debcy6fIKucZIRlAVGbQ94+o8UAzXClKEclnZcOHBcTk7HzTIAGoJSr+Y2d06NfqM/2Bw6+yLVSgNeQ7ZMQti5PQplzgUQwLuSqKJNrTNNEer5mqEHj8pb3kE5mjwXpNZ9iDMccP5JT78kdrmnXn7GZUvH+sVD6NVVJeERQ4btFIphOHY5WrFDMfbkm1+z2zpgb5u6v1nVxarOPs6SBkdmpLS/Vz+0LvSZd/VVmCIXph2d7fySWL3RtckPmb4egeJtUqljfQrPaI1xgzQ/L97Smh8LC6nuKmTuM3CqHoMGvv4Q3zRT8Dkn1kxvqBtjjhmtZbbWtJX014Fp4EVfoo07pMB5qp1nHZgiQqyPsX+u7kdmO0e2iPocWM9aGx8ESUGws1/FmA/myd9C6mRj9pPpCC9IJlxKFMNr8M99vFd2I/kByCdUuWZ/YyQ8nkn7/+7c8J//k+NOtaDm0yu12Mme/ht6LPSJkPaiBY7CHv5XIzMWeYm/m9Qu5jeZg+Dy3d4dRUEqFLo5n0rGyOgyZ0BTCPmwx3nj9kbrZcxNg0Vlf+xNZN3H41/ZE63Y9GMVl7e83E0guNS+c=
+  file: "./magicfountain-$TRAVIS_TAG.deb"
+  skip_cleanup: true
+  on:
+    repo: Aztorius/magicfountain
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
