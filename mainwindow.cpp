@@ -1,21 +1,25 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QStandardPaths>
+
+QString GLOBAL_VERSION = "1.0.0";
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    setWindowTitle("Magic Fountain Alpha 1.0.0");
+    setWindowTitle("Magic Fountain Alpha " + GLOBAL_VERSION);
 
     courierfont = QFont("Courier");
     courierfont.setPointSize(12);
 
-    ui->plainTextEdit->setFont(courierfont);
-    ui->plainTextEdit->setFocus();
+    ui->plainTextEdit_fountaineditor->setFont(courierfont);
+    ui->plainTextEdit_fountaineditor->setFocus();
 
-    connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
+    connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
     connect(ui->actionExport_as_HTML, SIGNAL(triggered()), this, SLOT(exportAsHTML()));
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
@@ -35,17 +39,20 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::refreshPreview(){
-    currentScript = Script(ui->plainTextEdit->toPlainText());
+    currentScript = Script(ui->plainTextEdit_fountaineditor->toPlainText());
 
-    ui->textBrowser->setHtml(currentScript.toHtml());
+    ui->textBrowser_preview->setHtml(currentScript.toHtml());
 
-    ui->textBrowser->setCurrentFont(courierfont);
+    ui->textBrowser_preview->setCurrentFont(courierfont);
 
-    ui->plainTextEdit->setFocus();
+    ui->plainTextEdit_fountaineditor->setFocus();
 }
 
 void MainWindow::exportAsPDF(){
-    QString fileName = QFileDialog::getSaveFileName(this, "Export PDF", QString(), "PDF files (*.pdf)");
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Export PDF"),
+                                                    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
+                                                    "PDF files (*.pdf)");
     if (!fileName.isEmpty()) {
         if (QFileInfo(fileName).suffix().isEmpty()){
                  fileName.append(".pdf");
@@ -60,12 +67,15 @@ void MainWindow::exportAsPDF(){
         printer.setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
         printer.setOutputFileName(fileName);
 
-        ui->textBrowser->document()->print(&printer);
+        ui->textBrowser_preview->document()->print(&printer);
     }
 }
 
 void MainWindow::exportAsHTML(){
-    QString fileName = QFileDialog::getSaveFileName(this, "Export HTML", QString(), "HTML files (*.html)");
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Export HTML"),
+                                                    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
+                                                    "HTML files (*.html)");
     if (!fileName.isEmpty()) {
         if (QFileInfo(fileName).suffix().isEmpty()){
              fileName.append(".html");
@@ -95,7 +105,7 @@ void MainWindow::print(){
            return;
         }
 
-        ui->textBrowser->document()->print(&printer);
+        ui->textBrowser_preview->document()->print(&printer);
 }
 
 void MainWindow::newFile(){
@@ -106,38 +116,44 @@ void MainWindow::newFile(){
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        ui->plainTextEdit->clear();
-        ui->plainTextEdit->appendPlainText(file.readAll());
+        ui->plainTextEdit_fountaineditor->clear();
+        ui->plainTextEdit_fountaineditor->appendPlainText(file.readAll());
         filepath.clear();
         file.close();
 
-        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Start);
-        ui->plainTextEdit->setTextCursor(cursor);
+        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
 }
 
 void MainWindow::openFile(){
-    QString filename = QFileDialog::getOpenFileName(this, "Open Fountain file", QString(), "Text files (*.fountain *.txt *.markdown *.md)");
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Fountain file"),
+                                                    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
+                                                    "Text files (*.fountain *.txt *.markdown *.md)");
     if(filename.isEmpty()){
         return;
     }
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        ui->plainTextEdit->clear();
-        ui->plainTextEdit->appendPlainText(file.readAll());
+        ui->plainTextEdit_fountaineditor->clear();
+        ui->plainTextEdit_fountaineditor->appendPlainText(file.readAll());
         filepath = filename;
         file.close();
 
-        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Start);
-        ui->plainTextEdit->setTextCursor(cursor);
+        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
 }
 
 void MainWindow::saveAs(){
-    QString filename = QFileDialog::getSaveFileName(this, "Save Fountain file", QString(), "Fountain files (*.fountain);; Text files (*.txt);; Markdown files (*.md *.markdown)");
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    tr("Save Fountain file"),
+                                                    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
+                                                    "Fountain files (*.fountain);; Text files (*.txt);; Markdown files (*.md *.markdown)");
     if (filename.isEmpty()){
         return;
     }
@@ -145,7 +161,7 @@ void MainWindow::saveAs(){
     QFile file(filename);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream stream(&file);
-        stream << ui->plainTextEdit->toPlainText();
+        stream << ui->plainTextEdit_fountaineditor->toPlainText();
         file.close();
         filepath = filename;
     }
@@ -160,53 +176,52 @@ void MainWindow::quickSave(){
     QFile file(filepath);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream stream(&file);
-        stream << ui->plainTextEdit->toPlainText();
+        stream << ui->plainTextEdit_fountaineditor->toPlainText();
         file.close();
     }
 }
 
 void MainWindow::setBold(){
-    if(ui->plainTextEdit->textCursor().selectedText().isEmpty()){
-        ui->plainTextEdit->insertPlainText("****");
+    if(ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()){
+        ui->plainTextEdit_fountaineditor->insertPlainText("****");
 
-        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 2);
-        ui->plainTextEdit->setTextCursor(cursor);
+        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
     else{
-        QString selected = ui->plainTextEdit->textCursor().selectedText();
-        ui->plainTextEdit->textCursor().clearSelection();
-        ui->plainTextEdit->insertPlainText("**" + selected + "**");
+        QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
+        ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
+        ui->plainTextEdit_fountaineditor->insertPlainText("**" + selected + "**");
     }
 }
 
 void MainWindow::setItalic(){
-    if(ui->plainTextEdit->textCursor().selectedText().isEmpty()){
-        ui->plainTextEdit->insertPlainText("**");
+    if(ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()){
+        ui->plainTextEdit_fountaineditor->insertPlainText("**");
 
-        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
-        ui->plainTextEdit->setTextCursor(cursor);
+        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
     else{
-        QString selected = ui->plainTextEdit->textCursor().selectedText();
-        ui->plainTextEdit->textCursor().clearSelection();
-        ui->plainTextEdit->insertPlainText("*" + selected + "*");
+        QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
+        ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
+        ui->plainTextEdit_fountaineditor->insertPlainText("*" + selected + "*");
     }
 }
 
 void MainWindow::setUnderline(){
-    if(ui->plainTextEdit->textCursor().selectedText().isEmpty()){
-        ui->plainTextEdit->insertPlainText("__");
+    if(ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()){
+        ui->plainTextEdit_fountaineditor->insertPlainText("__");
 
-        QTextCursor cursor = ui->plainTextEdit->textCursor();
+        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
-        ui->plainTextEdit->setTextCursor(cursor);
+        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
     else{
-        QString selected = ui->plainTextEdit->textCursor().selectedText();
-        ui->plainTextEdit->textCursor().clearSelection();
-        ui->plainTextEdit->insertPlainText("_" + selected + "_");
+        QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
+        ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
+        ui->plainTextEdit_fountaineditor->insertPlainText("_" + selected + "_");
     }
 }
-
