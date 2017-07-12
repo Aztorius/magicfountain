@@ -20,3 +20,8 @@ QString Block::getData()
 {
     return m_data;
 }
+
+QList<Block> Block::getBlocks()
+{
+    return m_blocks;
+}

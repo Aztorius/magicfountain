@@ -4,7 +4,13 @@
 #include <QString>
 #include <QStringList>
 
-enum BlockType { Scene, Text, Dialogue, Transitions };
+enum BlockType { Action,
+                 Scene,
+                 Character,
+                 Dialogue,
+                 DualDialogue,
+                 Parentheticals,
+                 Transitions };
 
 class Block
 {
@@ -13,6 +19,7 @@ public:
     void addBlock(Block block);
     BlockType getType();
     QString getData();
+    QList<Block> getBlocks();
 private:
     BlockType m_type;
     QString m_data;
