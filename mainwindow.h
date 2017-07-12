@@ -31,6 +31,7 @@ private:
 
 public slots:
     void refreshPreview();
+    void refreshScenesView();
     void exportAsPDF();
     void exportAsHTML();
     void print();

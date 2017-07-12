@@ -4,16 +4,18 @@
 #include <QString>
 #include <QStringList>
 
-enum BlockType { Text, Dialogue, Transitions };
+enum BlockType { Scene, Text, Dialogue, Transitions };
 
 class Block
 {
 public:
     Block(BlockType type, QString data);
-    Block(BlockType type, QStringList data);
+    void addBlock(Block block);
+    BlockType getType();
+    QString getData();
 private:
     BlockType m_type;
-    QStringList m_data;
+    QString m_data;
     QList<Block> m_blocks;
 };
 

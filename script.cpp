@@ -207,6 +207,7 @@ Script::Script(QString script)
             //Not used yet
         }
         else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
+            m_blocks.append(Block(BlockType::Scene, text));
             content.append("<p style=\"margin-left: 5em\">" + checkBoldItalicUnderline(text) + "</p>");
         }
         else if (text.left(1) == ">") {
@@ -354,4 +355,8 @@ bool Script::isABlankLine(int i, QStringList lines){
     } else {
         return false;
     }
+}
+
+QList<Block> Script::getBlocks() {
+    return m_blocks;
 }

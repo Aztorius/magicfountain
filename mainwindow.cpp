@@ -3,6 +3,8 @@
 
 #include <QStandardPaths>
 
+#include "block.h"
+
 QString GLOBAL_VERSION = "1.0.0";
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -38,7 +40,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::refreshPreview(){
+void MainWindow::refreshPreview() {
     currentScript = Script(ui->plainTextEdit_fountaineditor->toPlainText());
 
     ui->textBrowser_preview->setHtml(currentScript.toHtml());
@@ -46,9 +48,22 @@ void MainWindow::refreshPreview(){
     ui->textBrowser_preview->setCurrentFont(courierfont);
 
     ui->plainTextEdit_fountaineditor->setFocus();
+
+    refreshScenesView();
 }
 
-void MainWindow::exportAsPDF(){
+void MainWindow::refreshScenesView()
+{
+    ui->listWidget_scenes->clear();
+
+    foreach (Block block, currentScript.getBlocks()) {
+        if (block.getType() == BlockType::Scene) {
+            ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block.getData());
+        }
+    }
+}
+
+void MainWindow::exportAsPDF() {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Export PDF"),
                                                     QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
@@ -71,7 +86,7 @@ void MainWindow::exportAsPDF(){
     }
 }
 
-void MainWindow::exportAsHTML(){
+void MainWindow::exportAsHTML() {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Export HTML"),
                                                     QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
@@ -90,7 +105,7 @@ void MainWindow::exportAsHTML(){
     }
 }
 
-void MainWindow::print(){
+void MainWindow::print() {
         QPrinter printer;
         printer.setPageSize(QPrinter::Letter);
         printer.setColorMode(QPrinter::GrayScale);
@@ -108,7 +123,7 @@ void MainWindow::print(){
         ui->textBrowser_preview->document()->print(&printer);
 }
 
-void MainWindow::newFile(){
+void MainWindow::newFile() {
     QString filename = ":/data/default.fountain";
     if(filename.isEmpty()){
         return;
@@ -127,12 +142,12 @@ void MainWindow::newFile(){
     }
 }
 
-void MainWindow::openFile(){
+void MainWindow::openFile() {
     QString filename = QFileDialog::getOpenFileName(this,
                                                     tr("Open Fountain file"),
                                                     QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
                                                     "Text files (*.fountain *.txt *.markdown *.md)");
-    if(filename.isEmpty()){
+    if (filename.isEmpty()) {
         return;
     }
 
@@ -149,17 +164,17 @@ void MainWindow::openFile(){
     }
 }
 
-void MainWindow::saveAs(){
+void MainWindow::saveAs() {
     QString filename = QFileDialog::getSaveFileName(this,
                                                     tr("Save Fountain file"),
                                                     QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
                                                     "Fountain files (*.fountain);; Text files (*.txt);; Markdown files (*.md *.markdown)");
-    if (filename.isEmpty()){
+    if (filename.isEmpty()) {
         return;
     }
 
     QFile file(filename);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream stream(&file);
         stream << ui->plainTextEdit_fountaineditor->toPlainText();
         file.close();
@@ -167,59 +182,56 @@ void MainWindow::saveAs(){
     }
 }
 
-void MainWindow::quickSave(){
-    if(filepath.isEmpty()){
+void MainWindow::quickSave() {
+    if (filepath.isEmpty()) {
         saveAs();
         return;
     }
 
     QFile file(filepath);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream stream(&file);
         stream << ui->plainTextEdit_fountaineditor->toPlainText();
         file.close();
     }
 }
 
-void MainWindow::setBold(){
-    if(ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()){
+void MainWindow::setBold() {
+    if (ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()) {
         ui->plainTextEdit_fountaineditor->insertPlainText("****");
 
         QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 2);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
-    }
-    else{
+    } else {
         QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
         ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("**" + selected + "**");
     }
 }
 
-void MainWindow::setItalic(){
-    if(ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()){
+void MainWindow::setItalic() {
+    if (ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()) {
         ui->plainTextEdit_fountaineditor->insertPlainText("**");
 
         QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
-    }
-    else{
+    } else {
         QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
         ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("*" + selected + "*");
     }
 }
 
-void MainWindow::setUnderline(){
-    if(ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()){
+void MainWindow::setUnderline() {
+    if (ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()) {
         ui->plainTextEdit_fountaineditor->insertPlainText("__");
 
         QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
-    }
-    else{
+    } else {
         QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
         ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("_" + selected + "_");
