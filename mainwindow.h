@@ -27,7 +27,7 @@ private:
     Ui::MainWindow *ui;
     QString filepath;
     QFont courierfont;
-    Script currentScript;
+    Script *currentScript;
 
 public slots:
     void refreshPreview();

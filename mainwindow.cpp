@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     courierfont = QFont("Courier");
     courierfont.setPointSize(12);
 
+    currentScript = nullptr;
+
     ui->plainTextEdit_fountaineditor->setFont(courierfont);
     ui->plainTextEdit_fountaineditor->setFocus();
 
@@ -37,16 +39,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    if (currentScript != nullptr) {
+        delete currentScript;
+    }
+
     delete ui;
 }
 
 void MainWindow::refreshPreview() {
-    currentScript = Script(ui->plainTextEdit_fountaineditor->toPlainText());
+    if (currentScript != nullptr) {
+        delete currentScript;
+    }
 
-    ui->textBrowser_preview->setHtml(currentScript.toHtml());
+    currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText());
 
+    ui->textBrowser_preview->setHtml(currentScript->toHtml());
     ui->textBrowser_preview->setCurrentFont(courierfont);
-
     ui->plainTextEdit_fountaineditor->setFocus();
 
     refreshScenesView();
@@ -56,9 +64,9 @@ void MainWindow::refreshScenesView()
 {
     ui->listWidget_scenes->clear();
 
-    foreach (Block block, currentScript.getBlocks()) {
-        if (block.getType() == BlockType::Scene) {
-            ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block.getData());
+    foreach (Block *block, currentScript->getBlocks()) {
+        if (block->getType() == BlockType::Scene) {
+            ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
         }
     }
 }
@@ -99,7 +107,7 @@ void MainWindow::exportAsHTML() {
         QFile file(fileName);
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
              QTextStream stream(&file);
-             stream << currentScript.toHtml();
+             stream << currentScript->toHtml();
              file.close();
         }
     }

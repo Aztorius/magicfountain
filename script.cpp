@@ -20,6 +20,8 @@ Script::Script(QString script)
 
     int blockcount = lines.size();
     int i = 0;
+    m_blocks.append(new Block(BlockType::TitlePage, QString()));
+    Block* currentBlockScene(m_blocks.last());
 
     while (i < blockcount) {
         text = lines.at(i).trimmed();
@@ -28,18 +30,17 @@ Script::Script(QString script)
             text = lines.at(i);
             text.remove(text.indexOf("!"), 1);
             text.replace("\t", "    ");
+
+            currentBlockScene->addBlock(new Block(BlockType::Action, text));
+
             content.append("<p>" + checkBoldItalicUnderline(text) + "</p>");
-        }
-        else if (text.left(3) == "===") { //Page breaks
+        } else if (text.left(3) == "===") { //Page breaks
             content.append("<p style=\"white-space:pre-warp; page-break-after: always;\" > </p>");
-        }
-        else if (text.left(2) == "= ") { //Synopses
+        } else if (text.left(2) == "= ") { //Synopses
             //Not used yet
-        }
-        else if (text.left(1) == "~") { //Lyrics
+        } else if (text.left(1) == "~") { //Lyrics
             content.append("<p>" + text.mid(1) + "</p>");
-        }
-        else if (text.left(6) == "Title:") { //Title
+        } else if (text.left(6) == "Title:") { //Title
             content.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + checkBoldItalicUnderline(text.mid(6).trimmed()));
             title.append(text.mid(6).trimmed());
             i++;
@@ -64,8 +65,7 @@ Script::Script(QString script)
             }
             i--;
             content.append("<br/></p>");
-        }
-        else if (text.left(7) == "Credit:") { //Credit
+        } else if (text.left(7) == "Credit:") { //Credit
             content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()));
             credit.append(text.mid(7).trimmed());
             i++;
@@ -90,8 +90,7 @@ Script::Script(QString script)
             }
             i--;
             content.append("<br/></p>");
-        }
-        else if (text.left(7) == "Author:") { //Author
+        } else if (text.left(7) == "Author:") { //Author
             content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()));
             author.append(text.mid(7).trimmed());
             i++;
@@ -116,8 +115,7 @@ Script::Script(QString script)
             }
             i--;
             content.append("<br/></p>");
-        }
-        else if (text.left(7) == "Source:") { //Source
+        } else if (text.left(7) == "Source:") { //Source
             content.append("<p style=\"text-align: center;\">" + checkBoldItalicUnderline(text.mid(7).trimmed()));
             source.append(text.mid(7).trimmed());
             i++;
@@ -142,8 +140,7 @@ Script::Script(QString script)
             }
             i--;
             content.append("<br/></p>");
-        }
-        else if (text.left(11) == "Draft date:") { //Draft date
+        } else if (text.left(11) == "Draft date:") { //Draft date
             content.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + checkBoldItalicUnderline(text.mid(11).trimmed()));
             draftDate.append(text.mid(11).trimmed());
             i++;
@@ -168,8 +165,7 @@ Script::Script(QString script)
             }
             i--;
             content.append("</p>");
-        }
-        else if (text.left(8) == "Contact:") { //Contact
+        } else if (text.left(8) == "Contact:") { //Contact
             content.append("<p style=\"text-align: left; page-break-after: always;\">" + checkBoldItalicUnderline(text.mid(8).trimmed()));
             contact.append(text.mid(8).trimmed());
 
@@ -196,35 +192,27 @@ Script::Script(QString script)
             i--;
 
             content.append("<br/></p>");
-        }
-        else if (text.left(4) == "### ") { //Scene
+        } else if (text.left(4) == "### ") { //Scene
             //Not used yet
-        }
-        else if (text.left(3) == "## ") { //Sequence
+        } else if (text.left(3) == "## ") { //Sequence
             //Not used yet
-        }
-        else if (text.left(2) == "# ") { //Act
+        } else if (text.left(2) == "# ") { //Act
             //Not used yet
-        }
-        else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
-            m_blocks.append(Block(BlockType::Scene, text));
+        } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
+            m_blocks.append(new Block(BlockType::Scene, text));
+            currentBlockScene = m_blocks.last();
             content.append("<p style=\"margin-left: 5em\">" + checkBoldItalicUnderline(text) + "</p>");
-        }
-        else if (text.left(1) == ">") {
+        } else if (text.left(1) == ">") {
             if (text.right(1) == "<") { //Centered text
                 content.append("<p style=\"text-align:center;\">" + checkBoldItalicUnderline(text.mid(1, text.size()-2).trimmed()) + "</p>");
-            }
-            else { //Forced transition
+            } else { //Forced transition
                 content.append("<p style=\"margin-left: 480px;\">" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
             }
-        }
-        else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
+        } else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
             content.append("<p style=\"margin-left: 480px;\">" + checkBoldItalicUnderline(text) + "</p>");
-        }
-        else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
+        } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
             content.append("<p>" + checkBoldItalicUnderline(text.mid(1)) + "</p>");
-        }
-        else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
+        } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
             if (text.left(1) == "@") {
                 text.remove(0,1);
             }
@@ -245,11 +233,9 @@ Script::Script(QString script)
 
                 if (text.left(1) == "(" && text.right(1) == ")") { //Parenthetical : 2.6 inches from left side
                     content.append("<p style=\"margin-left: 15em; margin-right: 6em;\">" + checkBoldItalicUnderline(text) + "</p>");
-                }
-                else if (!text.isEmpty()) { //Dialogue : 1 inche from left side
+                } else if (!text.isEmpty()) { //Dialogue : 1 inche from left side
                     content.append("<p style=\"margin-left: 12em; margin-right: 144px;\">" + checkBoldItalicUnderline(text) + "</p>");
-                }
-                else {
+                } else {
                     content.append("<p style=\"white-space:pre-warp;\"> </p>");
                 }
 
@@ -265,14 +251,12 @@ Script::Script(QString script)
             content.append("</p>");
 
             i--;
-        }
-        else if (!lines.at(i).isEmpty()) { //Default action
+        } else if (!lines.at(i).isEmpty()) { //Default action
             text = lines.at(i);
             text.replace("\t", "    ");
 
             content.append("<p style=\"margin-left: 5em\">" + checkBoldItalicUnderline(text) + "</p>");
-        }
-        else { //Blank action
+        } else { //Blank action
             content.append("<p style=\"white-space:pre-warp;\"> </p>"); //Add blank line
         }
 
@@ -284,7 +268,13 @@ Script::Script(QString script)
     htmlScript = content;
 }
 
-QString Script::checkBoldItalicUnderline(QString text){
+Script::~Script()
+{
+    qDeleteAll(m_blocks.begin(), m_blocks.end());
+}
+
+QString Script::checkBoldItalicUnderline(QString text)
+{
     QStringList result = text.split("\\*");
     int firstindex = -1, secondindex = -1;
 
@@ -341,22 +331,43 @@ QString Script::checkBoldItalicUnderline(QString text){
     return result.join("_");
 }
 
-QString Script::toHtml(){
+QString Script::toHtml()
+{
     return htmlScript;
 }
 
-bool Script::isABlankLine(int i, QStringList lines){
+bool Script::isABlankLine(int i, QStringList lines)
+{
     if (i >= lines.size()) {
         return true;
     } else if (i < 0) {
         return true;
-    } else if (i >= 0 && lines.at(i).isEmpty()) {
+    } else if (lines.at(i).isEmpty()) {
         return true;
     } else {
         return false;
     }
 }
 
-QList<Block> Script::getBlocks() {
+QList<Block *> Script::getBlocks()
+{
     return m_blocks;
+}
+
+Script& Script::operator=(const Script& other)
+{
+    title = other.title;
+    credit = other.credit;
+    author = other.author;
+    source = other.source;
+    draftDate = other.draftDate;
+    contact = other.contact;
+
+    htmlScript = other.htmlScript;
+
+    foreach (Block *block, other.m_blocks) {
+        m_blocks.append(new Block(*block));
+    }
+
+    return *this;
 }
