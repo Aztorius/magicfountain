@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
         //Error loading the font : should use system font available
         courierfont = QFont("Courier");
     } else {
-        courierfont = QFontDatabase::applicationFontFamilies(fontId).at(0);
+        courierfont = QFont(QFontDatabase::applicationFontFamilies(fontId).at(0));
     }
 
     courierfont.setPointSize(12);
@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->plainTextEdit_fountaineditor->setFont(courierfont);
     ui->plainTextEdit_fountaineditor->setFocus();
+    ui->textBrowser_preview->setFont(courierfont);
 
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
