@@ -15,7 +15,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("Magic Fountain Alpha " + GLOBAL_VERSION);
 
-    courierfont = QFont("Courier");
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/Courier Prime.ttf");
+
+    if (fontId == -1) {
+        //Error loading the font : should use system font available
+        courierfont = QFont("Courier");
+    } else {
+        courierfont = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    }
+
     courierfont.setPointSize(12);
 
     currentScript = nullptr;
