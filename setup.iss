@@ -70,6 +70,7 @@ Source: "MagicFountain-release\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ig
 Source: "MagicFountain-release\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "MagicFountain-release\Qt5PrintSupport.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
