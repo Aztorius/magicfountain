@@ -138,8 +138,17 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionItalic"/>
     <addaction name="actionUnderline"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionFountain_Syntax"/>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAbout_Magic_Fountain"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -286,6 +295,21 @@ p, li { white-space: pre-wrap; }
   <action name="actionNew_scene">
    <property name="text">
     <string>&amp;New scene</string>
+   </property>
+  </action>
+  <action name="actionFountain_Syntax">
+   <property name="text">
+    <string>Fountain Syntax</string>
+   </property>
+  </action>
+  <action name="actionAbout_Magic_Fountain">
+   <property name="text">
+    <string>About Magic Fountain</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
    </property>
   </action>
  </widget>

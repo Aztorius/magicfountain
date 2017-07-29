@@ -42,6 +42,11 @@ public slots:
     void setBold();
     void setItalic();
     void setUnderline();
+
+private slots:
+    void slot_actionFountain_Syntax();
+    void slot_actionAbout_Qt();
+    void slot_actionAbout_Magic_Fountain();
 };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include <QStandardPaths>
+#include <QDesktopServices>
+#include <QMessageBox>
 
 #include "block.h"
 
@@ -43,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));
     connect(ui->actionUnderline, SIGNAL(triggered()), this, SLOT(setUnderline()));
+
+    connect(ui->actionFountain_Syntax, SIGNAL(triggered()), this, SLOT(slot_actionFountain_Syntax()));
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Qt()));
+    connect(ui->actionAbout_Magic_Fountain, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Magic_Fountain()));
 }
 
 MainWindow::~MainWindow()
@@ -252,4 +258,24 @@ void MainWindow::setUnderline() {
         ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("_" + selected + "_");
     }
+}
+
+void MainWindow::slot_actionFountain_Syntax()
+{
+    QDesktopServices::openUrl(QUrl("https://fountain.io/syntax"));
+}
+
+void MainWindow::slot_actionAbout_Qt()
+{
+    QMessageBox::aboutQt(this, QString("About Qt"));
+}
+
+void MainWindow::slot_actionAbout_Magic_Fountain()
+{
+    QMessageBox::about(this, QString("About Magic Fountain"), QString(
+                           "Magic Fountain is distributed under the GPL (General Public License) version 3.\n"\
+                           "It is a free and open source software.\n"\
+                           "You can contribute to the project on GitHub at https://github.com/Aztorius/magicfountain \n\n"\
+                           "Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL)."
+                           ));
 }
