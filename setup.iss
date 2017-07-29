@@ -60,7 +60,6 @@ Source: "MagicFountain-release\MagicFountain.exe"; DestDir: "{app}"; Flags: igno
 Source: "MagicFountain-release\iconengines\*"; DestDir: "{app}\iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "MagicFountain-release\imageformats\*"; DestDir: "{app}\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "MagicFountain-release\platforms\*"; DestDir: "{app}\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "MagicFountain-release\sqldrivers\*"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "MagicFountain-release\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "MagicFountain-release\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
