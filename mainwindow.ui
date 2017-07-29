@@ -113,7 +113,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>20</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -138,15 +138,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionItalic"/>
     <addaction name="actionUnderline"/>
    </widget>
-   <widget class="QMenu" name="menuScript">
-    <property name="title">
-     <string>Sc&amp;ript</string>
-    </property>
-    <addaction name="actionNew_scene"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuScript"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
