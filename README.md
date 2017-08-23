@@ -22,6 +22,8 @@ sudo make install
 qmake
 mingw32-make
 ```
+## Screenshot
+![img](http://basic1.moy.su/Fotos/Bildschirmfoto_2017-08-23_17-15-26.png)
 
 ## TODO List
 
