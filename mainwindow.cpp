@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QTranslator>
 
 #include "block.h"
 
@@ -48,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionUnderline, SIGNAL(triggered()), this, SLOT(setUnderline()));
 
     connect(ui->actionFountain_Syntax, SIGNAL(triggered()), this, SLOT(slot_actionFountain_Syntax()));
+    connect(ui->menuLanguage, SIGNAL(triggered(QAction*)), this, SLOT(slot_actionLanguage(QAction*)));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Qt()));
     connect(ui->actionAbout_Magic_Fountain, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Magic_Fountain()));
 }
@@ -264,6 +266,13 @@ void MainWindow::setUnderline() {
 void MainWindow::slot_actionFountain_Syntax()
 {
     QDesktopServices::openUrl(QUrl("https://fountain.io/syntax"));
+}
+
+void MainWindow::slot_actionLanguage(QAction *action)
+{
+    QTranslator translator;
+    translator.load(QString("locales/magicfountain_") + action->text());
+    qApp->installTranslator(&translator);
 }
 
 void MainWindow::slot_actionAbout_Qt()

@@ -113,7 +113,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>27</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -142,7 +142,18 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Help</string>
     </property>
+    <widget class="QMenu" name="menuLanguage">
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <addaction name="actionDe"/>
+     <addaction name="actionEnglish"/>
+     <addaction name="actionFrench"/>
+    </widget>
     <addaction name="actionFountain_Syntax"/>
+    <addaction name="separator"/>
+    <addaction name="menuLanguage"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout_Qt"/>
     <addaction name="actionAbout_Magic_Fountain"/>
    </widget>
@@ -299,17 +310,37 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFountain_Syntax">
    <property name="text">
-    <string>Fountain Syntax</string>
+    <string>&amp;Fountain Syntax</string>
    </property>
   </action>
   <action name="actionAbout_Magic_Fountain">
    <property name="text">
-    <string>About Magic Fountain</string>
+    <string>About &amp;Magic Fountain</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
    <property name="text">
-    <string>About Qt</string>
+    <string>&amp;About Qt</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>en</string>
+   </property>
+  </action>
+  <action name="actionFrench">
+   <property name="text">
+    <string>fr</string>
+   </property>
+  </action>
+  <action name="actionGerman">
+   <property name="text">
+    <string>German</string>
+   </property>
+  </action>
+  <action name="actionDe">
+   <property name="text">
+    <string>de</string>
    </property>
   </action>
  </widget>
