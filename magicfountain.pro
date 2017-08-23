@@ -27,4 +27,6 @@ DISTFILES +=
 
 RESOURCES += ressources.qrc
 
+TRANSLATIONS = magicfountain_en.ts magicfountain_fr.ts magicfountain_de.ts
+
 RC_FILE = icon.rc
