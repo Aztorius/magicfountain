@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE">
+<TS version="2.1" language="fr">
 <context>
     <name>MainWindow</name>
     <message>
@@ -11,7 +11,7 @@
     <message>
         <location filename="mainwindow.ui" line="32"/>
         <source>Fountain Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur Fountain</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="49"/>
