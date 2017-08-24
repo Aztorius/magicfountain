@@ -13,7 +13,7 @@ Script::Script(QString script)
     QStringList validStartHeaders;
     validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I/E";
 
-    QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
+    QString content = QString("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">");
     content.append("<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">");
     content.append("p, li { white-space: normal; margin: 0px; padding: 0px; } body { width: 624px; letter-spacing: 0px; padding: 0px; }");
     content.append("</style></head><body>");

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MagicFountain</string>
   </property>
   <property name="windowIcon">
    <iconset resource="ressources.qrc">
@@ -25,7 +25,7 @@
     <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget_menus">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_fountaineditor">
        <attribute name="title">
@@ -74,7 +74,7 @@
            <number>649</number>
           </property>
           <property name="html">
-           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+           <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -144,11 +144,11 @@ p, li { white-space: pre-wrap; }
     </property>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
-      <string>Language</string>
+      <string>&amp;Language</string>
      </property>
      <addaction name="actionDe"/>
-     <addaction name="actionEnglish"/>
-     <addaction name="actionFrench"/>
+     <addaction name="actionEn"/>
+     <addaction name="actionFr"/>
     </widget>
     <addaction name="actionFountain_Syntax"/>
     <addaction name="separator"/>
@@ -323,14 +323,26 @@ p, li { white-space: pre-wrap; }
     <string>&amp;About Qt</string>
    </property>
   </action>
-  <action name="actionEnglish">
+  <action name="actionEn">
    <property name="text">
-    <string>en</string>
+    <string notr="true">&amp;en</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">en</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">en</string>
    </property>
   </action>
-  <action name="actionFrench">
+  <action name="actionFr">
    <property name="text">
-    <string>fr</string>
+    <string notr="true">&amp;fr</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">fr</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">fr</string>
    </property>
   </action>
   <action name="actionGerman">
@@ -340,7 +352,13 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionDe">
    <property name="text">
-    <string>de</string>
+    <string notr="true">&amp;de</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">de</string>
+   </property>
+   <property name="toolTip">
+    <string notr="true">de</string>
    </property>
   </action>
  </widget>
