@@ -4,7 +4,6 @@
 #include <QStandardPaths>
 #include <QDesktopServices>
 #include <QMessageBox>
-#include <QTranslator>
 
 #include "block.h"
 
@@ -270,9 +269,9 @@ void MainWindow::slot_actionFountain_Syntax()
 
 void MainWindow::slot_actionLanguage(QAction *action)
 {
-    QTranslator translator;
-    translator.load(QString("locales/magicfountain_") + action->text());
-    qApp->installTranslator(&translator);
+    if (m_translator.load(QString("magicfountain_") + action->iconText(), QString(":/locales/"))) {
+        qApp->installTranslator(&m_translator);
+    }
 }
 
 void MainWindow::slot_actionAbout_Qt()
@@ -289,3 +288,13 @@ void MainWindow::slot_actionAbout_Magic_Fountain()
                            "Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL)."
                            ));
 }
+
+void MainWindow::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+
+    QMainWindow::changeEvent(event);
+}
+

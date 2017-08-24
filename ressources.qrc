@@ -16,5 +16,11 @@
         <file>fonts/Courier Prime Bold.ttf</file>
         <file>fonts/Courier Prime Italic.ttf</file>
         <file>fonts/Courier Prime.ttf</file>
+        <file>locales/magicfountain_de.qm</file>
+        <file>locales/magicfountain_de.ts</file>
+        <file>locales/magicfountain_en.qm</file>
+        <file>locales/magicfountain_en.ts</file>
+        <file>locales/magicfountain_fr.qm</file>
+        <file>locales/magicfountain_fr.ts</file>
     </qresource>
 </RCC>
