@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="de">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
         <source>MagicFountain</source>
-        <translation type="unfinished"></translation>
+        <translation>Magic Fountain</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="32"/>
@@ -36,7 +34,7 @@
     <message>
         <location filename="../mainwindow.ui" line="147"/>
         <source>&amp;Language</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sprache</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="167"/>
@@ -126,37 +124,37 @@
     <message>
         <location filename="../mainwindow.ui" line="313"/>
         <source>&amp;Fountain Syntax</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fountain Syntax</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="318"/>
         <source>About &amp;Magic Fountain</source>
-        <translation type="unfinished"></translation>
+        <translation>Über &amp;Magic Fountain</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="323"/>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Über Qt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="328"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>English</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="339"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Französisch</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="350"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="355"/>
         <source>Deutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="92"/>
