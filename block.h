@@ -5,27 +5,46 @@
 #include <QStringList>
 
 enum BlockType { Empty,
+                 Global,
                  TitlePage,
+                 Title,
+                 Credit,
+                 Author,
+                 Source,
+                 DraftDate,
+                 Contact,
                  Action,
+                 CenteredText,
                  Scene,
                  Character,
+                 CharacterLeft,
+                 CharacterRight,
                  Dialogue,
-                 DualDialogue,
+                 DualDialogueLeft,
+                 DualDialogueRight,
                  Parentheticals,
+                 LeftParentheticals,
+                 RightParentheticals,
+                 Lyrics,
                  Transitions,
-                 PageBreaks };
+                 PageBreaks,
+                 BlankLine,
+                 RawText };
 
 class Block
 {
 public:
+    Block(BlockType type);
     Block(BlockType type, QString data);
     ~Block();
 
     void addBlock(Block *block);
 
     BlockType getType();
+    void setType(BlockType type);
     QString getData();
     QList<Block *> getBlocks();
+    QString toHtml();
 
     Block& operator=(const Block& block);
 private:
