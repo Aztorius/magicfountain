@@ -24,8 +24,6 @@ noextract=()
 md5sums=('4f7bda958f29a23fbfdd59980173a383')
 validpgpkeys=()
 
-prepare() {}
-
 build() {
 	cd "$pkgname-$pkgver"
 	qmake PREFIX=/usr
