@@ -39,11 +39,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="167"/>
-        <source>toolBar</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="207"/>
         <source>&amp;Open</source>
         <translation></translation>
