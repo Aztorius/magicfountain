@@ -325,7 +325,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEn">
    <property name="text">
-    <string notr="true">&amp;en</string>
+    <string>English</string>
    </property>
    <property name="iconText">
     <string notr="true">en</string>
@@ -336,7 +336,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFr">
    <property name="text">
-    <string notr="true">&amp;fr</string>
+    <string>French</string>
    </property>
    <property name="iconText">
     <string notr="true">fr</string>
@@ -352,7 +352,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionDe">
    <property name="text">
-    <string notr="true">&amp;de</string>
+    <string>Deutch</string>
    </property>
    <property name="iconText">
     <string notr="true">de</string>
