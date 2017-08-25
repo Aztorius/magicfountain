@@ -12,7 +12,7 @@ depends=('qt5-base')
 makedepends=('qt5-base' 'git')
 optdepends=()
 source=("https://github.com/Aztorius/magicfountain/archive/${pkgver}.tar.gz")
-md5sums=('4f7bda958f29a23fbfdd59980173a383')
+md5sums=('3c2252c96d60dbdedeb3e6a291ce545d')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}
