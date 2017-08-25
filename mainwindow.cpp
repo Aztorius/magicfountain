@@ -28,6 +28,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     courierfont.setPointSize(12);
 
+    m_settings = new QSettings("MagicFountain", "MagicFountain");
+
+    if (m_settings->contains("language")) {
+        QString language = m_settings->value("language").toString();
+        if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
+            qApp->installTranslator(&m_translator);
+        }
+    }
+
     currentScript = nullptr;
 
     ui->plainTextEdit_fountaineditor->setFont(courierfont);
@@ -271,6 +280,7 @@ void MainWindow::slot_actionLanguage(QAction *action)
 {
     if (m_translator.load(QString("magicfountain_") + action->iconText(), QString(":/locales/"))) {
         qApp->installTranslator(&m_translator);
+        m_settings->setValue("language", action->iconText());
     }
 }
 

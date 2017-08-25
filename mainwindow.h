@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QTranslator>
+#include <QSettings>
 
 #include "script.h"
 
@@ -30,6 +31,7 @@ private:
     QFont courierfont;
     Script *currentScript;
     QTranslator m_translator;
+    QSettings *m_settings;
 
 public slots:
     void refreshPreview();
