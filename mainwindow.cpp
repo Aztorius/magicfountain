@@ -65,7 +65,7 @@ void MainWindow::refreshScenesView()
     ui->listWidget_scenes->clear();
 
     foreach (Block *block, currentScript->getBlocks()) {
-        if (block->getType() == BlockType::Scene) {
+        if (block->getType() == BlockType::SceneHeading) {
             ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
         }
     }
