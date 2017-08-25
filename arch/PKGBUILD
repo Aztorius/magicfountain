@@ -11,16 +11,21 @@ groups=()
 depends=('qt5-base')
 makedepends=('qt5-base' 'git')
 optdepends=()
+
 source=("https://github.com/Aztorius/magicfountain/archive/${pkgver}.tar.gz")
 md5sums=('3c2252c96d60dbdedeb3e6a291ce545d')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}
-	qmake PREFIX='/usr' LIBDIR='/usr/lib' magicfountain.pro
+	qmake LIBDIR='/usr/lib' magicfountain.pro
         make
 }
 
 package() {
 	cd ${srcdir}/${pkgname}-${pkgver}
 	make INSTALL_ROOT="$pkgdir/" install
+	mkdir -p ./usr/share/applications/
+	cp ${srcdir}/../../magicfountain.desktop ./usr/share/applications/
+	mkdir -p ./usr/share/icons/hicolor/48x48/apps/
+	cp ${srcdir}/../../magicfountain.png ./usr/share/icons/hicolor/48x48/apps/
 }

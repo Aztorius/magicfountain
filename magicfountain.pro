@@ -8,7 +8,7 @@ QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = MagicFountain
+TARGET = magicfountain
 TEMPLATE = app
 
 target.path = /usr/local/bin
