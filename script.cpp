@@ -261,12 +261,8 @@ Script::Script(QString script)
 
                 Block *block = nullptr;
 
-                while (m_blocks.at(cursor)->getType() == BlockType::Dialogue || m_blocks.at(cursor)->getType() == BlockType::Parentheticals) {
-                    if (cursor > 0) {
-                        cursor--;
-                    } else {
-                        break;
-                    }
+                while (cursor > 0 && (m_blocks.at(cursor)->getType() == BlockType::Dialogue || m_blocks.at(cursor)->getType() == BlockType::Parentheticals || m_blocks.at(cursor)->getType() == BlockType::BlankLine)) {
+                    cursor--;
                 }
 
                 block = m_blocks.at(cursor);
@@ -335,6 +331,9 @@ Script::Script(QString script)
             if (characterType == BlockType::CharacterRight) {
                 for (qint32 i = cursor; i < m_blocks.size(); i++) {
                     switch(m_blocks.at(i)->getType()){
+                    case BlockType::Character:
+                        m_blocks.at(i)->setType(BlockType::CharacterRight);
+                        break;
                     case BlockType::Dialogue:
                         m_blocks.at(i)->setType(BlockType::DualDialogueRight);
                         break;

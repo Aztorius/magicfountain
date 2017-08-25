@@ -57,7 +57,7 @@ QString Block::toHtml()
         html.append("<p style=\"margin-left: 19em;\">" + m_data + "</p>");
         break;
     case BlockType::CharacterLeft:
-        html.append("<p style=\"margin-left: 11em;\">" + m_data + "</p>");
+        html.append("<p style=\"margin-left: 8em;\">" + m_data + "</p>");
         break;
     case BlockType::CharacterRight:
         html.append("<p style=\"margin-left: 28em;\">" + m_data + "</p>");
