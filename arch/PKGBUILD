@@ -4,10 +4,9 @@ pkgname=magicfountain
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="A Fountain syntax editor and viewer."
-arch=('any')
+arch=('i686' 'x86_64')
 url="https://github.com/Aztorius/magicfountain"
 license=('GPL3')
-groups=()
 depends=('qt5-base')
 makedepends=('qt5-base' 'git')
 optdepends=()
@@ -15,18 +14,12 @@ source=("https://github.com/Aztorius/magicfountain/archive/${pkgver}-alpha4.tar.
 md5sums=('4f7bda958f29a23fbfdd59980173a383')
 
 build() {
-	cd ${srcdir}/${pkgname}-${pkgver}
-	qmake PREFIX='/usr' \
-        LIBDIR='/usr/lib' magicfountain.pro
+	cd ${srcdir}/${pkgname}-${pkgver}-alpha4
+	qmake-qt5 
         make
 }
 
-check() {
-	cd ${srcdir}/${pkgname}-${pkgver}
-	make -k check-alpha4
-}
-
 package() {
-	cd ${srcdir}/${pkgname}-${pkgver}
+	cd ${srcdir}/${pkgname}-${pkgver}-alpha4
 	make DESTDIR="$pkgdir/" install
 }
