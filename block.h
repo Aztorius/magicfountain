@@ -5,8 +5,6 @@
 #include <QStringList>
 
 enum BlockType { Empty,
-                 Global,
-                 TitlePage,
                  Title,
                  Credit,
                  Author,
@@ -28,8 +26,7 @@ enum BlockType { Empty,
                  Lyrics,
                  Transitions,
                  PageBreaks,
-                 BlankLine,
-                 RawText };
+                 BlankLine };
 
 class Block
 {

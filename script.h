@@ -24,7 +24,7 @@ public:
 private:
     QString title, credit, author, source, draftDate, contact;
     QString htmlScript;
-    QList<Block *> m_script;
+    QList<Block *> m_blocks;
 };
 
 #endif // SCRIPT_H

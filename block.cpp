@@ -82,9 +82,6 @@ QString Block::toHtml()
         break;
     case BlockType::Empty:
         break;
-    case BlockType::Global:
-        html.append("<p> </p>");
-        break;
     case BlockType::LeftParentheticals:
         html.append("<p style=\"margin-left: 3em; margin-right: 15em;\">" + m_data + "</p>");
         break;
@@ -97,8 +94,6 @@ QString Block::toHtml()
     case BlockType::Parentheticals:
         html.append("<p style=\"margin-left: 15em; margin-right: 6em;\">" + m_data + "</p>");
         break;
-    case BlockType::RawText:
-        return m_data;
     case BlockType::RightParentheticals:
         html.append("<p style=\"margin-left: 15em; margin-right: 27em;\">" + m_data + "</p>");
         break;
@@ -110,9 +105,6 @@ QString Block::toHtml()
         break;
     case BlockType::Title:
         html.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + m_data.replace("\n", "<br/>") + "</p>");
-        break;
-    case BlockType::TitlePage:
-        html.append("<p style=\"page-break-after: always;\"></p>");
         break;
     case BlockType::Transitions:
         html.append("<p style=\"margin-left: 480px;\">" + m_data + "</p>");
