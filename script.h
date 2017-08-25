@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QStringList>
-#include <QRegularExpression>
 
 #include "block.h"
 
@@ -14,7 +13,6 @@ public:
     Script(QString script);
     ~Script();
 
-    QString checkBoldItalicUnderline(QString text);
     QString toHtml();
     QList<Block *> getBlocks();
 
@@ -23,7 +21,6 @@ public:
     Script& operator=(const Script& other);
 private:
     QString title, credit, author, source, draftDate, contact;
-    QString htmlScript;
     QList<Block *> m_blocks;
 };
 
