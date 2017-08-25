@@ -150,7 +150,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="355"/>
-        <source>Deutch</source>
+        <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
