@@ -1,0 +1,11 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=MagicFountain
+Comment=Screenwriter
+Path=/usr/bin/magicfountain
+Exec=magicfountain
+Icon=magicfountain
+Terminal=false
+Categories=Office;
