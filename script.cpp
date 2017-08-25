@@ -319,15 +319,7 @@ QString Script::toHtml()
 
 bool Script::isABlankLine(int i, QStringList lines)
 {
-    if (i >= lines.size()) {
-        return true;
-    } else if (i < 0) {
-        return true;
-    } else if (lines.at(i).isEmpty()) {
-        return true;
-    } else {
-        return false;
-    }
+    return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
 }
 
 QList<Block *> Script::getBlocks()
