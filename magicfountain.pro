@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MagicFountain
 TEMPLATE = app
-
+INSTALLS += TARGET
 
 SOURCES += main.cpp\
         mainwindow.cpp \
