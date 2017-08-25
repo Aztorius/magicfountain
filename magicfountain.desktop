@@ -6,6 +6,6 @@ Name=MagicFountain
 Comment=Screenwriter
 Path=/usr/local/bin/magicfountain
 Exec=magicfountain
-Icon=magicfountain
+Icon=magicfountain.png
 Terminal=false
 Categories=Office;

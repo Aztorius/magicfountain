@@ -24,4 +24,8 @@ build() {
 package() {
 	cd ${srcdir}/${pkgname}-${pkgver}
 	make INSTALL_ROOT="$pkgdir/" install
+	mkdir -p ./usr/share/applications/
+	cp ${srcdir}/../../magicfountain.desktop ./usr/share/applications/
+	mkdir -p ./usr/share/icons/hicolor/48x48/apps/
+	cp ${srcdir}/../../magicfountain.png ./usr/share/icons/hicolor/48x48/apps/
 }
