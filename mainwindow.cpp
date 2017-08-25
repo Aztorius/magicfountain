@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include <QStandardPaths>
+#include <QDesktopServices>
+#include <QMessageBox>
 
 #include "block.h"
 
@@ -15,13 +17,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("Magic Fountain Alpha " + GLOBAL_VERSION);
 
-    courierfont = QFont("Courier");
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/Courier Prime.ttf");
+
+    if (fontId == -1) {
+        //Error loading the font : should use system font available
+        courierfont = QFont("Courier");
+    } else {
+        courierfont = QFont(QFontDatabase::applicationFontFamilies(fontId).at(0));
+    }
+
     courierfont.setPointSize(12);
 
     currentScript = nullptr;
 
     ui->plainTextEdit_fountaineditor->setFont(courierfont);
     ui->plainTextEdit_fountaineditor->setFocus();
+    ui->textBrowser_preview->setFont(courierfont);
 
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
@@ -35,6 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));
     connect(ui->actionUnderline, SIGNAL(triggered()), this, SLOT(setUnderline()));
+
+    connect(ui->actionFountain_Syntax, SIGNAL(triggered()), this, SLOT(slot_actionFountain_Syntax()));
+    connect(ui->menuLanguage, SIGNAL(triggered(QAction*)), this, SLOT(slot_actionLanguage(QAction*)));
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Qt()));
+    connect(ui->actionAbout_Magic_Fountain, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Magic_Fountain()));
 }
 
 MainWindow::~MainWindow()
@@ -245,3 +261,40 @@ void MainWindow::setUnderline() {
         ui->plainTextEdit_fountaineditor->insertPlainText("_" + selected + "_");
     }
 }
+
+void MainWindow::slot_actionFountain_Syntax()
+{
+    QDesktopServices::openUrl(QUrl("https://fountain.io/syntax"));
+}
+
+void MainWindow::slot_actionLanguage(QAction *action)
+{
+    if (m_translator.load(QString("magicfountain_") + action->iconText(), QString(":/locales/"))) {
+        qApp->installTranslator(&m_translator);
+    }
+}
+
+void MainWindow::slot_actionAbout_Qt()
+{
+    QMessageBox::aboutQt(this, QString("About Qt"));
+}
+
+void MainWindow::slot_actionAbout_Magic_Fountain()
+{
+    QMessageBox::about(this, QString("About Magic Fountain"), QString(
+                           "Magic Fountain is distributed under the GPL (General Public License) version 3.\n"\
+                           "It is a free and open source software.\n"\
+                           "You can contribute to the project on GitHub at https://github.com/Aztorius/magicfountain \n\n"\
+                           "Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL)."
+                           ));
+}
+
+void MainWindow::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+
+    QMainWindow::changeEvent(event);
+}
+

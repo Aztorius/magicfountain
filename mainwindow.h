@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QTranslator>
 
 #include "script.h"
 
@@ -28,6 +29,7 @@ private:
     QString filepath;
     QFont courierfont;
     Script *currentScript;
+    QTranslator m_translator;
 
 public slots:
     void refreshPreview();
@@ -42,6 +44,15 @@ public slots:
     void setBold();
     void setItalic();
     void setUnderline();
+
+private slots:
+    void slot_actionFountain_Syntax();
+    void slot_actionLanguage(QAction *action);
+    void slot_actionAbout_Qt();
+    void slot_actionAbout_Magic_Fountain();
+
+protected:
+    void changeEvent(QEvent*);
 };
 
 #endif // MAINWINDOW_H

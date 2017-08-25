@@ -25,5 +25,8 @@ FORMS    += mainwindow.ui
 
 DISTFILES +=
 
-RESOURCES += \
-    ressources.qrc
+RESOURCES += ressources.qrc
+
+TRANSLATIONS = locales/magicfountain_en.ts locales/magicfountain_fr.ts locales/magicfountain_de.ts
+
+RC_FILE = icon.rc
