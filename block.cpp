@@ -86,7 +86,7 @@ QString Block::toHtml()
         html.append("<p style=\"margin-left: 3em; margin-right: 15em;\">" + m_data + "</p>");
         break;
     case BlockType::Lyrics:
-        html.append("<p>" + m_data);
+        html.append("<p>" + m_data + "</p>");
         break;
     case BlockType::PageBreaks:
         html.append("<p style=\"white-space:pre-warp; page-break-after: always;\" > </p>");
