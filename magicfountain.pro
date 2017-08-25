@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = magicfountain
 TEMPLATE = app
 
-target.path = /usr/bin
+target.path = /usr/local/bin
 INSTALLS += target
 
 SOURCES += main.cpp\

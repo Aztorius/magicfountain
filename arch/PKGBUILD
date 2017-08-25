@@ -17,7 +17,7 @@ md5sums=('3c2252c96d60dbdedeb3e6a291ce545d')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}
-	qmake PREFIX='/usr' LIBDIR='/usr/lib' magicfountain.pro
+	qmake LIBDIR='/usr/lib' magicfountain.pro
         make
 }
 
