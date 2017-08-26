@@ -1,9 +1,15 @@
+### 1.0.0 Alpha 7
+- - - 
 ### 1.0.0 Alpha 6
- - - - 
+
+- Fix Arch package
+- Fix some translations
+- Add settings auto-saving
+- Add desktop shortcut on Arch
+
 ### 1.0.0 Alpha 5
 
 - Merge pull request #14 from ZeroDot1/patch-6
-
 - Fix magicfountain_en.ts
 
 ### 1.0.0 Alpha 4
