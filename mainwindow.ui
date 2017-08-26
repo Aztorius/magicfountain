@@ -146,9 +146,9 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>&amp;Language</string>
      </property>
-     <addaction name="actionDe"/>
      <addaction name="actionEn"/>
      <addaction name="actionFr"/>
+     <addaction name="actionDe"/>
     </widget>
     <addaction name="actionFountain_Syntax"/>
     <addaction name="separator"/>
@@ -325,7 +325,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEn">
    <property name="text">
-    <string>English</string>
+    <string>&amp;English</string>
    </property>
    <property name="iconText">
     <string notr="true">en</string>
@@ -336,7 +336,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionFr">
    <property name="text">
-    <string>French</string>
+    <string>&amp;French</string>
    </property>
    <property name="iconText">
     <string notr="true">fr</string>
@@ -352,7 +352,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionDe">
    <property name="text">
-    <string>Deutch</string>
+    <string>German</string>
    </property>
    <property name="iconText">
     <string notr="true">de</string>

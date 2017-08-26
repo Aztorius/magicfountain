@@ -135,46 +135,50 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="328"/>
-        <source>English</source>
-        <translation>English</translation>
+        <source>&amp;English</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="339"/>
+        <source>&amp;French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="vanished">English</translation>
+    </message>
+    <message>
         <source>French</source>
-        <translation>Französisch</translation>
+        <translation type="vanished">Französisch</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="350"/>
+        <location filename="../mainwindow.ui" line="355"/>
         <source>German</source>
         <translation>Deutsch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="355"/>
-        <source>Deutch</source>
-        <translation>Deutsch</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="92"/>
+        <location filename="../mainwindow.cpp" line="101"/>
         <source>Export PDF</source>
         <translation>Als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="115"/>
+        <location filename="../mainwindow.cpp" line="124"/>
         <source>Export HTML</source>
         <translation>Als HTML exprotieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="141"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Print Document</source>
         <translation>Dokument drucken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="171"/>
+        <location filename="../mainwindow.cpp" line="180"/>
         <source>Open Fountain file</source>
         <translation>Fountain Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="193"/>
+        <location filename="../mainwindow.cpp" line="202"/>
         <source>Save Fountain file</source>
         <translation>Fountain Datei speichern</translation>
     </message>
