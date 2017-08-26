@@ -50,6 +50,7 @@ public slots:
 private slots:
     void slot_actionFountain_Syntax();
     void slot_actionLanguage(QAction *action);
+    void slot_actionReportAnIssue();
     void slot_actionAbout_Qt();
     void slot_actionAbout_Magic_Fountain();
 

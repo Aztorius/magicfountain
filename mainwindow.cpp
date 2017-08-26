@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionFountain_Syntax, SIGNAL(triggered()), this, SLOT(slot_actionFountain_Syntax()));
     connect(ui->menuLanguage, SIGNAL(triggered(QAction*)), this, SLOT(slot_actionLanguage(QAction*)));
+    connect(ui->actionReport_an_issue, SIGNAL(triggered()), this, SLOT(slot_actionReportAnIssue()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Qt()));
     connect(ui->actionAbout_Magic_Fountain, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Magic_Fountain()));
 }
@@ -284,18 +285,25 @@ void MainWindow::slot_actionLanguage(QAction *action)
     }
 }
 
+void MainWindow::slot_actionReportAnIssue()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Aztorius/magicfountain/issues"));
+}
+
 void MainWindow::slot_actionAbout_Qt()
 {
-    QMessageBox::aboutQt(this, QString("About Qt"));
+    QMessageBox::aboutQt(this, QString(tr("About Qt")));
 }
 
 void MainWindow::slot_actionAbout_Magic_Fountain()
 {
-    QMessageBox::about(this, QString("About Magic Fountain"), QString(
+    QMessageBox::about(this, QString(tr("About MagicFountain")), QString(tr(
                            "Magic Fountain is distributed under the GPL (General Public License) version 3.\n"\
                            "It is a free and open source software.\n"\
                            "You can contribute to the project on GitHub at https://github.com/Aztorius/magicfountain \n\n"\
-                           "Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL)."
+                           "Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL).\n\n"\
+                           "Contributors: ")) + QString(
+                           "William Bonnaventure, ZeroDot1"
                            ));
 }
 

@@ -154,6 +154,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="menuLanguage"/>
     <addaction name="separator"/>
+    <addaction name="actionReport_an_issue"/>
     <addaction name="actionAbout_Qt"/>
     <addaction name="actionAbout_Magic_Fountain"/>
    </widget>
@@ -359,6 +360,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string notr="true">de</string>
+   </property>
+  </action>
+  <action name="actionReport_an_issue">
+   <property name="text">
+    <string>Report an issue</string>
    </property>
   </action>
  </widget>
