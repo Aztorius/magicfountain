@@ -30,6 +30,7 @@ private:
     QString filepath;
     QFont courierfont;
     Script *currentScript;
+    QTranslator m_qtTranslator;
     QTranslator m_translator;
     QSettings *m_settings;
 

@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QLibraryInfo>
 
 #include "block.h"
 
@@ -32,6 +33,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if (m_settings->contains("language")) {
         QString language = m_settings->value("language").toString();
+        QLocale locale(language);
+
+        if (m_qtTranslator.load("qt_" + locale.name(),
+                            QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+            qApp->installTranslator(&m_qtTranslator);
+        }
+
+        if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
+            qApp->installTranslator(&m_translator);
+        }
+    } else {
+        QLocale locale = QLocale::system();
+        QString language = QLocale::languageToString(locale.language());
+
+        if (m_qtTranslator.load("qt_" + QLocale::system().name(),
+                            QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+            qApp->installTranslator(&m_qtTranslator);
+        }
+
         if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
             qApp->installTranslator(&m_translator);
         }
@@ -67,6 +87,10 @@ MainWindow::~MainWindow()
 {
     if (currentScript != nullptr) {
         delete currentScript;
+    }
+
+    if (m_settings != 0) {
+        delete m_settings;
     }
 
     delete ui;
@@ -279,9 +303,17 @@ void MainWindow::slot_actionFountain_Syntax()
 
 void MainWindow::slot_actionLanguage(QAction *action)
 {
-    if (m_translator.load(QString("magicfountain_") + action->iconText(), QString(":/locales/"))) {
+    QString language = action->iconText();
+    QLocale locale(language);
+
+    if (m_qtTranslator.load("qt_" + locale.name(),
+                        QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        qApp->installTranslator(&m_qtTranslator);
+    }
+
+    if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
         qApp->installTranslator(&m_translator);
-        m_settings->setValue("language", action->iconText());
+        m_settings->setValue("language", language);
     }
 }
 
