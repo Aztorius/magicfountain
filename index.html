@@ -3,7 +3,7 @@
 <html>
 <head><!-- Header -->
 <meta name="Resource-type" content="Document">
-<meta name="Revisit-after" content="30 days">
+<meta name="Revisit-after" content="2 days">
 <meta name="robots" content="index, follow">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta http-equiv="expires" content="0">
@@ -25,10 +25,10 @@ a[href^="#"] {
   /* Formatting for page-internal references */
 }
 a[href^="#"]:before{
-  content:'➡ ';
+  content:'';
 }
 a[href^="#top"]:before{
-  content:'➡';
+  content:'';
   display: inline-block;
   color:#e04c32;
   font-size: 1.5em;
@@ -38,16 +38,9 @@ a[href^="#top"]:before{
 }
 
 html {
-	background:
-		-webkit-linear-gradient(45deg, hsla(67, 96%, 0%, 1) 0%, hsla(67, 96%, 0%, 0) 70%),
-		-webkit-linear-gradient(315deg, hsla(267, 93%, 0%, 1) 10%, hsla(267, 93%, 0%, 0) 80%),
-		-webkit-linear-gradient(225deg, hsla(119, 99%, 0%, 1) 10%, hsla(119, 99%, 0%, 0) 80%),
-		-webkit-linear-gradient(135deg, hsla(334, 93%, 0%, 1) 100%, hsla(334, 93%, 0%, 0) 70%);
-	background:
-		linear-gradient(45deg, hsla(67, 96%, 0%, 1) 0%, hsla(67, 96%, 0%, 0) 70%),
-		linear-gradient(135deg, hsla(267, 93%, 0%, 1) 10%, hsla(267, 93%, 0%, 0) 80%),
-		linear-gradient(225deg, hsla(119, 99%, 0%, 1) 10%, hsla(119, 99%, 0%, 0) 80%),
-		linear-gradient(315deg, hsla(334, 93%, 0%, 1) 100%, hsla(334, 93%, 0%, 0) 70%);
+background: #485563;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to bottom, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to bottom, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 color: #ffeee3;
 background-repeat: no-repeat center center fixed;
@@ -57,6 +50,18 @@ background-repeat: no-repeat center center fixed;
 -webkit-background-size: cover;
 -o-background-size: cover;
 background-size: cover;
+}
+
+img {
+  box-shadow: inset 0px 0px 10px 5px #3D7511;
+  -webkit-box-shadow: inset 0px 0px 10px 5px #3D7511;
+  -moz-box-shadow: inset 0px 0px 10px 5px #3D7511;
+  -o-box-shadow: inset 0px 0px 10px 5px #3D7511;
+box-shadow: 1px 1px 14px 3px #81A162;
+-webkit-box-shadow: 1px 1px 14px 3px #81A162;
+-moz-box-shadow: 1px 1px 14px 3px #81A162;
+-o-box-shadow: 1px 1px 14px 3px #81A162;
+border-radius: 8px;
 }
 
 a:link {
@@ -106,13 +111,50 @@ a { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-we
 	color: #ffeee3;
 	padding: 3;
 }
+
+.button {
+   border-top: 1px solid #96d1f8;
+   background: #65a9d7;
+   background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
+   background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
+   background: -moz-linear-gradient(top, #3e779d, #65a9d7);
+   background: -ms-linear-gradient(top, #3e779d, #65a9d7);
+   background: -o-linear-gradient(top, #3e779d, #65a9d7);
+   padding: 2.5px 5px;
+   -webkit-border-radius: 33px;
+   -moz-border-radius: 33px;
+   border-radius: 33px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 15px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+
+   box-shadow: 1px 1px 14px 3px #81A162;
+   -webkit-box-shadow: 1px 1px 14px 3px #81A162;
+   -moz-box-shadow: 1px 1px 14px 3px #81A162;
+   -o-box-shadow: 1px 1px 14px 3px #81A162;
+   }
+.button:hover {
+   border-top-color: #28597a;
+   background: #28597a;
+   color: #ccc;
+   }
+.button:active {
+   border-top-color: #1b435e;
+   background: #1b435e;
+   }
 </style>
-  <a href=""><h1><img src="http://basic1.moy.su/Fotos/magicfountain.png" alt="Magic Fountain Icon" width="48" height="48"><strong > Welcome to Magic Fountain!</strong></h1><img /></a>
+  <a href=""><h1><img src="http://basic1.moy.su/Fotos/magicfountain.png" alt="Magic Fountain Icon" width="48" height="48"><strong > Welcome to Magic Fountain!</strong><img/></h1></a>
 <br />
-<a href="https://github.com/Aztorius/magicfountain"><button type="button">GITHUB</button></a>
-<a href="#FEATURES"><button type="button">FEATURES</button></a>
-<a href="#SCREENSHOTS"><button type="button">SCREENSHOTS</button></a>
-<a href="#DOWNLOADS"><button type="button">DOWNLOADS</button></a>
+<a href="https://github.com/Aztorius/magicfountain" class="button">GITHUB</button></a>
+<a href="#FEATURES" class="button">FEATURES</a>
+<a href="#SCREENSHOTS" class="button">SCREENSHOTS</a>
+<a href="#DOWNLOADS" class="button">DOWNLOADS</a>
 <br />
 <br />
 <p>Magic Fountain is a free and open-source Fountain syntax editor and viewer for writing screenplays.</p>
@@ -158,25 +200,34 @@ a { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-we
 	</tbody>
 </table>
 <p>&nbsp;</p>
-<a href="#">UP</a>
+<a href="#" class="button">UP ↑</a>
 <br />
 <a id="SCREENSHOTS"><h1>SCREENSHOTS</h1></a>
 <br />
-<img src="http://basic1.moy.su/Fotos/Bildschirmfoto_2017-08-23_17-15-26.png" style="float: center;" alt="" width="1004" height="580"><img />
+<img src="http://basic1.moy.su/Fotos/Bildschirmfoto_2017-08-23_17-15-26.png" style="float: center;" alt="" width="1004" height="580"><img/>
 <br />
-<a href="#">UP</a>
+<br />
+<a href="#" class="button">UP ↑</a>
 <br />
 <a id="DOWNLOADS"><h1>DOWNLOADS</h1></a>
 <br />
 <table align="center" border="1" cellpadding="1" cellspacing="1" style="width:500px">
 	<tbody>
 		<tr>
-			<td>Source [tar.gz]</td>
+			<td>Source [.tar.gz]</td>
 			<td><a href="https://github.com/Aztorius/magicfountain/archive/1.0.0alpha6.tar.gz">1.0.0 Alpha 6</a>&nbsp;</td>
 		</tr>
+    <tr>
+			<td>Source [.zip]</td>
+			<td><a href="https://github.com/Aztorius/magicfountain/archive/1.0.0alpha6.zip">1.0.0 Alpha 6</a>&nbsp;</td>
+		</tr>
+    <tr>
+			<td>Arch Linux AUR</td>
+			<td><a href="https://github.com/Aztorius/magicfountain/issues/1">Coming soon . . . <p> pacaur -S magicfountain or yaourt -S magicfountain</p></a>&nbsp;</td>
+		</tr>
 		<tr>
-			<td>Linux [deb]</td>
-			<td><a href="https://github.com/Aztorius/magicfountain/releases/download/1.0.0alpha6/magicfountain-1.0.0alpha6.deb">1.0.0 Alpha 6</a>&nbsp;</td>
+			<td>Linux [.deb]</td>
+			<td><a href="https://github.com/Aztorius/magicfountain/releases/download/1.0.0alpha6/magicfountain-1.0.0alpha6.deb">1.0.0 Alpha 6 <p> sudo dpkg -i packagename.deb</p></a>&nbsp;</td>
 		</tr>
 		<tr>
 			<td>Mac</td>
@@ -189,13 +240,16 @@ a { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-we
 	</tbody>
 </table>
 <p>&nbsp;</p>
-<a href="#">UP</a>
+<a href="#" class="button">UP ↑</a>
 <br />
 <br />
 <br />
 <br />
 <br />
-<a href="http://basic1.moy.su/">This page was created by ZeroDot1</a>
+<br />
+<br />
+<br />
+<a href="http://basic1.moy.su/">This page was created 2017 by ZeroDot1</a>
 </div>
 <div>
   <br />
