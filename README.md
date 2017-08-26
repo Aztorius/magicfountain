@@ -6,8 +6,10 @@ A screenwriting program currently available on Linux and Windows.
 
 ## License
 Magic Fountain is licensed under the GPL (General Public License) license version 3
-
 See: https://www.gnu.org/licenses/gpl-3.0.en.html
+
+Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL)
+See: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=OFL
 
 ### [Latest releases](https://github.com/Aztorius/magicfountain/releases)
 
