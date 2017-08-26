@@ -7,7 +7,7 @@ pkgdesc="A Fountain syntax editor and viewer."
 arch=('i686' 'x86_64')
 url="https://github.com/Aztorius/magicfountain"
 license=('GPL3')
-depends=('qt5-base' 'hicolor-icon-theme')
+depends=('qt5-base' 'hicolor-icon-theme' 'qt5-translations')
 makedepends=('qt5-base' 'git')
 
 source=("https://github.com/Aztorius/magicfountain/archive/${pkgver}.tar.gz")
