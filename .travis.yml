@@ -6,9 +6,7 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-  exclude:
-    - os: linux
-      dist: precise
+      osx_image: xcode8.3
 
 addons:
   apt:
@@ -25,13 +23,13 @@ before_script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --yes qt56base ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source /opt/qt56/bin/qt56-env.sh ; fi
 - qmake -v
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir -p ./magicfountain/usr/bin ; fi
 
 script:
 - qmake magicfountain.pro
 - make
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./magicfountain ./MagicFountain ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp ./debian/control ./magicfountain/DEBIAN/ ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir -p ./magicfountain/usr/bin ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./MagicFountain ./magicfountain/usr/bin/magicfountain ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dpkg-deb --build magicfountain ; fi
 
