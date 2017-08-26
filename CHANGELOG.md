@@ -1,5 +1,8 @@
+### 1.0.0 Alpha 7
+- - - 
 ### 1.0.0 Alpha 6
- - - - 
+- Fix Arch package
+
 ### 1.0.0 Alpha 5
 
 - Merge pull request #14 from ZeroDot1/patch-6
