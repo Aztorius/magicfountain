@@ -7,7 +7,18 @@ Script::Script()
 
 }
 
-Script::Script(QString script)
+Script::Script(QString script, ScriptType type)
+{
+    switch(type) {
+    case ScriptType::Fountain:
+        this->parseFromFountain(script);
+        break;
+    default:
+        break;
+    };
+}
+
+void Script::parseFromFountain(QString script)
 {
     QStringList lines = script.split("\n");
     QString text;

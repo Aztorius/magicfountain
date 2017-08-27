@@ -101,7 +101,7 @@ void MainWindow::refreshPreview() {
         delete currentScript;
     }
 
-    currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText());
+    currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText(), ScriptType::Fountain);
 
     ui->textBrowser_preview->setHtml(currentScript->toHtml());
     ui->textBrowser_preview->setCurrentFont(courierfont);
