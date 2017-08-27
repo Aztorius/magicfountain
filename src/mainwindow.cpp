@@ -81,6 +81,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionReport_an_issue, SIGNAL(triggered()), this, SLOT(slot_actionReportAnIssue()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Qt()));
     connect(ui->actionAbout_Magic_Fountain, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Magic_Fountain()));
+
+    connect(ui->listWidget_scenes, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(slot_clickScenes(QListWidgetItem*)));
 }
 
 MainWindow::~MainWindow()
@@ -101,7 +103,7 @@ void MainWindow::refreshPreview() {
         delete currentScript;
     }
 
-    currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText());
+    currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText(), ScriptType::Fountain);
 
     ui->textBrowser_preview->setHtml(currentScript->toHtml());
     ui->textBrowser_preview->setCurrentFont(courierfont);
@@ -339,7 +341,17 @@ void MainWindow::slot_actionAbout_Magic_Fountain()
                            ));
 }
 
-void MainWindow::changeEvent(QEvent* event)
+void MainWindow::slot_clickScenes(QListWidgetItem *item)
+{
+    if (item != nullptr) {
+        QString scene = item->text();
+        if (!ui->plainTextEdit_fountaineditor->find(scene)) {
+            ui->plainTextEdit_fountaineditor->find(scene, QTextDocument::FindBackward);
+        }
+    }
+}
+
+void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
@@ -347,4 +359,3 @@ void MainWindow::changeEvent(QEvent* event)
 
     QMainWindow::changeEvent(event);
 }
-

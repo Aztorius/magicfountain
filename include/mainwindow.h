@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QTranslator>
 #include <QSettings>
+#include <QListWidgetItem>
 
 #include "script.h"
 
@@ -55,8 +56,10 @@ private slots:
     void slot_actionAbout_Qt();
     void slot_actionAbout_Magic_Fountain();
 
+    void slot_clickScenes(QListWidgetItem *item);
+
 protected:
-    void changeEvent(QEvent*);
+    void changeEvent(QEvent *event);
 };
 
 #endif // MAINWINDOW_H

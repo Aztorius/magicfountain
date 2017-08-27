@@ -24,7 +24,7 @@ HEADERS  += include/mainwindow.h \
     include/script.h \
     include/block.h
 
-FORMS    += src/mainwindow.ui
+FORMS    += mainwindow.ui
 
 RESOURCES += ressources.qrc
 
