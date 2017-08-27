@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow:
+
+Sitemap: https://aztorius.github.io/magicfountain/sitemap.xml
