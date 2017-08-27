@@ -7,7 +7,18 @@ Script::Script()
 
 }
 
-Script::Script(QString script)
+Script::Script(QString script, ScriptType type)
+{
+    switch(type) {
+    case ScriptType::Fountain:
+        this->parseFromFountain(script);
+        break;
+    default:
+        break;
+    };
+}
+
+void Script::parseFromFountain(QString script)
 {
     QStringList lines = script.split("\n");
     QString text;
@@ -179,11 +190,11 @@ Script::Script(QString script)
             }
             i--;
         } else if (text.left(4) == "### ") { //Scene
-            //Not used yet
+            m_blocks.append(new Block(BlockType::Scene, text.mid(4)));
         } else if (text.left(3) == "## ") { //Sequence
-            //Not used yet
+            m_blocks.append(new Block(BlockType::Sequence, text.mid(3)));
         } else if (text.left(2) == "# ") { //Act
-            //Not used yet
+            m_blocks.append(new Block(BlockType::Act, text.mid(2)));
         } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
             m_blocks.append(new Block(BlockType::SceneHeading, text));
         } else if (text.left(1) == ">") {

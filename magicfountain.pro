@@ -8,24 +8,23 @@ QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = MagicFountain
+TARGET = magicfountain
 TEMPLATE = app
 
 target.path = /usr/local/bin
 INSTALLS += target
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    script.cpp \
-    block.cpp
+SOURCES += src/main.cpp\
+    src/mainwindow.cpp \
+    src/script.cpp \
+    src/block.cpp
 
-HEADERS  += mainwindow.h \
-    script.h \
-    block.h
+INCLUDEPATH += include/
+HEADERS  += include/mainwindow.h \
+    include/script.h \
+    include/block.h
 
 FORMS    += mainwindow.ui
-
-DISTFILES +=
 
 RESOURCES += ressources.qrc
 

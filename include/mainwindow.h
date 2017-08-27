@@ -9,6 +9,8 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QTranslator>
+#include <QSettings>
+#include <QListWidgetItem>
 
 #include "script.h"
 
@@ -29,7 +31,9 @@ private:
     QString filepath;
     QFont courierfont;
     Script *currentScript;
+    QTranslator m_qtTranslator;
     QTranslator m_translator;
+    QSettings *m_settings;
 
 public slots:
     void refreshPreview();
@@ -48,11 +52,14 @@ public slots:
 private slots:
     void slot_actionFountain_Syntax();
     void slot_actionLanguage(QAction *action);
+    void slot_actionReportAnIssue();
     void slot_actionAbout_Qt();
     void slot_actionAbout_Magic_Fountain();
 
+    void slot_clickScenes(QListWidgetItem *item);
+
 protected:
-    void changeEvent(QEvent*);
+    void changeEvent(QEvent *event);
 };
 
 #endif // MAINWINDOW_H

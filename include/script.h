@@ -6,11 +6,16 @@
 
 #include "block.h"
 
+enum ScriptType {
+    Unknown,
+    Fountain
+};
+
 class Script
 {
 public:
     Script();
-    Script(QString script);
+    Script(QString script, ScriptType type);
     ~Script();
 
     QString toHtml();
@@ -22,6 +27,8 @@ public:
 private:
     QString title, credit, author, source, draftDate, contact;
     QList<Block *> m_blocks;
+
+    void parseFromFountain(QString script);
 };
 
 #endif // SCRIPT_H

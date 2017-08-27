@@ -45,12 +45,14 @@ QString Block::toHtml()
     QString html;
 
     switch (m_type) {
+    case BlockType::Act:
+        break;
     case BlockType::Action:
         html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Author:
         html.append("<p style=\"text-align: center;\">" + htmlCheckBIU(m_data) + "</p>");
-        return html;
+        break;
     case BlockType::BlankLine:
         html.append("<p style=\"white-space:pre-warp;\"> </p>");
         break;
@@ -92,6 +94,8 @@ QString Block::toHtml()
     case BlockType::Lyrics:
         html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
         break;
+    case BlockType::Note:
+        break;
     case BlockType::PageBreaks:
         html.append("<p style=\"white-space:pre-warp; page-break-after: always;\" > </p>");
         break;
@@ -101,8 +105,12 @@ QString Block::toHtml()
     case BlockType::RightParentheticals:
         html.append("<p style=\"margin-left: 15em; margin-right: 27em;\">" + htmlCheckBIU(m_data) + "</p>");
         break;
+    case BlockType::Scene:
+        break;
     case BlockType::SceneHeading:
         html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
+        break;
+    case BlockType::Sequence:
         break;
     case BlockType::Source:
         html.append("<p style=\"text-align: center;\">" + htmlCheckBIU(m_data) + "</p>");
