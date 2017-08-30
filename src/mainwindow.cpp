@@ -32,27 +32,27 @@ MainWindow::MainWindow(QWidget *parent) :
     m_settings = new QSettings("MagicFountain", "MagicFountain");
 
     if (m_settings->contains("language")) {
-        QString language = m_settings->value("language").toString();
-        QLocale locale(language);
+        m_language = m_settings->value("language").toString();
+        QLocale locale(m_language);
 
         if (m_qtTranslator.load("qt_" + locale.name(),
                             QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
             qApp->installTranslator(&m_qtTranslator);
         }
 
-        if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
+        if (m_translator.load(QString("magicfountain_") + m_language, QString(":/locales/"))) {
             qApp->installTranslator(&m_translator);
         }
     } else {
         QLocale locale = QLocale::system();
-        QString language = QLocale::languageToString(locale.language());
+        m_language = QLocale::languageToString(locale.language());
 
         if (m_qtTranslator.load("qt_" + QLocale::system().name(),
                             QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
             qApp->installTranslator(&m_qtTranslator);
         }
 
-        if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
+        if (m_translator.load(QString("magicfountain_") + m_language, QString(":/locales/"))) {
             qApp->installTranslator(&m_translator);
         }
     }
@@ -184,10 +184,7 @@ void MainWindow::print() {
 }
 
 void MainWindow::newFile() {
-    QString filename = ":/data/default.fountain";
-    if(filename.isEmpty()){
-        return;
-    }
+    QString filename = ":/data/default_" + m_language + ".fountain";
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -199,6 +196,19 @@ void MainWindow::newFile() {
         QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Start);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
+    } else {
+        file.setFileName(":/data/default_en.fountain");
+
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            ui->plainTextEdit_fountaineditor->clear();
+            ui->plainTextEdit_fountaineditor->appendPlainText(file.readAll());
+            filepath.clear();
+            file.close();
+
+            QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
+            cursor.movePosition(QTextCursor::Start);
+            ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
+        }
     }
 }
 
@@ -305,17 +315,17 @@ void MainWindow::slot_actionFountain_Syntax()
 
 void MainWindow::slot_actionLanguage(QAction *action)
 {
-    QString language = action->iconText();
-    QLocale locale(language);
+    m_language = action->iconText();
+    QLocale locale(m_language);
 
     if (m_qtTranslator.load("qt_" + locale.name(),
                         QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         qApp->installTranslator(&m_qtTranslator);
     }
 
-    if (m_translator.load(QString("magicfountain_") + language, QString(":/locales/"))) {
+    if (m_translator.load(QString("magicfountain_") + m_language, QString(":/locales/"))) {
         qApp->installTranslator(&m_translator);
-        m_settings->setValue("language", language);
+        m_settings->setValue("language", m_language);
     }
 }
 

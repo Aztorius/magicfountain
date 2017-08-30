@@ -34,6 +34,7 @@ private:
     QTranslator m_qtTranslator;
     QTranslator m_translator;
     QSettings *m_settings;
+    QString m_language;
 
 public slots:
     void refreshPreview();
