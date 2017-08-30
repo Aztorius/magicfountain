@@ -1,5 +1,14 @@
 # Magic Fountain Homepage CHANGELOG
 - - -
+### 3.3
+
+- Add French translation with https://www.deepl.com/translator
+- Add different templates for different languages info to the (FEATURES)table
+- Update sitemap.xml
+- Fixed writing errors in the German translation
+- Fixed a writing error  in the CHANGELOG.md
+- Removed flashing Flags
+
 ### 3.2
 
 - Beautify HTML and CSS
@@ -10,7 +19,7 @@
 - Add a .htaccess File
 - Add CHANGELOG.md
 - Update CSS
-- Udate the Footer
+- Update the Footer
 - Fix Bugs
 
 ### 3.1
