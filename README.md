@@ -1,4 +1,4 @@
-# Magic Fountain
+# ![img](http://basic1.moy.su/Fotos/magicfountain.png)[Magic Fountain](https://goo.gl/h9KubK "Magic Fountain Offical Site")
 A screenwriting program currently available on Linux and Windows.
 
 [![Build Status](https://travis-ci.org/Aztorius/magicfountain.svg?branch=master)](https://travis-ci.org/Aztorius/magicfountain)
@@ -11,7 +11,7 @@ See: https://www.gnu.org/licenses/gpl-3.0.en.html
 Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL)
 See: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=OFL
 
-### [Latest releases](https://github.com/Aztorius/magicfountain/releases)
+### [Download latest releases](https://goo.gl/NF7bAi)
 
 ## Install
 
@@ -31,6 +31,11 @@ mingw32-make
 ```
 ## Screenshot
 ![img](http://basic1.moy.su/Fotos/Bildschirmfoto_2017-08-23_17-15-26.png)
+
+# Contributing
+You can open issues for bugs you've found or features you think are missing. You can also submit pull requests to this repository.
+## Translations
+We manage our translations via [Transifex](https://goo.gl/tmFoFc "Translations via Transifex")
 
 ## TODO List
 

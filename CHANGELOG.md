@@ -1,8 +1,16 @@
 # Magic Fountain Homepage CHANGELOG
 - - -
+
+### 3.4
+
+- Add yandex site verification https://webmaster.yandex.com
+- Update flags
+- Update the frensh translaton by @Aztorius
+- Fix Bugs
+
 ### 3.3
 
-- Add French translation with https://www.deepl.com/translator
+- Add french translation with https://www.deepl.com/translator
 - Add different templates for different languages info to the (FEATURES)table
 - Update sitemap.xml
 - Fixed writing errors in the German translation
@@ -12,14 +20,14 @@
 ### 3.2
 
 - Beautify HTML and CSS
-- Add a Language selection Menu
-- Add Table CSS
-- Add a German Page and Tranlation
+- Add a language selection menu
+- Add table CSS
+- Add a German page and tranlation
 - Add Page FR [NO TRANSLATION]
 - Add a .htaccess File
 - Add CHANGELOG.md
 - Update CSS
-- Update the Footer
+- Update the footer
 - Fix Bugs
 
 ### 3.1
