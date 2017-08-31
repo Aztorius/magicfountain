@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="de">
 <context>
     <name>MainWindow</name>
     <message>
@@ -134,12 +136,12 @@
     <message>
         <location filename="../mainwindow.ui" line="329"/>
         <source>&amp;English</source>
-        <translation>&amp;Englisch</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="340"/>
         <source>&amp;French</source>
-        <translation>&amp;Französisch</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="351"/>
@@ -150,45 +152,46 @@
     <message>
         <location filename="../mainwindow.ui" line="367"/>
         <source>Report an issue</source>
-        <translation>Einen Fehler melden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="102"/>
+        <location filename="../src/mainwindow.cpp" line="154"/>
         <source>Export PDF</source>
         <translation>Als PDF exportieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../src/mainwindow.cpp" line="177"/>
         <source>Export HTML</source>
         <translation>Als HTML exprotieren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="151"/>
+        <location filename="../src/mainwindow.cpp" line="203"/>
         <source>Print Document</source>
         <translation>Dokument drucken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../src/mainwindow.cpp" line="247"/>
         <source>Open Fountain file</source>
         <translation>Fountain Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="203"/>
+        <location filename="../src/mainwindow.cpp" line="269"/>
+        <location filename="../src/mainwindow.cpp" line="408"/>
         <source>Save Fountain file</source>
         <translation>Fountain Datei speichern</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="295"/>
+        <location filename="../src/mainwindow.cpp" line="371"/>
         <source>About Qt</source>
-        <translation>Über Qt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="300"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>About MagicFountain</source>
-        <translation>Über Magic Fountain</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="300"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Magic Fountain is distributed under the GPL (General Public License) version 3.
 It is a free and open source software.
 You can contribute to the project on GitHub at https://github.com/Aztorius/magicfountain 
@@ -196,13 +199,12 @@ You can contribute to the project on GitHub at https://github.com/Aztorius/magic
 Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL).
 
 Contributors: </source>
-        <translation>Magic Fountain wird unter der GPL (General Public License) Version 3 verteilt..
-Magic Fountain ist freie und Open Source Software.
-Sie können zum Projekt auf GitHub unter https://github.com/Aztorius/magicfountain beitragen.
-
-Magic Fountain enthält die Courier Prime Fonts, die unter der SIL Open Font Lizenz (OFL) lizenziert sind.
-
-Mitwirkende: </translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="408"/>
+        <source>Do you want to save current script ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

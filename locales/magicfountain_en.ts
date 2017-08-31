@@ -155,42 +155,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="102"/>
+        <location filename="../src/mainwindow.cpp" line="154"/>
         <source>Export PDF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../src/mainwindow.cpp" line="177"/>
         <source>Export HTML</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="151"/>
+        <location filename="../src/mainwindow.cpp" line="203"/>
         <source>Print Document</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../src/mainwindow.cpp" line="247"/>
         <source>Open Fountain file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="203"/>
+        <location filename="../src/mainwindow.cpp" line="269"/>
+        <location filename="../src/mainwindow.cpp" line="408"/>
         <source>Save Fountain file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="295"/>
+        <location filename="../src/mainwindow.cpp" line="371"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="300"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>About MagicFountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="300"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
         <source>Magic Fountain is distributed under the GPL (General Public License) version 3.
 It is a free and open source software.
 You can contribute to the project on GitHub at https://github.com/Aztorius/magicfountain 
@@ -198,6 +199,11 @@ You can contribute to the project on GitHub at https://github.com/Aztorius/magic
 Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL).
 
 Contributors: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="408"/>
+        <source>Do you want to save current script ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
