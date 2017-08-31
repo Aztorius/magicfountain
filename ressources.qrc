@@ -7,7 +7,7 @@
         <file>data/print.png</file>
         <file>data/open.png</file>
         <file>data/new.png</file>
-        <file>data/default.fountain</file>
+        <file>data/default_en.fountain</file>
         <file>data/bold.png</file>
         <file>data/italic.png</file>
         <file>data/underline.png</file>
@@ -22,5 +22,7 @@
         <file>locales/magicfountain_en.ts</file>
         <file>locales/magicfountain_fr.qm</file>
         <file>locales/magicfountain_fr.ts</file>
+        <file>data/default_fr.fountain</file>
+        <file>data/default_de.fountain</file>
     </qresource>
 </RCC>
