@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    virtual void closeEvent(QCloseEvent *event);
 
 private:
     Ui::MainWindow *ui;
@@ -37,6 +38,7 @@ private:
     QString m_language;
 
 public slots:
+    void refreshTitleBar(bool modified);
     void refreshPreview();
     void refreshScenesView();
     void exportAsPDF();
@@ -58,6 +60,7 @@ private slots:
     void slot_actionAbout_Magic_Fountain();
 
     void slot_clickScenes(QListWidgetItem *item);
+    void slot_checkAndSaveScript();
 
 protected:
     void changeEvent(QEvent *event);

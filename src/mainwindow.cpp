@@ -8,7 +8,7 @@
 
 #include "block.h"
 
-QString GLOBAL_VERSION = "1.0.0";
+QString GLOBAL_VERSION = "1.0.0-alpha";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowTitle("Magic Fountain Alpha " + GLOBAL_VERSION);
+    setWindowTitle("MagicFountain " + GLOBAL_VERSION);
 
     int fontId = QFontDatabase::addApplicationFont(":/fonts/Courier Prime.ttf");
 
@@ -64,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->textBrowser_preview->setFont(courierfont);
 
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
+    connect(ui->plainTextEdit_fountaineditor, SIGNAL(modificationChanged(bool)), this, SLOT(refreshTitleBar(bool)));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
     connect(ui->actionExport_as_HTML, SIGNAL(triggered()), this, SLOT(exportAsHTML()));
     connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
@@ -98,7 +99,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::refreshPreview() {
+void MainWindow::closeEvent( QCloseEvent *event )
+{
+    event->ignore();
+
+    slot_checkAndSaveScript();
+
+    event->accept();
+}
+
+void MainWindow::refreshTitleBar(bool modified)
+{
+    QString title = "MagicFountain " + GLOBAL_VERSION;
+
+    if (!filepath.isEmpty()) {
+        title.append(" " + filepath);
+    }
+
+    if (modified) {
+        title.append(" *");
+    }
+
+    setWindowTitle(title);
+}
+
+void MainWindow::refreshPreview()
+{
     if (currentScript != nullptr) {
         delete currentScript;
     }
@@ -184,13 +210,15 @@ void MainWindow::print() {
 }
 
 void MainWindow::newFile() {
+    slot_checkAndSaveScript();
+
     QString filename = ":/data/default_" + m_language + ".fountain";
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        ui->plainTextEdit_fountaineditor->clear();
-        ui->plainTextEdit_fountaineditor->appendPlainText(file.readAll());
         filepath.clear();
+        ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
+        ui->plainTextEdit_fountaineditor->document()->setModified(false);
         file.close();
 
         QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
@@ -200,8 +228,8 @@ void MainWindow::newFile() {
         file.setFileName(":/data/default_en.fountain");
 
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            ui->plainTextEdit_fountaineditor->clear();
-            ui->plainTextEdit_fountaineditor->appendPlainText(file.readAll());
+            ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
+            ui->plainTextEdit_fountaineditor->document()->setModified(false);
             filepath.clear();
             file.close();
 
@@ -213,6 +241,8 @@ void MainWindow::newFile() {
 }
 
 void MainWindow::openFile() {
+    slot_checkAndSaveScript();
+
     QString filename = QFileDialog::getOpenFileName(this,
                                                     tr("Open Fountain file"),
                                                     QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
@@ -223,9 +253,9 @@ void MainWindow::openFile() {
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        ui->plainTextEdit_fountaineditor->clear();
-        ui->plainTextEdit_fountaineditor->appendPlainText(file.readAll());
         filepath = filename;
+        ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
+        ui->plainTextEdit_fountaineditor->document()->setModified(false);
         file.close();
 
         QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
@@ -249,6 +279,7 @@ void MainWindow::saveAs() {
         stream << ui->plainTextEdit_fountaineditor->toPlainText();
         file.close();
         filepath = filename;
+        ui->plainTextEdit_fountaineditor->document()->setModified(false);
     }
 }
 
@@ -263,6 +294,7 @@ void MainWindow::quickSave() {
         QTextStream stream(&file);
         stream << ui->plainTextEdit_fountaineditor->toPlainText();
         file.close();
+        ui->plainTextEdit_fountaineditor->document()->setModified(false);
     }
 }
 
@@ -368,4 +400,13 @@ void MainWindow::changeEvent(QEvent *event)
     }
 
     QMainWindow::changeEvent(event);
+}
+
+void MainWindow::slot_checkAndSaveScript()
+{
+    if (currentScript != nullptr && ui->plainTextEdit_fountaineditor->document()->isModified()) {
+        if (QMessageBox::question(this, QString(tr("Save Fountain file")), QString(tr("Do you want to save current script ?"))) == QMessageBox::Yes) {
+            saveAs();
+        }
+    }
 }
