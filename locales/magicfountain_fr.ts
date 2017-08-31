@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
 <context>
     <name>MainWindow</name>
     <message>
@@ -136,12 +134,12 @@
     <message>
         <location filename="../mainwindow.ui" line="329"/>
         <source>&amp;English</source>
-        <translation type="unfinished"></translation>
+        <translation>Anglais</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="340"/>
         <source>&amp;French</source>
-        <translation type="unfinished"></translation>
+        <translation>Français</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="351"/>
@@ -152,7 +150,7 @@
     <message>
         <location filename="../mainwindow.ui" line="367"/>
         <source>Report an issue</source>
-        <translation type="unfinished"></translation>
+        <translation>Signaler un problème</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="154"/>
@@ -183,12 +181,12 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="371"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos de Qt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="376"/>
         <source>About MagicFountain</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos de MagicFountain</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="376"/>
@@ -199,12 +197,18 @@ You can contribute to the project on GitHub at https://github.com/Aztorius/magic
 Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL).
 
 Contributors: </source>
-        <translation type="unfinished"></translation>
+        <translation>Magic Fountain est distribué sous la license GPL (General Public License) version 3.
+C&apos;est un logiciel gratuit et libre.
+Vous pouvez contribuer au projet sur GitHub ici https://github.com/Aztorius/magicfountain
+
+Magic Fountain inclut la police de caractère Courier Prime qui sont sous licence SIL Open Font License (OFL).
+
+Contributeurs:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="408"/>
         <source>Do you want to save current script ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous sauvegarder le script actuel ?</translation>
     </message>
 </context>
 </TS>
