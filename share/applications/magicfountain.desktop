@@ -3,9 +3,10 @@
 Type=Application
 Version=1.0
 Name=MagicFountain
-Comment=Screenwriter
+Comment=A Fountain syntax editor and viewer for writing screenplays.
 Path=/usr/local/bin/magicfountain
 Exec=magicfountain
-Icon=magicfountain.png
+Icon=magicfountain
 Terminal=false
 Categories=Office;
+GenericName=Fountain syntax editor and viewer
