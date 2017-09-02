@@ -2,8 +2,8 @@ Main authors
 ------------
 
 - [William Bonnaventure](https://github.com/Aztorius): Project lead and main developer
-- [ZeroDot1](http://basic1.moy.su/): Web developer translator and betatester (ArchLinux)
+- [ZeroDot1](https://goo.gl/k3nTZn): Web developer translator and betatester (ArchLinux)
 
 Contributors
 ------------
-- 
+-
