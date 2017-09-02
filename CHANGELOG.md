@@ -1,7 +1,9 @@
 ### 1.0.0 Alpha 7
 
+- Update translations
 - Move cursor when cliking on Scene Header
 - Add internal support for Scene, Sequence, Act
+- Add save script when closing or opening another one
 
 ### 1.0.0 Alpha 6
 
