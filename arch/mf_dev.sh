@@ -19,9 +19,9 @@
 #-----------------------------------------------------------------------------
 # Author: ZeroDot1 https://github.com/ZeroDot1
 # Contact: zerodot1@bk.ru
-# Author Website: http://basic1.moy.su/
-# Version: 1.0
-# Date Time: 25.08.2017 04:19
+# Author Website: https://goo.gl/k3nTZn
+# Version: 1.1
+# Date Time: 01.09.2017 13:19
 # Credits: Thanks to Colin Duquesnoy https://github.com/ColinDuquesnoy
 #-----------------------------------------------------------------------------
 clear

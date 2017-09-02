@@ -19,9 +19,9 @@
 #-----------------------------------------------------------------------------
 # Author: ZeroDot1 https://github.com/ZeroDot1
 # Contact: zerodot1@bk.ru
-# Author Website: http://basic1.moy.su/
-# Version: 1.0
-# Date Time: 25.08.2017 04:19
+# Author Website: https://goo.gl/k3nTZn
+# Version: 1.1
+# Date Time: 01.09.2017 13:19
 # Credits: Thanks to Colin Duquesnoy https://github.com/ColinDuquesnoy
 #-----------------------------------------------------------------------------
 clear
@@ -41,7 +41,7 @@ echo 'Download [Aztorius/magicfountain/archive/master.zip] . . . . .'
 tput sgr0
 wget --verbose --referer=https://github.com/ -t 20 --no-check-certificate https://github.com/Aztorius/magicfountain/archive/master.zip
 tput setaf 2
-echo 'Unzip [develop.zip to $HOME/magicfountain-dev/magicfountain-dev] and Make [This action can take a few moments to complete]'
+echo 'Unzip [develop.zip to $HOME/magicfountain-master/magicfountain-master] and Make [This action can take a few moments to complete]'
 unzip master.zip
 pushd magicfountain-master
 echo 'Compile . . . .'
