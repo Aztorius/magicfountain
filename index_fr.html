@@ -1,242 +1,41 @@
 <!DOCTYPE html>
-<!-- Version 3.4 Date 31.08.2017 -->
+<!-- Version 3.5 Date 21.10.2017 13:47 -->
 <html lang="fr">
 <html>
 
 <head>
   <!-- Header -->
-  <meta name="Resource-type" content="Document">
-  <meta name="Revisit-after" content="7 days">
-  <meta name="robots" content="index, follow">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="index,follow">
+  <meta name="revisit-after" content="7 days">
+  <meta name="revisit" content="after 7 days">
   <meta http-equiv="expires" content="0">
-  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" , content="chrome=1" />
+  <meta http-equiv="pragma" content="no-cache">
+  <meta name="DC.Language" content="en">
+  <meta name="DC.Type" content="Software">
+  <meta name="DC.Format" content="text/html">
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" , content="chrome=1">
   <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, user-scalable=0, width=device-width">
-  <meta name="author" content="ZeroDot1" />
-  <meta name="publisher" content="ZeroDot1" />
+  <meta name="author" content="ZeroDot1">
+  <meta name="publisher" content="ZeroDot1">
   <meta name="description" content="A Fountain syntax editor and viewer." />
   <meta name="keywords" content="Movie, magicfountain, Fountain, Editor" />
-  <meta name="language" content="fr" />
-  <link rel='icon' href='http://basic1.moy.su/Fotos/magicfountain.png' type='image/x-icon' />
-  <link rel='shortcut icon' href='http://basic1.moy.su/Fotos/magicfountain.png' type='image/x-icon' />
+  <meta name="language" content="fr">
+  <link rel='dns-prefetch' href='//*.googleusercontent.com'>
+  <link rel='dns-prefetch' href='//github.com'>
+  <link rel='dns-prefetch' href='//github.io'>
+  <link rel='icon' href='https://lh3.googleusercontent.com/vz4xgx0cnGQkIB8dlVejZ-AFxYxD_sz1gaB4hMb57mwbpOotdHbBV-9uXk23ScMzgHlu1jwNVM3b8WMsmA=w1000-no-tmp.jpg' type='image/x-icon' />
+  <link rel='shortcut icon' href='https://lh3.googleusercontent.com/vz4xgx0cnGQkIB8dlVejZ-AFxYxD_sz1gaB4hMb57mwbpOotdHbBV-9uXk23ScMzgHlu1jwNVM3b8WMsmA=w1000-no-tmp.jpg' type='image/x-icon' />
+  <link href="css/blue.css" rel="stylesheet" type="text/css" media="screen">
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
   <title>Magic Fountain - Un éditeur et visualiseurs de fichiers Fountain - Français</title>
   <!-- end #header -->
 </head>
 
 <body style="overflow: auto">
   <div align="center">
-    <style type="text/css">
-      a[href^="#"] {
-        /* Formatting for page-internal references */
-      }
-
-      a[href^="#"]:before {
-        content: '';
-      }
-
-      a[href^="#top"]:before {
-        content: '';
-        display: inline-block;
-        color: #e04c32;
-        font-size: 1.5em;
-        -webkit-transform: rotate(-90deg);
-        -ms-transform: rotate(-90deg);
-        transform: rotate(-90deg);
-      }
-
-      html {
-        background: #485563;
-        /* fallback for old browsers */
-        background: -webkit-linear-gradient(to bottom, #29323c, #485563);
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to bottom, #29323c, #485563);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        color: #ffeee3;
-        background-repeat: no-repeat center center fixed;
-        /* W3C Markup, MS Edge Release Preview */
-        background-repeat: no-repeat center center fixed;
-        -moz-background-size: cover;
-        -webkit-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-      }
-
-      img {
-        box-shadow: inset 0px 0px 10px 5px #3D7511;
-        -webkit-box-shadow: inset 0px 0px 10px 5px #3D7511;
-        -moz-box-shadow: inset 0px 0px 10px 5px #3D7511;
-        -o-box-shadow: inset 0px 0px 10px 5px #3D7511;
-        box-shadow: 1px 1px 14px 3px #81A162;
-        -webkit-box-shadow: 1px 1px 14px 3px #81A162;
-        -moz-box-shadow: 1px 1px 14px 3px #81A162;
-        -o-box-shadow: 1px 1px 14px 3px #81A162;
-        border-radius: 8px;
-      }
-
-      a:link {
-        font-family: Arial, Verdana, Helvetica;
-        font-size: 11pt;
-        font-weight: 700;
-        text-decoration: none;
-        color: #66FF66;
-      }
-
-      a:visited {
-        font-family: Arial, Verdana, Helvetica;
-        font-size: 11pt;
-        font-weight: 700;
-        text-decoration: none;
-        color: #00FF66;
-      }
-
-      a:active {
-        font-family: Arial, Verdana, Helvetica;
-        font-size: 11pt;
-        font-weight: 700;
-        text-decoration: none;
-        color: #FF9900;
-      }
-
-      a:hover {
-        font-family: Arial, Verdana, Helvetica;
-        font-size: 11pt;
-        font-weight: 700;
-        text-decoration: none;
-        color: #99CC00;
-      }
-
-      h1 {
-        font-family: Verdana, Arial, Helvetica, serif;
-        font-size: 200%;
-        font-weight: bold;
-        color: #00FFFF
-      }
-
-      p {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 12px;
-        font-weight: normal;
-        color: #00FFFF
-      }
-
-      P1 {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 14px;
-        font-weight: bold;
-        color: #00FFFF
-      }
-
-      a {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 12px;
-        font-weight: bold;
-        color: #00FFFF
-      }
-
-      .font-style {
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        letter-spacing: 1pt;
-        word-spacing: 2pt;
-        font-size: 12px;
-        text-align: left;
-        line-height: 1;
-        color: #ffeee3;
-        padding: 3;
-      }
-
-      .button {
-        border-top: 1px solid #96d1f8;
-        background: #65a9d7;
-        background: -webkit-gradient(linear, left top, left bottom, from(#3e779d), to(#65a9d7));
-        background: -webkit-linear-gradient(top, #3e779d, #65a9d7);
-        background: -moz-linear-gradient(top, #3e779d, #65a9d7);
-        background: -ms-linear-gradient(top, #3e779d, #65a9d7);
-        background: -o-linear-gradient(top, #3e779d, #65a9d7);
-        padding: 2.5px 5px;
-        -webkit-border-radius: 33px;
-        -moz-border-radius: 33px;
-        border-radius: 33px;
-        -webkit-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
-        -moz-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
-        box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
-        text-shadow: rgba(0, 0, 0, .4) 0 1px 0;
-        color: white;
-        font-size: 15px;
-        font-family: Helvetica, Arial, Sans-Serif;
-        text-decoration: none;
-        vertical-align: middle;
-
-        box-shadow: 1px 1px 14px 3px #81A162;
-        -webkit-box-shadow: 1px 1px 14px 3px #81A162;
-        -moz-box-shadow: 1px 1px 14px 3px #81A162;
-        -o-box-shadow: 1px 1px 14px 3px #81A162;
-      }
-
-      .button:hover {
-        border-top-color: #28597a;
-        background: #28597a;
-        color: #ccc;
-      }
-
-      .button:active {
-        border-top-color: #1b435e;
-        background: #1b435e;
-      }
-      /* Table Style */
-
-      .tg {
-        border-collapse: collapse;
-        border-spacing: 1;
-        border-color: #485563;
-        border-width: 2px;
-        border-style: solid;
-      }
-
-      .tg td {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        padding: 10px 5px;
-        border-style: solid;
-        border-width: 3px;
-        overflow: hidden;
-        word-break: normal;
-        border-color: #485563;
-        color: #669;
-        background-color: #e8edff;
-      }
-
-      .tg th {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        padding: 10px 5px;
-        border-style: solid;
-        border-width: 3px;
-        overflow: hidden;
-        word-break: normal;
-        border-color: #485563;
-        color: #039;
-        background-color: #b9c9fe;
-      }
-
-      .tg .tg-yw4l {
-        vertical-align: top
-      }
-
-      @media screen and (max-width: 767px) {
-        .tg {
-          width: auto !important;
-        }
-        .tg col {
-          width: auto !important;
-        }
-        .tg-wrap {
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-        }
-      }
-    </style>
-    <a href=""><h1><img src="http://basic1.moy.su/Fotos/magicfountain.png" alt="Magic Fountain Icon" width="48" height="48"><strong> Bienvenue à Magic Fountain!</strong><img/></h1></a>
+    <a href=""><h1><img src="https://lh3.googleusercontent.com/vz4xgx0cnGQkIB8dlVejZ-AFxYxD_sz1gaB4hMb57mwbpOotdHbBV-9uXk23ScMzgHlu1jwNVM3b8WMsmA=w1000-no-tmp.jpg" alt="Magic Fountain Icon" width="48" height="48"><strong> Bienvenue à Magic Fountain!</strong><img/></h1></a>
     <br />
     <a href="https://github.com/Aztorius/magicfountain" target="_blank" class="button">GITHUB</button></a>
     <a href="https://github.com/Aztorius/magicfountain/blob/master/CHANGELOG.md" target="_blank" class="button">MODIFICATIONS</button></a>
@@ -307,7 +106,7 @@
       <br />
       <a id="SCREENSHOTS"><h1>TIRES D'ÉCRAN</h1></a>
       <br />
-      <img src="http://basic1.moy.su/Fotos/Bildschirmfoto_2017-08-23_17-15-26.png" style="float: center;" alt="" width="1004" height="580"><img/>
+      <img src="https://lh3.googleusercontent.com/28OVCI8kb_qdWvEHDOlDu3vFekXqmeC-JFJYHwYuiZMRMOjLkaTODC4raWwsSpEti8WJ30w3P40dRVWwqw=w1000-no-tmp.jpg" style="float: center;" alt="" width="1004" height="580"><img/>
       <br />
       <br />
       <a href="#" class="button" title="En haut de la page">En haut de la page ⬆️</a>
@@ -363,9 +162,9 @@
         <br />
         <br />
         <footer align="center">
-          <a href="http://basic1.moy.su/" target="_blank">Créé en 2017 par ZeroDot1</a>
+          <a href="https://goo.gl/ZuWQB2" target="_blank">Créé en 2017 par ZeroDot1</a>
           <p>Traduit par ZeroDot1 et Aztorius avec l'aide de <a href="https://www.deepl.com/translator">https://www.deepl.com/translator</a></p>
-          <p>Dernière mise à jour: 31.08.2017 14:06</p>
+          <p>Dernière mise à jour: 21.10.2017 13:47</p>
           <p>______________________________________________________</p>
           <br />
         </footer>
