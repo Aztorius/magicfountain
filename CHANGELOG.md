@@ -1,6 +1,10 @@
 # Magic Fountain Homepage CHANGELOG
 - - -
 
+### 3.5
+
+- Fix Bugs
+
 ### 3.4
 
 - Add yandex site verification https://webmaster.yandex.com
