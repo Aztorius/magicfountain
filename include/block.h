@@ -25,6 +25,10 @@ enum BlockType { Empty,
                  RightParentheticals,
                  Lyrics,
                  Transitions,
+                 Note,
+                 Scene,
+                 Sequence,
+                 Act,
                  PageBreaks,
                  BlankLine };
 

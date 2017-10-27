@@ -150,7 +150,7 @@
     <message>
         <location filename="../mainwindow.ui" line="367"/>
         <source>Report an issue</source>
-        <translation>Reporter un bogue</translation>
+        <translation>Signaler un problème</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="102"/>
@@ -196,11 +196,11 @@ You can contribute to the project on GitHub at https://github.com/Aztorius/magic
 Magic Fountain includes the Courier Prime fonts which are licensed under the SIL Open Font License (OFL).
 
 Contributors: </source>
-        <translation>MagicFountain est distribué sous la licence GPL (General Public License) version 3.
+        <translation>Magic Fountain est distribué sous la license GPL (General Public License) version 3.
 C&apos;est un logiciel gratuit et libre.
-Vous pouvez contribuer au projet sur GitHub à l&apos;adresse https://github.com/Aztorius/magicfountain
+Vous pouvez contribuer au projet sur GitHub ici https://github.com/Aztorius/magicfountain
 
-MagicFountain inclut la police Courier Prime sous licence SIL Open Font License (OFL).
+Magic Fountain inclut la police de caractère Courier Prime qui sont sous licence SIL Open Font License (OFL).
 
 Contributeurs:</translation>
     </message>

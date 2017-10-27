@@ -1,5 +1,8 @@
 ### 1.0.0 Alpha 7
-- - - 
+
+- Move cursor when cliking on Scene Header
+- Add internal support for Scene, Sequence, Act
+
 ### 1.0.0 Alpha 6
 
 - Fix Arch package
