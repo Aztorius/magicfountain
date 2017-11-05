@@ -61,7 +61,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->plainTextEdit_fountaineditor->setFont(courierfont);
     ui->plainTextEdit_fountaineditor->setFocus();
-    ui->textBrowser_preview->setFont(courierfont);
 
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(modificationChanged(bool)), this, SLOT(refreshTitleBar(bool)));
@@ -132,8 +131,7 @@ void MainWindow::refreshPreview()
 
     currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText(), ScriptType::Fountain);
 
-    ui->textBrowser_preview->setHtml(currentScript->toHtml());
-    ui->textBrowser_preview->setCurrentFont(courierfont);
+    ui->webEngineView_preview->setHtml(currentScript->toHtml());
     ui->plainTextEdit_fountaineditor->setFocus();
 
     refreshScenesView();
@@ -169,7 +167,7 @@ void MainWindow::exportAsPDF() {
         printer.setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
         printer.setOutputFileName(fileName);
 
-        ui->textBrowser_preview->document()->print(&printer);
+        ui->webEngineView_preview->page()->print(&printer, [](bool){});
     }
 }
 
@@ -208,7 +206,7 @@ void MainWindow::print() {
            return;
         }
 
-        ui->textBrowser_preview->document()->print(&printer);
+        ui->webEngineView_preview->page()->print(&printer, [](bool){});
 }
 
 void MainWindow::newFile() {

@@ -6,7 +6,7 @@
 
 QT       += core gui printsupport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webenginewidgets
 
 TARGET = magicfountain
 TEMPLATE = app
