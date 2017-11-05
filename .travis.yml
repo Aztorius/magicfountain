@@ -6,7 +6,7 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-      osx_image: xcode9.1
+      osx_image: xcode8.3
 
 addons:
   apt:
@@ -23,8 +23,8 @@ before_script:
 - qmake -v
 
 script:
-- qmake magicfountain.pro
-- make
+- qmake CONFIG+=release magicfountain.pro
+- make -j$(nproc)
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./magicfountain ./MagicFountain ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mkdir -p ./magicfountain/DEBIAN/ ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cp ./debian/control ./magicfountain/DEBIAN/ ; fi
