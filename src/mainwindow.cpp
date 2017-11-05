@@ -185,6 +185,7 @@ void MainWindow::exportAsHTML() {
         QFile file(fileName);
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
              QTextStream stream(&file);
+             stream.setCodec("UTF-8");
              stream << currentScript->toHtml();
              file.close();
         }

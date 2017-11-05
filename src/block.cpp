@@ -57,16 +57,16 @@ QString Block::toHtml()
         html.append("<p style=\"white-space:pre-warp;\"> </p>");
         break;
     case BlockType::CenteredText:
-        html.append("<p style=\"text-align:center;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p style='text-align: center !important; '>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Character:
-        html.append("<p style=\"margin-left: 19em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='character'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::CharacterLeft:
-        html.append("<p style=\"margin-left: 8em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<div class='dual-dialogue'><div class='dual-dialogue-left'><p class='character'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::CharacterRight:
-        html.append("<p style=\"margin-left: 28em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("</div><div class='dual-dialogue-right'><p class='character'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Contact:
         html.append("<p style=\"text-align: left;\">" + htmlCheckBIU(m_data) + "</p>");
@@ -75,21 +75,21 @@ QString Block::toHtml()
         html.append("<p style=\"text-align: center;\">" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Dialogue:
-        html.append("<p style=\"margin-left: 12em; margin-right: 9em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<div class='dialogue'>" + htmlCheckBIU(m_data) + "</div>");
         break;
     case BlockType::DraftDate:
         html.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + htmlCheckBIU(m_data).replace("\n", "<br/>") + "</p>");
         break;
     case BlockType::DualDialogueLeft:
-        html.append("<p style=\"margin-left: 0em; margin-right: 21em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='dialogue'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::DualDialogueRight:
-        html.append("<p style=\"margin-left: 23em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='dialogue'>" + htmlCheckBIU(m_data) + "</p></div></div>");
         break;
     case BlockType::Empty:
         break;
     case BlockType::LeftParentheticals:
-        html.append("<p style=\"margin-left: 3em; margin-right: 15em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='parenthetical'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Lyrics:
         html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
@@ -100,10 +100,10 @@ QString Block::toHtml()
         html.append("<p style=\"white-space:pre-warp; page-break-after: always;\" > </p>");
         break;
     case BlockType::Parentheticals:
-        html.append("<p style=\"margin-left: 15em; margin-right: 6em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='parenthetical'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::RightParentheticals:
-        html.append("<p style=\"margin-left: 15em; margin-right: 27em;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='parenthetical'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Scene:
         break;

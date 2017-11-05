@@ -59,7 +59,7 @@
           </property>
           <property name="font">
            <font>
-            <family>Courier</family>
+            <family>Courier 10 Pitch</family>
             <pointsize>12</pointsize>
             <stylestrategy>PreferDefault</stylestrategy>
            </font>
@@ -77,7 +77,7 @@
            <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Courier 10 Pitch'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Courier New';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="tabStopWidth">
@@ -132,7 +132,7 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionBold"/>
     <addaction name="actionItalic"/>
@@ -140,7 +140,7 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
@@ -353,7 +353,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionDe">
    <property name="text">
-    <string>German</string>
+    <string>&amp;German</string>
    </property>
    <property name="iconText">
     <string notr="true">de</string>
@@ -364,7 +364,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionReport_an_issue">
    <property name="text">
-    <string>Report an issue</string>
+    <string>&amp;Report an issue</string>
    </property>
   </action>
  </widget>

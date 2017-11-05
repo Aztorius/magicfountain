@@ -321,10 +321,21 @@ Script::~Script()
 QString Script::toHtml()
 {
     QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
-    content.append("<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">");
+    content.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">");
     content.append("html { margin: 0px; padding: 0px; }");
-    content.append(" body { background-color: #fff; color: #3e3e3e; width: 624px; letter-spacing: 0px; padding: 0px; }");
-    content.append(" p, li { white-space: normal;  }");
+    content.append(" body { background-color: #fff; color: #3e3e3e; padding: 0; margin: 0; }");
+    content.append(" article { padding: 40px 0; margin: 0; }");
+    content.append(" section { padding: 0 0 0 40px; width: 465px; margin-left: auto; margin-right: auto; }");
+    content.append(" p { word-wrap: break-word; padding: 0 10px; }");
+    content.append(" body > p:first-child { margin-top: 0; }");
+    content.append(" .character { margin: 1.3em auto 0; width: 180px; }");
+    content.append(" .dialogue { margin: 0 auto; width: 310px; }");
+    content.append(" .parenthetical { margin: 0 auto; width: 250px; }");
+    content.append(" .dual-dialogue { overflow: hidden; }");
+    content.append(" .dual-dialogue .dual-dialogue-left, .dual-dialogue .dual-dialogue-right { width: 228px; float: left; }");
+    content.append(" .dual-dialogue p { width: auto; }");
+    content.append(" .dual-dialogue .character { xtext-align: center; padding-left: 40px; }");
+    content.append(" .dual-dialogue .parenthetical { padding-left: 40px; }");
     content.append("</style>\n</head>\n<body>\n<article>\n<section>\n");
 
     Block *block;
