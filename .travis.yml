@@ -41,7 +41,7 @@ deploy:
     secure: ZbgyWaHzXU9FkGYBs0osFuIusooGYpmd9B1CU+07GAUB2QPMQpYVnvYnR9pImxXvyZNcA3JbzH9x6T5IcpPwAnBf7rKyb673Debcy6fIKucZIRlAVGbQ94+o8UAzXClKEclnZcOHBcTk7HzTIAGoJSr+Y2d06NfqM/2Bw6+yLVSgNeQ7ZMQti5PQplzgUQwLuSqKJNrTNNEer5mqEHj8pb3kE5mjwXpNZ9iDMccP5JT78kdrmnXn7GZUvH+sVD6NVVJeERQ4btFIphOHY5WrFDMfbkm1+z2zpgb5u6v1nVxarOPs6SBkdmpLS/Vz+0LvSZd/VVmCIXph2d7fySWL3RtckPmb4egeJtUqljfQrPaI1xgzQ/L97Smh8LC6nuKmTuM3CqHoMGvv4Q3zRT8Dkn1kxvqBtjjhmtZbbWtJX014Fp4EVfoo07pMB5qp1nHZgiQqyPsX+u7kdmO0e2iPocWM9aGx8ESUGws1/FmA/myd9C6mRj9pPpCC9IJlxKFMNr8M99vFd2I/kByCdUuWZ/YyQ8nkn7/+7c8J//k+NOtaDm0yu12Mme/ht6LPSJkPaiBY7CHv5XIzMWeYm/m9Qu5jeZg+Dy3d4dRUEqFLo5n0rGyOgyZ0BTCPmwx3nj9kbrZcxNg0Vlf+xNZN3H41/ZE63Y9GMVl7e83E0guNS+c=
   file_glob: true
   file:
-    - ./magicfountain*.AppImage
+    - ./MagicFountain*.AppImage
   skip_cleanup: true
   on:
     repo: Aztorius/magicfountain
