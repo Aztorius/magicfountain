@@ -2,6 +2,7 @@
 
 - Move cursor when cliking on Scene Header
 - Add internal support for Scene, Sequence, Act
+- Add Boneyard support (/* ... */)
 
 ### 1.0.0 Alpha 6
 

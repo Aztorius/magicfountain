@@ -32,7 +32,11 @@ void Script::parseFromFountain(QString script)
     while (i < blockcount) {
         text = lines.at(i).trimmed();
 
-        if (text.left(1) == "!") { //Forced action
+        if (text.left(2) == "/*") { //Boneyard Start
+            m_blocks.append(new Block(BlockType::BoneyardStart));
+        } else if (text.left(2) == "*/") { //Boneyard Stop
+            m_blocks.append(new Block(BlockType::BoneyardStop));
+        } else if (text.left(1) == "!") { //Forced action
             text = lines.at(i);
             text.remove(text.indexOf("!"), 1);
             text.replace("\t", "    ");
@@ -321,8 +325,20 @@ QString Script::toHtml()
     content.append("p, li { white-space: normal; margin: 0px; padding: 0px; } body { width: 624px; letter-spacing: 0px; padding: 0px; }");
     content.append("</style></head><body>");
 
-    foreach (Block *block, m_blocks) {
-        content.append(block->toHtml());
+    Block *block;
+    for (qint64 i = 0; i < m_blocks.size(); ++i) {
+        block = m_blocks.at(i);
+
+        if (block->getType() == BlockType::BoneyardStart) {
+            while(block->getType() != BlockType::BoneyardStop) {
+                if (++i == m_blocks.size()) {
+                    break;
+                }
+                block = m_blocks.at(i);
+            }
+        } else {
+            content.append(block->toHtml());
+        }
     }
 
     return content;

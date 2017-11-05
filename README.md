@@ -44,7 +44,6 @@ We manage our translations via [Transifex](https://goo.gl/tmFoFc "Translations v
 - Support Notes
 - Support Sections
 - Support Fountain 1.0 and 1.1
-- Improve Boneyard
 - Improve PDF and HTML export
 - Improve Indenting
 - Check spelling in different languages
