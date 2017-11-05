@@ -25,7 +25,11 @@ unix {
     shortcutfiles.files = magicfountain.desktop
     shortcutfiles.path = $$PREFIX/share/applications/
 
+    desktopicon.files = magicfountain.png
+    desktopicon.path = $$PREFIX/share/icons/hicolor/48x48/apps/
+
     INSTALLS += shortcutfiles
+    INSTALLS += desktopicon
 }
 
 INSTALLS += target
