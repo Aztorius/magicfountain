@@ -129,6 +129,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionExport_as_PDF"/>
     <addaction name="actionExport_as_HTML"/>
     <addaction name="actionPrint"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -365,6 +367,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionReport_an_issue">
    <property name="text">
     <string>&amp;Report an issue</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
    </property>
   </action>
  </widget>

@@ -72,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(quickSave()));
     connect(ui->actionSave_as, SIGNAL(triggered()), this, SLOT(saveAs()));
     connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(print()));
+    connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));

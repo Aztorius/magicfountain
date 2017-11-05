@@ -232,19 +232,6 @@ void Script::parseFromFountain(QString script)
 
                 if (block->getType() == BlockType::Character) {
                     block->setType(BlockType::CharacterLeft);
-
-                    for (qint32 i = cursor + 1; i < m_blocks.size(); i++) {
-                        switch(m_blocks.at(i)->getType()) {
-                        case BlockType::Dialogue:
-                            m_blocks.at(i)->setType(BlockType::DualDialogueLeft);
-                            break;
-                        case BlockType::Parentheticals:
-                            m_blocks.at(i)->setType(BlockType::LeftParentheticals);
-                            break;
-                        default:
-                            break;
-                        }
-                    }
                 } else {
                     //ERROR: Previous Block should be a Dialogue Block
                 }
@@ -287,16 +274,12 @@ void Script::parseFromFountain(QString script)
                     case BlockType::Character:
                         m_blocks.at(i)->setType(BlockType::CharacterRight);
                         break;
-                    case BlockType::Dialogue:
-                        m_blocks.at(i)->setType(BlockType::DualDialogueRight);
-                        break;
-                    case BlockType::Parentheticals:
-                        m_blocks.at(i)->setType(BlockType::RightParentheticals);
-                        break;
                     default:
                         break;
                     }
                 }
+
+                m_blocks.append(new Block(BlockType::DualDialogueEnd));
             }
 
             i--;
@@ -328,14 +311,17 @@ QString Script::toHtml()
     content.append(" section { padding: 0 0 0 40px; width: 465px; margin-left: auto; margin-right: auto; }");
     content.append(" p { word-wrap: break-word; padding: 0 10px; }");
     content.append(" body > p:first-child { margin-top: 0; }");
+    content.append(" .transition { text-align: right; }");
     content.append(" .character { margin: 1.3em auto 0; width: 180px; }");
     content.append(" .dialogue { margin: 0 auto; width: 310px; }");
     content.append(" .parenthetical { margin: 0 auto; width: 250px; }");
+    content.append(" .scene-heading { margin-top: 2.6em; font-weight: bold; position: relative; padding-right: 40px; }");
     content.append(" .dual-dialogue { overflow: hidden; }");
     content.append(" .dual-dialogue .dual-dialogue-left, .dual-dialogue .dual-dialogue-right { width: 228px; float: left; }");
     content.append(" .dual-dialogue p { width: auto; }");
     content.append(" .dual-dialogue .character { xtext-align: center; padding-left: 40px; }");
     content.append(" .dual-dialogue .parenthetical { padding-left: 40px; }");
+    content.append(" p.page-break { text-align: right; border-top: 1px solid #ccc; padding-top: 20px; margin-top: 20px; }");
     content.append("</style>\n</head>\n<body>\n<article>\n<section>\n");
 
     Block *block;

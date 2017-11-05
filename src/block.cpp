@@ -54,7 +54,6 @@ QString Block::toHtml()
         html.append("<p style=\"text-align: center;\">" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::BlankLine:
-        html.append("<p style=\"white-space:pre-warp;\"> </p>");
         break;
     case BlockType::CenteredText:
         html.append("<p style='text-align: center !important; '>" + htmlCheckBIU(m_data) + "</p>");
@@ -75,21 +74,15 @@ QString Block::toHtml()
         html.append("<p style=\"text-align: center;\">" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Dialogue:
-        html.append("<div class='dialogue'>" + htmlCheckBIU(m_data) + "</div>");
+        html.append("<p class='dialogue'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::DraftDate:
         html.append("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><p style=\"text-align: left;\">" + htmlCheckBIU(m_data).replace("\n", "<br/>") + "</p>");
         break;
-    case BlockType::DualDialogueLeft:
-        html.append("<p class='dialogue'>" + htmlCheckBIU(m_data) + "</p>");
-        break;
-    case BlockType::DualDialogueRight:
-        html.append("<p class='dialogue'>" + htmlCheckBIU(m_data) + "</p></div></div>");
+    case BlockType::DualDialogueEnd:
+        html.append("</div></div>");
         break;
     case BlockType::Empty:
-        break;
-    case BlockType::LeftParentheticals:
-        html.append("<p class='parenthetical'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Lyrics:
         html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
@@ -97,18 +90,15 @@ QString Block::toHtml()
     case BlockType::Note:
         break;
     case BlockType::PageBreaks:
-        html.append("<p style=\"white-space:pre-warp; page-break-after: always;\" > </p>");
+        html.append("</section><section><p class='page-break'></p>");
         break;
     case BlockType::Parentheticals:
-        html.append("<p class='parenthetical'>" + htmlCheckBIU(m_data) + "</p>");
-        break;
-    case BlockType::RightParentheticals:
         html.append("<p class='parenthetical'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Scene:
         break;
     case BlockType::SceneHeading:
-        html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='scene-heading'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     case BlockType::Sequence:
         break;
@@ -121,7 +111,7 @@ QString Block::toHtml()
         html.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + htmlCheckBIU(m_data.replace("\n", "<br/>")) + "</p>");
         break;
     case BlockType::Transitions:
-        html.append("<p style=\"margin-left: 480px;\">" + htmlCheckBIU(m_data) + "</p>");
+        html.append("<p class='transition'>" + htmlCheckBIU(m_data) + "</p>");
         break;
     default :
         html.append("<p>" + htmlCheckBIU(m_data) + "</p>");
