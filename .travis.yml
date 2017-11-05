@@ -14,12 +14,12 @@ addons:
     - ubuntu-toolchain-r-test
     - sourceline: 'ppa:beineri/opt-qt592-trusty'
     packages:
-    - qt5-default qttools5-dev-tools qt59base
+    - qt5-default qttools5-dev-tools qt59base qt59webengine
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install qt5 ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force qt5 ; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source /opt/qt57/bin/qt57-env.sh ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source /opt/qt59/bin/qt59-env.sh ; fi
 - qmake -v
 
 script:
