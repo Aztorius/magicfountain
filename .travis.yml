@@ -34,7 +34,6 @@ script:
 
 before_deploy:
 - echo $TRAVIS_TAG
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./magicfountain.deb ./magicfountain-$TRAVIS_TAG.deb ; fi
 
 deploy:
   provider: releases
