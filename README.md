@@ -15,7 +15,7 @@ See: http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&item_id=OFL
 
 ## Install
 
-qmake with Qt5 is required.
+qmake with Qt 5.8 at least is required.
 
 ### Linux
 ```bash

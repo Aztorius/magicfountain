@@ -1,6 +1,6 @@
 install:
   - choco install -y curl InnoSetup
-  - set QTDIR=C:\\Qt\\5.6\\mingw49_32
+  - set QTDIR=C:\\Qt\\5.8\\mingw53_32
   - set PATH=%PATH%;C:\\MinGW\\bin;%QTDIR%\\bin;"C:\\Program Files (x86)\\Inno Setup 5"
 
 build_script:
@@ -9,7 +9,7 @@ build_script:
   - mkdir MagicFountain-release
   - cp release/magicfountain.exe MagicFountain-release
   - windeployqt --compiler-runtime MagicFountain-release/MagicFountain.exe
-  - cp C:\\Qt\\5.6\\mingw49_32\\bin\\libwinpthread-1.dll MagicFountain-release\\
+  - cp C:\\Qt\\5.8\\mingw53_32\\bin\\libwinpthread-1.dll MagicFountain-release\\
   - iscc -DMyAppVersion=%APPVEYOR_REPO_TAG_NAME% setup.iss
   - rename output-release\\setup-MagicFountain.exe setup-MagicFountain-%APPVEYOR_REPO_TAG_NAME%.exe
 

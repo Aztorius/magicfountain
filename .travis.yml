@@ -12,9 +12,9 @@ addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
-    - sourceline: 'ppa:beineri/opt-qt571-trusty'
+    - sourceline: 'ppa:beineri/opt-qt592-trusty'
     packages:
-    - qt5-default qttools5-dev-tools qt57base
+    - qt5-default qttools5-dev-tools qt59base
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install qt5 ; fi
