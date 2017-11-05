@@ -322,8 +322,10 @@ QString Script::toHtml()
 {
     QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
     content.append("<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">");
-    content.append("p, li { white-space: normal; margin: 0px; padding: 0px; } body { width: 624px; letter-spacing: 0px; padding: 0px; }");
-    content.append("</style></head><body>");
+    content.append("html { margin: 0px; padding: 0px; }");
+    content.append(" body { background-color: #fff; color: #3e3e3e; width: 624px; letter-spacing: 0px; padding: 0px; }");
+    content.append(" p, li { white-space: normal;  }");
+    content.append("</style>\n</head>\n<body>\n<article>\n<section>\n");
 
     Block *block;
     for (qint64 i = 0; i < m_blocks.size(); ++i) {
@@ -341,6 +343,7 @@ QString Script::toHtml()
         }
     }
 
+    content.append("</section>\n</article>\n</body>\n</html>");
     return content;
 }
 
