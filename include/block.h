@@ -31,6 +31,7 @@ enum BlockType { Empty,
                  Scene,
                  Sequence,
                  Act,
+                 Synopses,
                  PageBreaks,
                  BlankLine };
 

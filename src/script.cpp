@@ -45,7 +45,7 @@ void Script::parseFromFountain(QString script)
         } else if (text.left(3) == "===") { //Page breaks
             m_blocks.append(new Block(BlockType::PageBreaks));
         } else if (text.left(2) == "= ") { //Synopses
-            //Not used yet
+            m_blocks.append(new Block(BlockType::Synopses, text.mid(2)));
         } else if (text.left(1) == "~") { //Lyrics
             m_blocks.append(new Block(BlockType::Lyrics, text.mid(1)));
         } else if (text.left(6) == "Title:") { //Title

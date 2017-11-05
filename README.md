@@ -41,9 +41,9 @@ We manage our translations via [Transifex](https://goo.gl/tmFoFc "Translations v
 
 - Support Dual Dialogue
 - Support Scene Numbers
-- Support Sections
 - Support Fountain 1.0 and 1.1
 - Improve PDF and HTML export
 - Improve Indenting
+- Improve Sections
 - Improve Notes
 - Check spelling in different languages

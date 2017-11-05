@@ -115,6 +115,8 @@ QString Block::toHtml()
     case BlockType::Source:
         html.append("<p style=\"text-align: center;\">" + htmlCheckBIU(m_data) + "</p>");
         break;
+    case BlockType::Synopses:
+        break;
     case BlockType::Title:
         html.append("<p style=\"text-align: center;\"><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>" + htmlCheckBIU(m_data.replace("\n", "<br/>")) + "</p>");
         break;
