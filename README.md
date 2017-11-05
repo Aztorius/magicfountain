@@ -1,4 +1,4 @@
-# ![img](http://basic1.moy.su/Fotos/magicfountain.png)[Magic Fountain](https://goo.gl/h9KubK "Magic Fountain Offical Site")
+# ![img](https://github.com/Aztorius/magicfountain/raw/master/magicfountain.png)[Magic Fountain](https://aztorius.github.io/magicfountain/ "Magic Fountain Offical Site")
 A screenwriting program currently available on Linux and Windows.
 
 [![Build Status](https://travis-ci.org/Aztorius/magicfountain.svg?branch=master)](https://travis-ci.org/Aztorius/magicfountain)
@@ -41,9 +41,9 @@ We manage our translations via [Transifex](https://goo.gl/tmFoFc "Translations v
 
 - Support Dual Dialogue
 - Support Scene Numbers
-- Support Notes
 - Support Sections
 - Support Fountain 1.0 and 1.1
 - Improve PDF and HTML export
 - Improve Indenting
+- Improve Notes
 - Check spelling in different languages
