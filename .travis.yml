@@ -29,8 +29,8 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then chmod a+x linuxdeployqt*.AppImage ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH ; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs ; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./linuxdeployqt*.AppImage ./appdir/usr/local/share/applications/*.desktop -bundle-non-qt-libs ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./linuxdeployqt*.AppImage ./appdir/usr/local/share/applications/*.desktop -appimage ; fi
 
 before_deploy:
 - echo $TRAVIS_TAG

@@ -21,6 +21,11 @@ unix {
     }
 
     target.path = $$PREFIX/bin
+
+    shortcutfiles.files = magicfountain.desktop
+    shortcutfiles.path = $$PREFIX/share/applications/
+
+    INSTALLS += shortcutfiles
 }
 
 INSTALLS += target
