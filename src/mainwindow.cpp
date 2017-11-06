@@ -212,32 +212,26 @@ void MainWindow::print() {
 void MainWindow::newFile() {
     slot_checkAndSaveScript();
 
-    QString filename = ":/data/default_" + m_language + ".fountain";
+    QFile file(":/data/default_" + m_language + ".fountain");
 
-    QFile file(filename);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        filepath.clear();
-        ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
-        ui->plainTextEdit_fountaineditor->document()->setModified(false);
-        file.close();
-
-        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
-        cursor.movePosition(QTextCursor::Start);
-        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
-    } else {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         file.setFileName(":/data/default_en.fountain");
 
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
-            ui->plainTextEdit_fountaineditor->document()->setModified(false);
-            filepath.clear();
-            file.close();
-
-            QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
-            cursor.movePosition(QTextCursor::Start);
-            ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            // Error
+            return;
         }
     }
+
+    ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
+    ui->plainTextEdit_fountaineditor->document()->setModified(false);
+    filepath.clear();
+
+    QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
+
+    file.close();
 }
 
 void MainWindow::openFile() {
