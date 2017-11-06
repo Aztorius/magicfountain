@@ -299,43 +299,46 @@ void MainWindow::quickSave() {
 }
 
 void MainWindow::setBold() {
-    if (ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()) {
+    QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
+
+    if (cursor.selectedText().isEmpty()) {
         ui->plainTextEdit_fountaineditor->insertPlainText("****");
 
-        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 2);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     } else {
-        QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
-        ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
+        QString selected = cursor.selectedText();
+        cursor.clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("**" + selected + "**");
     }
 }
 
 void MainWindow::setItalic() {
-    if (ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()) {
+    QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
+
+    if (cursor.selectedText().isEmpty()) {
         ui->plainTextEdit_fountaineditor->insertPlainText("**");
 
-        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     } else {
-        QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
-        ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
+        QString selected = cursor.selectedText();
+        cursor.clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("*" + selected + "*");
     }
 }
 
 void MainWindow::setUnderline() {
-    if (ui->plainTextEdit_fountaineditor->textCursor().selectedText().isEmpty()) {
+    QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
+
+    if (cursor.selectedText().isEmpty()) {
         ui->plainTextEdit_fountaineditor->insertPlainText("__");
 
-        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
         cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     } else {
-        QString selected = ui->plainTextEdit_fountaineditor->textCursor().selectedText();
-        ui->plainTextEdit_fountaineditor->textCursor().clearSelection();
+        QString selected = cursor.selectedText();
+        cursor.clearSelection();
         ui->plainTextEdit_fountaineditor->insertPlainText("_" + selected + "_");
     }
 }
