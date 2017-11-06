@@ -24,5 +24,6 @@
         <file>locales/magicfountain_fr.ts</file>
         <file>data/default_fr.fountain</file>
         <file>data/default_de.fountain</file>
+        <file>data/style.css</file>
     </qresource>
 </RCC>

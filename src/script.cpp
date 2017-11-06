@@ -1,6 +1,7 @@
 #include "script.h"
 
 #include <QDebug>
+#include <QFile>
 
 Script::Script()
 {
@@ -9,6 +10,16 @@ Script::Script()
 
 Script::Script(QString script, ScriptType type)
 {
+    QFile file(":/data/style.css");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QTextStream in(&file);
+    m_cssStyle = in.readAll();
+
+    file.close();
+
     switch(type) {
     case ScriptType::Fountain:
         this->parseFromFountain(script);
@@ -16,6 +27,11 @@ Script::Script(QString script, ScriptType type)
     default:
         break;
     };
+}
+
+bool static isABlankLine(int i, QStringList lines)
+{
+    return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
 }
 
 void Script::parseFromFountain(QString script)
@@ -303,26 +319,10 @@ Script::~Script()
 
 QString Script::toHtml()
 {
-    QString content = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">";
+    QString content = "<!DOCTYPE HTML>";
     content.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">");
-    content.append("html { margin: 0px; padding: 0px; }");
-    content.append(" body { background-color: #fff; color: #3e3e3e; padding: 0; margin: 0; }");
-    content.append(" article { padding: 40px 0; margin: 0; }");
-    content.append(" section { padding: 0 0 0 40px; width: 465px; margin-left: auto; margin-right: auto; }");
-    content.append(" p { word-wrap: break-word; padding: 0 10px; }");
-    content.append(" body > p:first-child { margin-top: 0; }");
-    content.append(" .transition { text-align: right; }");
-    content.append(" .character { margin: 1.3em auto 0; width: 180px; }");
-    content.append(" .dialogue { margin: 0 auto; width: 310px; }");
-    content.append(" .parenthetical { margin: 0 auto; width: 250px; }");
-    content.append(" .scene-heading { margin-top: 2.6em; font-weight: bold; position: relative; padding-right: 40px; }");
-    content.append(" .dual-dialogue { overflow: hidden; }");
-    content.append(" .dual-dialogue .dual-dialogue-left, .dual-dialogue .dual-dialogue-right { width: 228px; float: left; }");
-    content.append(" .dual-dialogue p { width: auto; }");
-    content.append(" .dual-dialogue .character { xtext-align: center; padding-left: 40px; }");
-    content.append(" .dual-dialogue .parenthetical { padding-left: 40px; }");
-    content.append(" p.page-break { text-align: right; border-top: 1px solid #ccc; padding-top: 20px; margin-top: 20px; }");
-    content.append("</style>\n</head>\n<body>\n<article>\n<section>\n");
+    content.append(m_cssStyle);
+    content.append("</style></head><body><article><section>");
 
     Block *block;
     for (qint64 i = 0; i < m_blocks.size(); ++i) {
@@ -340,13 +340,8 @@ QString Script::toHtml()
         }
     }
 
-    content.append("</section>\n</article>\n</body>\n</html>");
+    content.append("</section></article></body></html>");
     return content;
-}
-
-bool Script::isABlankLine(int i, QStringList lines)
-{
-    return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
 }
 
 QList<Block *> Script::getBlocks()
@@ -363,6 +358,7 @@ Script& Script::operator=(const Script& other)
     draftDate = other.draftDate;
     contact = other.contact;
     m_blocks = other.m_blocks;
+    m_cssStyle = other.m_cssStyle;
 
     return *this;
 }
