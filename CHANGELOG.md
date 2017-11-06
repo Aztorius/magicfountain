@@ -1,3 +1,15 @@
+### 1.0.0 Beta 1
+
+- Switch to a Qt WebView Widget for the preview (Qt >= 5.8 required)
+- Add Dual Dialogue support
+- Add Synopses support
+- Force colors on HTML and PDF exports and preview
+- Fix HTML export with UTF-8 chars
+
+### 1.0.0 Alpha 8
+
+- Fix Linux auto-deploy build
+
 ### 1.0.0 Alpha 7
 
 - Move cursor when cliking on Scene Header
