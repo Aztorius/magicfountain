@@ -19,7 +19,7 @@ public:
     ~Script();
 
     QString toHtml();
-    QList<Block *> getBlocks();
+    QList<Block *> getBlocksOfType(BlockType type);
 
     Script& operator=(const Script& other);
 private:

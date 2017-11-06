@@ -344,9 +344,17 @@ QString Script::toHtml()
     return content;
 }
 
-QList<Block *> Script::getBlocks()
+QList<Block *> Script::getBlocksOfType(BlockType type)
 {
-    return m_blocks;
+    QList<Block *> list;
+
+    foreach (Block *block, m_blocks) {
+        if (block->getType() == type) {
+            list.append(block);
+        }
+    }
+
+    return list;
 }
 
 Script& Script::operator=(const Script& other)
@@ -357,8 +365,10 @@ Script& Script::operator=(const Script& other)
     source = other.source;
     draftDate = other.draftDate;
     contact = other.contact;
-    m_blocks = other.m_blocks;
     m_cssStyle = other.m_cssStyle;
+
+    qDeleteAll(m_blocks);
+    m_blocks = other.m_blocks;
 
     return *this;
 }
