@@ -1,5 +1,5 @@
 # ![img](https://github.com/Aztorius/magicfountain/raw/master/magicfountain.png)[Magic Fountain](https://aztorius.github.io/magicfountain/ "Magic Fountain Offical Site")
-A screenwriting program currently available on Linux and Windows.
+A screenwriting program available on Linux, MacOSX and Windows.
 
 [![Build Status](https://travis-ci.org/Aztorius/magicfountain.svg?branch=master)](https://travis-ci.org/Aztorius/magicfountain)
 [![Build status](https://ci.appveyor.com/api/projects/status/2jbbo67va29cjoxw?svg=true)](https://ci.appveyor.com/project/Aztorius/magicfountain)
@@ -24,13 +24,20 @@ make
 sudo make install
 ```
 
-### Windows
+### MacOSX
+```bash
+qmake
+make
 ```
+
+### Windows
+```bash
 qmake
 mingw32-make
 ```
+
 ## Screenshot
-![img](http://basic1.moy.su/Fotos/Bildschirmfoto_2017-08-23_17-15-26.png)
+![img](https://lh3.googleusercontent.com/28OVCI8kb_qdWvEHDOlDu3vFekXqmeC-JFJYHwYuiZMRMOjLkaTODC4raWwsSpEti8WJ30w3P40dRVWwqw=w1000-no-tmp.jpg)
 
 # Contributing
 You can open issues for bugs you've found or features you think are missing. You can also submit pull requests to this repository.
@@ -39,7 +46,6 @@ We manage our translations via [Transifex](https://goo.gl/tmFoFc "Translations v
 
 ## TODO List
 
-- Support Dual Dialogue
 - Support Scene Numbers
 - Support Fountain 1.0 and 1.1
 - Improve PDF and HTML export
