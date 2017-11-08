@@ -213,21 +213,21 @@ void MainWindow::exportAsHTML() {
 }
 
 void MainWindow::print() {
-        QPrinter printer;
-        printer.setPageSize(QPrinter::Letter);
-        printer.setColorMode(QPrinter::GrayScale);
-        printer.setFullPage(true);
-        printer.setResolution(96);
-        printer.setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
+        QPrinter *printer = new QPrinter();
+        printer->setPageSize(QPrinter::Letter);
+        printer->setColorMode(QPrinter::GrayScale);
+        printer->setFullPage(true);
+        printer->setResolution(96);
+        printer->setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
 
-        QPrintDialog dialog(&printer, this);
+        QPrintDialog dialog(printer, this);
         dialog.setWindowTitle(tr("Print Document"));
 
         if (dialog.exec() != QDialog::Accepted) {
            return;
         }
 
-        ui->webEngineView_preview->page()->print(&printer, [](bool){});
+        ui->webEngineView_preview->page()->print(printer, [printer](bool){ delete printer; });
 }
 
 void MainWindow::newFile() {
