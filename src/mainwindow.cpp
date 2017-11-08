@@ -8,7 +8,7 @@
 
 #include "block.h"
 
-QString GLOBAL_VERSION = "1.0.0-alpha";
+QString GLOBAL_VERSION = "1.0.0-beta";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,13 +18,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("MagicFountain " + GLOBAL_VERSION);
 
-    int fontId = QFontDatabase::addApplicationFont(":/fonts/Courier Prime.ttf");
+    QStringList listFonts;
+    listFonts << "Courier Prime.ttf" << "Courier Prime Italic.ttf" << "Courier Prime Bold.ttf" << "Courier Prime Bold Italic.ttf";
+    int fontId = -1;
+
+    foreach (QString font, listFonts ) {
+        fontId = QFontDatabase::addApplicationFont(":/fonts/" + font);
+        if (fontId == -1) {
+            break;
+        }
+    }
 
     if (fontId == -1) {
-        //Error loading the font : should use system font available
+        //Error loading the font : should use the system font available
         courierfont = QFont("Courier");
     } else {
-        courierfont = QFont(QFontDatabase::applicationFontFamilies(fontId).at(0));
+        courierfont = QFont("Courier Prime");
     }
 
     courierfont.setPointSize(12);
