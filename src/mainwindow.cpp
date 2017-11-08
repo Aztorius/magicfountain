@@ -179,16 +179,16 @@ void MainWindow::exportAsPDF() {
                  fileName.append(".pdf");
         }
 
-        QPrinter printer;
-        printer.setOutputFormat(QPrinter::PdfFormat);
-        printer.setPageSize(QPrinter::Letter);
-        printer.setColorMode(QPrinter::GrayScale);
-        printer.setFullPage(true);
-        printer.setResolution(96);
-        printer.setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
-        printer.setOutputFileName(fileName);
+        QPrinter *printer = new QPrinter();
+        printer->setOutputFormat(QPrinter::PdfFormat);
+        printer->setPageSize(QPrinter::Letter);
+        printer->setColorMode(QPrinter::GrayScale);
+        printer->setFullPage(true);
+        printer->setResolution(96);
+        printer->setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
+        printer->setOutputFileName(fileName);
 
-        ui->webEngineView_preview->page()->print(&printer, [](bool){});
+        ui->webEngineView_preview->page()->print(printer, [printer](bool){ delete printer; });
     }
 }
 
