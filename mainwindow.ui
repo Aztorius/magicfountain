@@ -103,9 +103,18 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <widget class="QMenu" name="menuFont">
+     <property name="title">
+      <string>Font</string>
+     </property>
+     <addaction name="actionCourier_Prime"/>
+     <addaction name="actionCourier_System"/>
+    </widget>
     <addaction name="actionBold"/>
     <addaction name="actionItalic"/>
     <addaction name="actionUnderline"/>
+    <addaction name="separator"/>
+    <addaction name="menuFont"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -338,7 +347,17 @@
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionCourier_Prime">
+   <property name="text">
+    <string>Courier Prime</string>
+   </property>
+  </action>
+  <action name="actionCourier_System">
+   <property name="text">
+    <string>Courier (System)</string>
    </property>
   </action>
  </widget>

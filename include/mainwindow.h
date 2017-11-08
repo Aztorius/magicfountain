@@ -62,6 +62,9 @@ private slots:
     void slot_clickScenes(QListWidgetItem *item);
     void slot_checkAndSaveScript();
 
+    void slot_loadSystemFont();
+    void slot_loadCustomFont();
+
 protected:
     void changeEvent(QEvent *event);
 };

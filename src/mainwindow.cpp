@@ -18,25 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setWindowTitle("MagicFountain " + GLOBAL_VERSION);
 
-    QStringList listFonts;
-    listFonts << "Courier Prime.ttf" << "Courier Prime Italic.ttf" << "Courier Prime Bold.ttf" << "Courier Prime Bold Italic.ttf";
-    int fontId = -1;
-
-    foreach (QString font, listFonts ) {
-        fontId = QFontDatabase::addApplicationFont(":/fonts/" + font);
-        if (fontId == -1) {
-            break;
-        }
-    }
-
-    if (fontId == -1) {
-        //Error loading the font : should use the system font available
-        courierfont = QFont("Courier");
-    } else {
-        courierfont = QFont("Courier Prime");
-    }
-
-    courierfont.setPointSize(12);
+    slot_loadCustomFont();
 
     m_settings = new QSettings("MagicFountain", "MagicFountain");
 
@@ -68,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     currentScript = nullptr;
 
-    ui->plainTextEdit_fountaineditor->setFont(courierfont);
     ui->plainTextEdit_fountaineditor->setFocus();
 
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
@@ -85,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionBold, SIGNAL(triggered()), this, SLOT(setBold()));
     connect(ui->actionItalic, SIGNAL(triggered()), this, SLOT(setItalic()));
     connect(ui->actionUnderline, SIGNAL(triggered()), this, SLOT(setUnderline()));
+    connect(ui->actionCourier_Prime, SIGNAL(triggered()), this, SLOT(slot_loadCustomFont()));
+    connect(ui->actionCourier_System, SIGNAL(triggered()), this, SLOT(slot_loadSystemFont()));
 
     connect(ui->actionFountain_Syntax, SIGNAL(triggered()), this, SLOT(slot_actionFountain_Syntax()));
     connect(ui->menuLanguage, SIGNAL(triggered(QAction*)), this, SLOT(slot_actionLanguage(QAction*)));
@@ -153,6 +136,37 @@ void MainWindow::refreshScenesView()
     foreach (Block *block, currentScript->getBlocksOfType(BlockType::SceneHeading)) {
         ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
     }
+}
+
+void MainWindow::slot_loadSystemFont()
+{
+    courierfont = QFont("Courier");
+    courierfont.setPointSize(12);
+    ui->plainTextEdit_fountaineditor->setFont(courierfont);
+}
+
+void MainWindow::slot_loadCustomFont()
+{
+    QStringList listFonts;
+    listFonts << "Courier Prime.ttf" << "Courier Prime Italic.ttf" << "Courier Prime Bold.ttf" << "Courier Prime Bold Italic.ttf";
+    int fontId = -1;
+
+    foreach (QString font, listFonts) {
+        fontId = QFontDatabase::addApplicationFont(":/fonts/" + font);
+        if (fontId == -1) {
+            break;
+        }
+    }
+
+    if (fontId == -1) {
+        //Error loading the font : should use the system font available
+        courierfont = QFont("Courier");
+    } else {
+        courierfont = QFont("Courier Prime");
+    }
+
+    courierfont.setPointSize(12);
+    ui->plainTextEdit_fountaineditor->setFont(courierfont);
 }
 
 void MainWindow::exportAsPDF() {
