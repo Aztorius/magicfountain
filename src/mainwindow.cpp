@@ -22,30 +22,23 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_settings = new QSettings("MagicFountain", "MagicFountain");
 
+    QLocale locale;
+
     if (m_settings->contains("language")) {
         m_language = m_settings->value("language").toString();
-        QLocale locale(m_language);
-
-        if (m_qtTranslator.load("qt_" + locale.name(),
-                            QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-            qApp->installTranslator(&m_qtTranslator);
-        }
-
-        if (m_translator.load(QString("magicfountain_") + m_language, QString(":/locales/"))) {
-            qApp->installTranslator(&m_translator);
-        }
+        locale = QLocale(m_language);
     } else {
-        QLocale locale = QLocale::system();
+        locale = QLocale::system();
         m_language = QLocale::languageToString(locale.language());
+    }
 
-        if (m_qtTranslator.load("qt_" + QLocale::system().name(),
-                            QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-            qApp->installTranslator(&m_qtTranslator);
-        }
+    if (m_qtTranslator.load("qt_" + locale.name(),
+                        QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        qApp->installTranslator(&m_qtTranslator);
+    }
 
-        if (m_translator.load(QString("magicfountain_") + m_language, QString(":/locales/"))) {
-            qApp->installTranslator(&m_translator);
-        }
+    if (m_translator.load(QString("magicfountain_") + m_language, QString(":/locales/"))) {
+        qApp->installTranslator(&m_translator);
     }
 
     currentScript = nullptr;
