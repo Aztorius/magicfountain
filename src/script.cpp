@@ -1,7 +1,7 @@
 #include "script.h"
 
-#include <QDebug>
 #include <QFile>
+#include <QTextStream>
 
 Script::Script()
 {

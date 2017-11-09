@@ -5,6 +5,12 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QLibraryInfo>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QTextBlock>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
 
 #include "block.h"
 
@@ -98,14 +104,11 @@ void MainWindow::refreshTitleBar(bool modified)
     QString title = "MagicFountain " + GLOBAL_VERSION;
 
     if (!filepath.isEmpty()) {
-        title.append(" " + filepath);
-    }
-
-    if (modified) {
-        title.append(" *");
+        title = filepath + "[*] - " + title;
     }
 
     setWindowTitle(title);
+    setWindowModified(modified);
 }
 
 void MainWindow::refreshPreview()

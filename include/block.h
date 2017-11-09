@@ -2,7 +2,6 @@
 #define BLOC_H
 
 #include <QString>
-#include <QStringList>
 
 enum BlockType { Empty,
                  Title,

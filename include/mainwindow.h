@@ -2,12 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTextBlock>
-#include <QPrinter>
-#include <QPrintDialog>
-#include <QFile>
-#include <QFileDialog>
-#include <QTextStream>
 #include <QTranslator>
 #include <QSettings>
 #include <QListWidgetItem>

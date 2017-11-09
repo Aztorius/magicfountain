@@ -1,7 +1,6 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-#include <QString>
 #include <QStringList>
 
 #include "block.h"
