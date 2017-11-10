@@ -31,6 +31,13 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./linuxdeployqt*.AppImage ./appdir/usr/local/share/applications/*.desktop -bundle-non-qt-libs ; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./linuxdeployqt*.AppImage ./appdir/usr/local/share/applications/*.desktop -appimage ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv ./MagicFountain*.AppImage ./MagicFountain-$TRAVIS_TAG.AppImage ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then macdeployqt ./MagicFountain.app -verbose=2 ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -O https://raw.githubusercontent.com/aurelien-rainone/macdeployqtfix/master/macdeployqtfix.py ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python macdeployqtfix.py ./MagicFountain.app/Contents/MacOS/MagicFountain /usr/local/Cellar/qt/5.8.0_2/ ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then otool -L ./MagicFountain.app/Contents/MacOS/MagicFountain ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then macdeployqt ./MagicFountain.app -dmg ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mv ./*.dmg ./MagicFountain-$TRAVIS_TAG.dmg ; fi
 
 before_deploy:
 - echo $TRAVIS_TAG
@@ -42,8 +49,8 @@ deploy:
   file_glob: true
   file:
     - ./MagicFountain*.AppImage
+    - ./MagicFountain*.dmg
   skip_cleanup: true
   on:
     repo: Aztorius/magicfountain
     tags: true
-    condition: $TRAVIS_OS_NAME = linux
