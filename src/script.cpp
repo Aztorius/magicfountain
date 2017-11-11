@@ -238,7 +238,7 @@ QList<Block *> Script::getBlocksOfType(BlockType type)
     QList<Block *> list;
 
     foreach (Block *block, m_blocks) {
-        if (block->getType() == type) {
+        if (block->getType() & type) {
             list.append(block);
         }
     }
