@@ -285,16 +285,6 @@ void Script::parseFromFountain(QString script)
             }
 
             if (characterType == BlockType::CharacterRight) {
-                for (qint32 i = cursor; i < m_blocks.size(); i++) {
-                    switch(m_blocks.at(i)->getType()){
-                    case BlockType::Character:
-                        m_blocks.at(i)->setType(BlockType::CharacterRight);
-                        break;
-                    default:
-                        break;
-                    }
-                }
-
                 m_blocks.append(new Block(BlockType::DualDialogueEnd));
             }
 
