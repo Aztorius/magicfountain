@@ -34,6 +34,29 @@ bool static isABlankLine(int i, QStringList lines)
     return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
 }
 
+void static parseTitlePageData(quint32 *i, QStringList *lines, QList<Block *> *m_blocks, QString *destination)
+{
+    quint32 blockcount = lines->size();
+
+    if (++(*i) >= blockcount) {
+        return;
+    }
+
+    QString text = lines->at(*i);
+
+    while ((text.left(1) == "\t" || text.left(3) == "   ") && (*i) < blockcount) {
+        m_blocks->last()->appendData("\n" + text.trimmed());
+        (*destination).append(text.trimmed());
+
+        if (++(*i) >= blockcount) {
+            break;
+        }
+
+        text = lines->at(*i);
+    }
+    --(*i);
+}
+
 void Script::parseFromFountain(QString script)
 {
     QStringList lines = script.split("\n");
@@ -42,8 +65,8 @@ void Script::parseFromFountain(QString script)
     QStringList validStartHeaders;
     validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I/E";
 
-    int blockcount = lines.size();
-    int i = 0;
+    quint32 blockcount = lines.size();
+    quint32 i = 0;
 
     while (i < blockcount) {
         text = lines.at(i).trimmed();
@@ -67,148 +90,27 @@ void Script::parseFromFountain(QString script)
         } else if (text.left(6) == "Title:") { //Title
             m_blocks.append(new Block(BlockType::Title, text.mid(6)));
             title.append(text.mid(6).trimmed());
-            i++;
-
-            if (i >= blockcount) {
-                break;
-            }
-
-            text = lines.at(i);
-
-            while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-                m_blocks.last()->appendData("\n" + text.trimmed());
-                title.append(text.trimmed());
-
-                i++;
-
-                if (i >= blockcount) {
-                    break;
-                }
-
-                text = lines.at(i);
-            }
-            i--;
+            parseTitlePageData(&i, &lines, &m_blocks, &title);
         } else if (text.left(7) == "Credit:") { //Credit
             m_blocks.append(new Block(BlockType::Credit, text.mid(7)));
             credit.append(text.mid(7).trimmed());
-            i++;
-
-            if (i >= blockcount) {
-                break;
-            }
-
-            text = lines.at(i);
-
-            while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-                m_blocks.last()->appendData("\n" + text.trimmed());
-                credit.append(text.trimmed());
-
-                i++;
-
-                if (i >= blockcount) {
-                    break;
-                }
-
-                text = lines.at(i);
-            }
-            i--;
+            parseTitlePageData(&i, &lines, &m_blocks, &credit);
         } else if (text.left(7) == "Author:") { //Author
             m_blocks.append(new Block(BlockType::Author, text.mid(7)));
             author.append(text.mid(7).trimmed());
-            i++;
-
-            if (i >= blockcount) {
-                break;
-            }
-
-            text = lines.at(i);
-
-            while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-                m_blocks.last()->appendData("\n" + text.trimmed());
-                author.append(text.trimmed());
-
-                i++;
-
-                if (i >= blockcount) {
-                    break;
-                }
-
-                text = lines.at(i);
-            }
-            i--;
+            parseTitlePageData(&i, &lines, &m_blocks, &author);
         } else if (text.left(7) == "Source:") { //Source
             m_blocks.append(new Block(BlockType::Source, text.mid(7)));
             source.append(text.mid(7).trimmed());
-            i++;
-
-            if (i >= blockcount) {
-                break;
-            }
-
-            text = lines.at(i);
-
-            while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-                m_blocks.last()->appendData("\n" + text.trimmed());
-                source.append(text.trimmed());
-
-                i++;
-
-                if (i >= blockcount) {
-                    break;
-                }
-
-                text = lines.at(i);
-            }
-            i--;
+            parseTitlePageData(&i, &lines, &m_blocks, &source);
         } else if (text.left(11) == "Draft date:") { //Draft date
             m_blocks.append(new Block(BlockType::DraftDate, text.mid(11).trimmed()));
             draftDate.append(text.mid(11).trimmed());
-            i++;
-
-            if (i >= blockcount) {
-                break;
-            }
-
-            text = lines.at(i);
-
-            while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-                m_blocks.last()->appendData("\n" + text.trimmed());
-                draftDate.append(text.trimmed());
-
-                i++;
-
-                if (i >= blockcount) {
-                    break;
-                }
-
-                text = lines.at(i);
-            }
-            i--;
+            parseTitlePageData(&i, &lines, &m_blocks, &draftDate);
         } else if (text.left(8) == "Contact:") { //Contact
             m_blocks.append(new Block(BlockType::Contact, text.mid(8)));
             contact.append(text.mid(8).trimmed());
-
-            i++;
-
-            if (i >= blockcount) {
-                break;
-            }
-
-            text = lines.at(i);
-
-            while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-                m_blocks.last()->appendData("\n" + text.trimmed());
-                contact.append(text.trimmed());
-
-                i++;
-
-                if (i >= blockcount) {
-                    break;
-                }
-
-                text = lines.at(i);
-            }
-            i--;
+            parseTitlePageData(&i, &lines, &m_blocks, &contact);
         } else if (text.left(4) == "### ") { //Scene
             m_blocks.append(new Block(BlockType::Scene, text.mid(4)));
         } else if (text.left(3) == "## ") { //Sequence
@@ -229,18 +131,18 @@ void Script::parseFromFountain(QString script)
             m_blocks.append(new Block(BlockType::SceneHeading, text.mid(1)));
         } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
             if (text.left(1) == "@") {
-                text.remove(0,1);
+                text.remove(0, 1);
             }
 
             BlockType characterType = BlockType::Character;
             qint32 cursor = m_blocks.size() - 1;
 
             if (text.right(1) == "^") { //Dual dialogue
-                text.remove(text.size()-1, 1);
+                text.remove(text.size() - 1, 1);
 
                 Block *block = nullptr;
 
-                while (cursor > 0 && (m_blocks.at(cursor)->getType() == BlockType::Dialogue || m_blocks.at(cursor)->getType() == BlockType::Parentheticals || m_blocks.at(cursor)->getType() == BlockType::BlankLine)) {
+                while (cursor > 0 && (m_blocks.at(cursor)->getType() & (BlockType::Dialogue | BlockType::Parentheticals | BlockType::BlankLine))) {
                     cursor--;
                 }
 
@@ -257,9 +159,8 @@ void Script::parseFromFountain(QString script)
             } else {
                 m_blocks.append(new Block(BlockType::Character, text));
             }
-            i++;
 
-            if (i >= blockcount) {
+            if (++i >= blockcount) {
                 break;
             }
 
@@ -267,17 +168,15 @@ void Script::parseFromFountain(QString script)
 
             while ((!text.isEmpty() || lines.at(i) == "  ") && i < blockcount) {
 
-                if (text.left(1) == "(" && text.right(1) == ")") { //Parenthetical : 2.6 inches from left side
+                if (text.left(1) == "(" && text.right(1) == ")") { //Parenthetical
                     m_blocks.append(new Block(BlockType::Parentheticals, text));
-                } else if (!text.isEmpty()) { //Dialogue : 1 inche from left side
+                } else if (!text.isEmpty()) { //Dialogue
                     m_blocks.append(new Block(BlockType::Dialogue, text));
                 } else {
                     m_blocks.append(new Block(BlockType::BlankLine));
                 }
 
-                i++;
-
-                if (i >= blockcount) {
+                if (++i >= blockcount) {
                     break;
                 }
 
