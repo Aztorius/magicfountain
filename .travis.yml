@@ -7,13 +7,6 @@ matrix:
       sudo: required
     - os: osx
       osx_image: xcode8.3
-      env: LOCAL_MACOS_VER=10.12
-    - os: osx
-      osx_image: xcode7.3
-      env: LOCAL_MACOS_VER=10.11
-    - os: osx
-      osx_image: xcode6.4
-      env: LOCAL_MACOS_VER=10.10
 
 addons:
   apt:
@@ -44,7 +37,7 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then python macdeployqtfix.py ./MagicFountain.app/Contents/MacOS/MagicFountain /usr/local/Cellar/qt/5.8.0_2/ ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then otool -L ./MagicFountain.app/Contents/MacOS/MagicFountain ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then macdeployqt ./MagicFountain.app -dmg ; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mv ./*.dmg ./MagicFountain-$TRAVIS_TAG.MACOSX$LOCAL_MACOS_VER.dmg ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mv ./*.dmg ./MagicFountain-$TRAVIS_TAG.dmg ; fi
 
 before_deploy:
 - echo $TRAVIS_TAG
