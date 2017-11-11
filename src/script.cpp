@@ -201,15 +201,14 @@ Script::~Script()
 
 QString Script::toHtml()
 {
+    QString cssStyle;
     QFile file(":/data/style.css");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        // Unable to load css style
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        cssStyle = in.readAll();
+        file.close();
     }
-
-    QTextStream in(&file);
-    QString cssStyle = in.readAll();
-
-    file.close();
 
     QString content = "<!DOCTYPE HTML>";
     content.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">");
