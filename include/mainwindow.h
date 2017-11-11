@@ -25,7 +25,7 @@ private:
     Ui::MainWindow *ui;
     QString filepath;
     QFont courierfont;
-    Script *currentScript;
+    Script currentScript;
     QTranslator m_qtTranslator;
     QTranslator m_translator;
     QSettings *m_settings;

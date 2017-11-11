@@ -10,16 +10,6 @@ Script::Script()
 
 Script::Script(QString script, ScriptType type)
 {
-    QFile file(":/data/style.css");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return;
-    }
-
-    QTextStream in(&file);
-    m_cssStyle = in.readAll();
-
-    file.close();
-
     switch(type) {
     case ScriptType::Fountain:
         this->parseFromFountain(script);
@@ -67,6 +57,9 @@ void Script::parseFromFountain(QString script)
 
     quint32 blockcount = lines.size();
     quint32 i = 0;
+
+    qDeleteAll(m_blocks);
+    m_blocks.clear();
 
     while (i < blockcount) {
         text = lines.at(i).trimmed();
@@ -208,9 +201,19 @@ Script::~Script()
 
 QString Script::toHtml()
 {
+    QFile file(":/data/style.css");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        // Unable to load css style
+    }
+
+    QTextStream in(&file);
+    QString cssStyle = in.readAll();
+
+    file.close();
+
     QString content = "<!DOCTYPE HTML>";
     content.append("<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">");
-    content.append(m_cssStyle);
+    content.append(cssStyle);
     content.append("</style></head><body><article><section>");
 
     Block *block;
@@ -254,9 +257,9 @@ Script& Script::operator=(const Script& other)
     source = other.source;
     draftDate = other.draftDate;
     contact = other.contact;
-    m_cssStyle = other.m_cssStyle;
 
     qDeleteAll(m_blocks);
+    m_blocks.clear();
 
     foreach (Block *block, other.m_blocks) {
         m_blocks.append(new Block(*block));

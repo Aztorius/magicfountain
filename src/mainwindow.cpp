@@ -47,8 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
         qApp->installTranslator(&m_translator);
     }
 
-    currentScript = nullptr;
-
     ui->plainTextEdit_fountaineditor->setFocus();
 
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
@@ -79,10 +77,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    if (currentScript != nullptr) {
-        delete currentScript;
-    }
-
     if (m_settings != 0) {
         delete m_settings;
     }
@@ -113,13 +107,9 @@ void MainWindow::refreshTitleBar(bool modified)
 
 void MainWindow::refreshPreview()
 {
-    if (currentScript != nullptr) {
-        delete currentScript;
-    }
+    currentScript.parseFromFountain(ui->plainTextEdit_fountaineditor->toPlainText());
 
-    currentScript = new Script(ui->plainTextEdit_fountaineditor->toPlainText(), ScriptType::Fountain);
-
-    ui->webEngineView_preview->setHtml(currentScript->toHtml());
+    ui->webEngineView_preview->setHtml(currentScript.toHtml());
     ui->plainTextEdit_fountaineditor->setFocus();
 
     refreshScenesView();
@@ -129,7 +119,7 @@ void MainWindow::refreshScenesView()
 {
     ui->listWidget_scenes->clear();
 
-    foreach (Block *block, currentScript->getBlocksOfType(BlockType::SceneHeading)) {
+    foreach (Block *block, currentScript.getBlocksOfType(BlockType::SceneHeading)) {
         ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
     }
 }
@@ -202,7 +192,7 @@ void MainWindow::exportAsHTML() {
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
              QTextStream stream(&file);
              stream.setCodec("UTF-8");
-             stream << currentScript->toHtml();
+             stream << currentScript.toHtml();
              file.close();
         }
     }
@@ -418,7 +408,7 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::slot_checkAndSaveScript()
 {
-    if (currentScript != nullptr && ui->plainTextEdit_fountaineditor->document()->isModified()) {
+    if (ui->plainTextEdit_fountaineditor->document()->isModified()) {
         if (QMessageBox::question(this, QString(tr("Save Fountain file")), QString(tr("Do you want to save current script ?"))) == QMessageBox::Yes) {
             saveAs();
         }
