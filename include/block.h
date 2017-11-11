@@ -36,6 +36,7 @@ class Block
 public:
     Block(BlockType type);
     Block(BlockType type, QString data);
+    Block(Block& other);
     ~Block();
 
     void addBlock(Block *block);

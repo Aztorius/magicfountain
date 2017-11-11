@@ -15,6 +15,12 @@ Block::Block(BlockType type, QString data)
     m_data = data;
 }
 
+Block::Block(Block &other)
+{
+    m_type = other.m_type;
+    m_data = other.m_data;
+}
+
 Block::~Block()
 {
 

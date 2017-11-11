@@ -257,7 +257,10 @@ Script& Script::operator=(const Script& other)
     m_cssStyle = other.m_cssStyle;
 
     qDeleteAll(m_blocks);
-    m_blocks = other.m_blocks;
+
+    foreach (Block *block, other.m_blocks) {
+        m_blocks.append(new Block(*block));
+    }
 
     return *this;
 }
