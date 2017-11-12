@@ -394,6 +394,12 @@ void MainWindow::slot_clickScenes(QListWidgetItem *item)
         if (!ui->plainTextEdit_fountaineditor->find(scene)) {
             ui->plainTextEdit_fountaineditor->find(scene, QTextDocument::FindBackward);
         }
+
+        QFlags<QWebEnginePage::FindFlag> flags = QWebEnginePage::FindCaseSensitively;
+        ui->webEngineView_preview->findText(scene, flags);
+        flags |= QWebEnginePage::FindBackward;
+        ui->webEngineView_preview->findText(scene, flags);
+        ui->webEngineView_preview->findText(QString());
     }
 }
 
