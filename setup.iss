@@ -66,13 +66,16 @@ Source: "MagicFountain-release\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversi
 Source: "MagicFountain-release\libGLESV2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "MagicFountain-release\Qt5Qml.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Quick.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5QuickWidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "MagicFountain-release\Qt5Positioning.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5PrintSupport.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "MagicFountain-release\Qt5WebChannel.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5WebEngineWidgets.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5WebEngineCore.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
