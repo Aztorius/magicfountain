@@ -3,9 +3,9 @@ image: Visual Studio 2017
 install:
   - choco install -y curl InnoSetup
   - set QTDIR=C:\\Qt\\5.9.1\\msvc2017_64
-  - set PATH=%PATH%;%QTDIR%\\bin;"C:\\Program Files (x86)\\Inno Setup 5"
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-  - C:\Qt\5.9.1\msvc2017_64\bin\qmake.exe -tp vc
+  - set PATH=%PATH%;%QTDIR%\\bin;"C:\\Program Files (x86)\\Inno Setup 5"
+  - qmake -tp vc
 
 build_script:
   - qmake magicfountain.pro
