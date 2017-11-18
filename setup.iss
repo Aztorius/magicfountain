@@ -63,10 +63,8 @@ Source: "MagicFountain-release\platforms\*"; DestDir: "{app}\platforms"; Flags: 
 Source: "MagicFountain-release\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "MagicFountain-release\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "MagicFountain-release\libgcc_s_dw2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\libGLESV2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "MagicFountain-release\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\opengl32sw.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MagicFountain-release\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
