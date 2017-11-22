@@ -8,7 +8,8 @@
 
 enum ScriptType {
     Unknown,
-    Fountain
+    Fountain,
+    FinalDraft
 };
 
 class Script
@@ -22,6 +23,7 @@ public:
     QString toHtml();
     QList<Block *> getBlocksOfType(BlockType type);
     void parseFromFountain(QString script);
+    void parseFromFinalDraft(QString script);
 
     Script& operator=(const Script& other);
 private:

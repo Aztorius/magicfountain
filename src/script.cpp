@@ -2,6 +2,7 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QXmlStreamReader>
 
 Script::Script()
 {
@@ -13,6 +14,9 @@ Script::Script(QString script, ScriptType type)
     switch(type) {
     case ScriptType::Fountain:
         this->parseFromFountain(script);
+        break;
+    case ScriptType::FinalDraft:
+        this->parseFromFinalDraft(script);
         break;
     default:
         break;
@@ -30,6 +34,9 @@ Script::Script(QFile file, ScriptType type)
     switch(type) {
     case ScriptType::Fountain:
         this->parseFromFountain(in.readAll());
+        break;
+    case ScriptType::FinalDraft:
+        this->parseFromFinalDraft(in.readAll());
         break;
     default:
         break;
@@ -210,6 +217,44 @@ void Script::parseFromFountain(QString script)
         }
 
         i++;
+    }
+}
+
+void Script::parseFromFinalDraft(QString script)
+{
+    QXmlStreamReader reader(script);
+    QString attributeName;
+
+    qDeleteAll(m_blocks);
+    m_blocks.clear();
+
+    while (reader.readNextStartElement()) {
+        if (reader.name() == "Paragraph") {
+            foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
+                if (attr.name().toString() == QString("Type")) {
+                    QString type = attr.value().toString();
+
+                    if (type == QString("Action")) {
+                        reader.readNextStartElement();
+                        m_blocks.append(new Block(BlockType::Action, reader.readElementText()));
+                    } else if (type == QString("Character")) {
+                        reader.readNextStartElement();
+                        m_blocks.append(new Block(BlockType::Character, reader.readElementText()));
+                    } else if (type == QString("Dialogue")) {
+                        reader.readNextStartElement();
+                        m_blocks.append(new Block(BlockType::Dialogue, reader.readElementText()));
+                    } else if (type == QString("Parenthetical")) {
+                        reader.readNextStartElement();
+                        m_blocks.append(new Block(BlockType::Parentheticals, reader.readElementText()));
+                    }
+                }
+            }
+        }
+    }
+
+    if (reader.hasError()) {
+        //TODO: Raise Error
+        return;
     }
 }
 
