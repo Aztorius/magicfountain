@@ -19,6 +19,25 @@ Script::Script(QString script, ScriptType type)
     };
 }
 
+Script::Script(QFile file, ScriptType type)
+{
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QTextStream in(&file);
+
+    switch(type) {
+    case ScriptType::Fountain:
+        this->parseFromFountain(in.readAll());
+        break;
+    default:
+        break;
+    }
+
+    file.close();
+}
+
 bool static isABlankLine(int i, QStringList lines)
 {
     return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());

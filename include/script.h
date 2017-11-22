@@ -2,6 +2,7 @@
 #define SCRIPT_H
 
 #include <QStringList>
+#include <QFile>
 
 #include "block.h"
 
@@ -15,6 +16,7 @@ class Script
 public:
     Script();
     Script(QString script, ScriptType type);
+    Script(QFile file, ScriptType type);
     ~Script();
 
     QString toHtml();
