@@ -45,6 +45,7 @@ public slots:
     void setBold();
     void setItalic();
     void setUnderline();
+    void import();
 
 private slots:
     void slot_actionFountain_Syntax();

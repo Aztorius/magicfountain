@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(quickSave()));
     connect(ui->actionSave_as, SIGNAL(triggered()), this, SLOT(saveAs()));
+    connect(ui->actionImport, SIGNAL(triggered()), this, SLOT(import()));
     connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(print()));
     connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 
@@ -418,5 +419,32 @@ void MainWindow::slot_checkAndSaveScript()
         if (QMessageBox::question(this, QString(tr("Save Fountain file")), QString(tr("Do you want to save current script ?"))) == QMessageBox::Yes) {
             saveAs();
         }
+    }
+}
+
+void MainWindow::import()
+{
+    slot_checkAndSaveScript();
+
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Import Final Draft file"),
+                                                    QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first(),
+                                                    "Text files (*.fdx)");
+    if (filename.isEmpty()) {
+        return;
+    }
+
+    QFile file(filename);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        filepath = QString();
+        currentScript.parseFromFinalDraft(file.readAll());
+        file.close();
+
+        ui->plainTextEdit_fountaineditor->setPlainText(currentScript.toFountain());
+        ui->plainTextEdit_fountaineditor->document()->setModified(false);
+
+        QTextCursor cursor = ui->plainTextEdit_fountaineditor->textCursor();
+        cursor.movePosition(QTextCursor::Start);
+        ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
 }

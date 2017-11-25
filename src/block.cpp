@@ -127,6 +127,64 @@ QString Block::toHtml()
     return html;
 }
 
+QString Block::toFountain()
+{
+    switch (m_type) {
+    case BlockType::Act:
+        return QString("# ") + m_data;
+    case BlockType::Action:
+        return QString("\n") + m_data;
+    case BlockType::Author:
+        return QString("Author: ").append(m_data);
+    case BlockType::BlankLine:
+        return QString();
+    case BlockType::CenteredText:
+        return QString(">") + m_data + QString("<");
+    case BlockType::Character:
+        return QString("\n@") + m_data;
+    case BlockType::CharacterLeft:
+        return QString("\n@") + m_data + QString("^");
+    case BlockType::CharacterRight:
+        return QString("\n@") + m_data;
+    case BlockType::Contact:
+        return QString("Contact: ") + m_data;
+    case BlockType::Credit:
+        return QString("Credit: ") + m_data;
+    case BlockType::Dialogue:
+        return m_data;
+    case BlockType::DraftDate:
+        return QString("Draft date: ") + m_data;
+    case BlockType::DualDialogueEnd:
+        return QString();
+    case BlockType::Empty:
+        return QString();
+    case BlockType::Lyrics:
+        return QString("~") + m_data;
+    case BlockType::Note:
+        return QString("[[") + m_data + QString("]]");
+    case BlockType::PageBreaks:
+        return QString("===");
+    case BlockType::Parentheticals:
+        return QString("(") + m_data + QString(")");
+    case BlockType::Scene:
+        return QString("### ") + m_data;
+    case BlockType::SceneHeading:
+        return QString(".") + m_data + QString("\n");
+    case BlockType::Sequence:
+        return QString("## ") + m_data;
+    case BlockType::Source:
+        return QString("Source: ") + m_data;
+    case BlockType::Synopses:
+        return QString("= ") + m_data;
+    case BlockType::Title:
+        return QString("Title: ") + m_data;
+    case BlockType::Transitions:
+        return QString("> ") + m_data;
+    default :
+        return m_data;
+    }
+}
+
 Block& Block::operator=(const Block& other)
 {
     m_type = other.m_type;

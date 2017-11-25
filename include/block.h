@@ -46,6 +46,7 @@ public:
     QString getData();
     void appendData(QString data);
     QString toHtml();
+    QString toFountain();
 
     Block& operator=(const Block& block);
 private:

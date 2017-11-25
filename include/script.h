@@ -24,6 +24,7 @@ public:
     QList<Block *> getBlocksOfType(BlockType type);
     void parseFromFountain(QString script);
     void parseFromFinalDraft(QString script);
+    QString toFountain();
 
     Script& operator=(const Script& other);
 private:

@@ -228,26 +228,35 @@ void Script::parseFromFinalDraft(QString script)
     qDeleteAll(m_blocks);
     m_blocks.clear();
 
-    while (reader.readNextStartElement()) {
-        if (reader.name() == "Paragraph") {
-            foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
-                if (attr.name().toString() == QString("Type")) {
-                    QString type = attr.value().toString();
+    if (reader.readNextStartElement() && reader.name().toString() == QString("FinalDraft")) {
+        if (reader.readNextStartElement() && reader.name().toString() == QString("Content")) {
+            while(reader.readNextStartElement()) {
+                if (reader.name().toString() == QString("Paragraph")) {
+                    foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
+                        if (attr.name().toString() == QString("Type")) {
+                            QString type = attr.value().toString();
 
-                    if (type == QString("Action")) {
-                        reader.readNextStartElement();
-                        m_blocks.append(new Block(BlockType::Action, reader.readElementText()));
-                    } else if (type == QString("Character")) {
-                        reader.readNextStartElement();
-                        m_blocks.append(new Block(BlockType::Character, reader.readElementText()));
-                    } else if (type == QString("Dialogue")) {
-                        reader.readNextStartElement();
-                        m_blocks.append(new Block(BlockType::Dialogue, reader.readElementText()));
-                    } else if (type == QString("Parenthetical")) {
-                        reader.readNextStartElement();
-                        m_blocks.append(new Block(BlockType::Parentheticals, reader.readElementText()));
+                            if (type == QString("Action")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::Action, reader.readElementText()));
+                            } else if (type == QString("Character")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::Character, reader.readElementText()));
+                            } else if (type == QString("Dialogue")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::Dialogue, reader.readElementText()));
+                            } else if (type == QString("Parenthetical")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::Parentheticals, reader.readElementText()));
+                            } else if (type == QString("Scene Heading")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::SceneHeading, reader.readElementText()));
+                            }
+                        }
                     }
                 }
+
+                while(reader.readNextStartElement());
             }
         }
     }
@@ -296,6 +305,17 @@ QString Script::toHtml()
     }
 
     content.append("</section></article></body></html>");
+    return content;
+}
+
+QString Script::toFountain()
+{
+    QString content;
+
+    foreach (Block* block, m_blocks) {
+        content.append(block->toFountain().append("\n"));
+    }
+
     return content;
 }
 
