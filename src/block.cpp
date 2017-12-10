@@ -165,7 +165,7 @@ QString Block::toFountain()
     case BlockType::PageBreaks:
         return QString("===");
     case BlockType::Parentheticals:
-        return QString("(") + m_data + QString(")");
+        return m_data;
     case BlockType::Scene:
         return QString("### ") + m_data;
     case BlockType::SceneHeading:
