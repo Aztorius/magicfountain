@@ -139,7 +139,7 @@ QString Block::toFountain()
     case BlockType::BlankLine:
         return QString();
     case BlockType::CenteredText:
-        return QString(">") + m_data + QString("<");
+        return QString("\n>") + m_data + QString("<");
     case BlockType::Character:
         return QString("\n@") + m_data;
     case BlockType::CharacterLeft:

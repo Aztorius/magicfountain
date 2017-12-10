@@ -251,6 +251,17 @@ void Script::parseFromFinalDraft(QString script)
                             } else if (type == QString("Scene Heading")) {
                                 reader.readNextStartElement();
                                 m_blocks.append(new Block(BlockType::SceneHeading, reader.readElementText()));
+                            } else if (type == QString("Transition")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::Transitions, reader.readElementText()));
+                            }
+                        } else if (attr.name().toString() == QString("Alignment")) {
+                            QString alignment = attr.value().toString();
+
+                            if (alignment == QString("Center")) {
+                                reader.readNextStartElement();
+                                m_blocks.append(new Block(BlockType::CenteredText, reader.readElementText()));
+                                break;
                             }
                         }
                     }
