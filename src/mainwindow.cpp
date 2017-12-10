@@ -14,7 +14,7 @@
 
 #include "block.h"
 
-QString GLOBAL_VERSION = "1.0.0-beta";
+#define GLOBAL_VERSION "1.0.0"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowTitle("MagicFountain " + GLOBAL_VERSION);
+    setWindowTitle("MagicFountain " + QString(GLOBAL_VERSION));
 
     slot_loadCustomFont();
 
@@ -96,7 +96,7 @@ void MainWindow::closeEvent( QCloseEvent *event )
 
 void MainWindow::refreshTitleBar(bool modified)
 {
-    QString title = "MagicFountain " + GLOBAL_VERSION;
+    QString title = "MagicFountain " + QString(GLOBAL_VERSION);
 
     if (!filepath.isEmpty()) {
         title = filepath + "[*] - " + title;
