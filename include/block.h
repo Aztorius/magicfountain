@@ -35,16 +35,16 @@ class Block
 {
 public:
     Block(BlockType type);
-    Block(BlockType type, QString data);
-    Block(Block& other);
+    Block(BlockType type, const QString &data);
+    Block(const Block& other);
     ~Block();
 
     void addBlock(Block *block);
 
     BlockType getType();
-    void setType(BlockType type);
+    void setType(const BlockType& type);
     QString getData();
-    void appendData(QString data);
+    void appendData(const QString& data);
     QString toHtml();
     QString toFountain();
 

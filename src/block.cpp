@@ -2,20 +2,20 @@
 
 #include <QRegularExpression>
 
-QString htmlCheckBIU(QString text);
+QString htmlCheckBIU(const QString &text);
 
 Block::Block(BlockType type)
 {
     m_type = type;
 }
 
-Block::Block(BlockType type, QString data)
+Block::Block(BlockType type, const QString& data)
 {
     m_type = type;
     m_data = data;
 }
 
-Block::Block(Block &other)
+Block::Block(const Block &other)
 {
     m_type = other.m_type;
     m_data = other.m_data;
@@ -31,7 +31,7 @@ BlockType Block::getType()
     return m_type;
 }
 
-void Block::setType(BlockType type)
+void Block::setType(const BlockType& type)
 {
     m_type = type;
 }
@@ -41,7 +41,7 @@ QString Block::getData()
     return m_data;
 }
 
-void Block::appendData(QString data)
+void Block::appendData(const QString& data)
 {
     m_data.append(data);
 }
@@ -192,7 +192,7 @@ Block& Block::operator=(const Block& other)
     return *this;
 }
 
-QString htmlCheckBIU(QString text)
+QString htmlCheckBIU(const QString& text)
 {
     QStringList result = text.split("\\*");
     int firstindex = -1, secondindex = -1;

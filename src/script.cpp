@@ -9,7 +9,7 @@ Script::Script()
 
 }
 
-Script::Script(QString script, ScriptType type)
+Script::Script(const QString &script, ScriptType type)
 {
     switch(type) {
     case ScriptType::Fountain:
@@ -73,7 +73,7 @@ void static parseTitlePageData(quint32 *i, QStringList *lines, QList<Block *> *m
     --(*i);
 }
 
-void Script::parseFromFountain(QString script)
+void Script::parseFromFountain(const QString& script)
 {
     QStringList lines = script.split("\n");
     QString text;
@@ -220,7 +220,7 @@ void Script::parseFromFountain(QString script)
     }
 }
 
-void Script::parseFromFinalDraft(QString script)
+void Script::parseFromFinalDraft(const QString& script)
 {
     QXmlStreamReader reader(script);
     QString attributeName;

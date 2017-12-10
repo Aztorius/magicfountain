@@ -16,14 +16,14 @@ class Script
 {
 public:
     Script();
-    Script(QString script, ScriptType type);
+    Script(const QString& script, ScriptType type);
     Script(QFile file, ScriptType type);
     ~Script();
 
     QString toHtml();
     QList<Block *> getBlocksOfType(BlockType type);
-    void parseFromFountain(QString script);
-    void parseFromFinalDraft(QString script);
+    void parseFromFountain(const QString& script);
+    void parseFromFinalDraft(const QString& script);
     QString toFountain();
 
     Script& operator=(const Script& other);
