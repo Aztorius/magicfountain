@@ -4,6 +4,26 @@
 #include <QTextStream>
 #include <QXmlStreamReader>
 
+#include "act.h"
+#include "action.h"
+#include "author.h"
+#include "blankline.h"
+#include "character.h"
+#include "contact.h"
+#include "credit.h"
+#include "dialogue.h"
+#include "draftdate.h"
+#include "lyrics.h"
+#include "pagebreak.h"
+#include "parenthetical.h"
+#include "scene.h"
+#include "scenesection.h"
+#include "sequence.h"
+#include "source.h"
+#include "synopsis.h"
+#include "title.h"
+#include "transition.h"
+
 Script::Script()
 {
 
@@ -50,27 +70,26 @@ bool static isABlankLine(int i, QStringList lines)
     return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
 }
 
-void static parseTitlePageData(quint32 *i, QStringList *lines, QList<Block *> *m_blocks, QString *destination)
+void static parseTitlePageData(quint32 &i, QStringList &lines, TitlePageElement *element)
 {
-    quint32 blockcount = lines->size();
+    quint32 blockcount = lines.size();
 
-    if (++(*i) >= blockcount) {
+    if (++i >= blockcount) {
         return;
     }
 
-    QString text = lines->at(*i);
+    QString text = lines.at(i);
 
-    while ((text.left(1) == "\t" || text.left(3) == "   ") && (*i) < blockcount) {
-        m_blocks->last()->appendData("\n" + text.trimmed());
-        (*destination).append(text.trimmed());
+    while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
+        element->addLine(text.trimmed());
 
-        if (++(*i) >= blockcount) {
+        if (++i >= blockcount) {
             break;
         }
 
-        text = lines->at(*i);
+        text = lines.at(i);
     }
-    --(*i);
+    --i;
 }
 
 void Script::parseFromFountain(const QString& script)
@@ -84,99 +103,88 @@ void Script::parseFromFountain(const QString& script)
     quint32 blockcount = lines.size();
     quint32 i = 0;
 
-    qDeleteAll(m_blocks);
-    m_blocks.clear();
+    qDeleteAll(m_content);
+    m_content.clear();
 
     while (i < blockcount) {
         text = lines.at(i).trimmed();
 
-        if (text.left(2) == "/*") { //Boneyard Start
-            m_blocks.append(new Block(BlockType::BoneyardStart));
-        } else if (text.left(2) == "*/") { //Boneyard Stop
-            m_blocks.append(new Block(BlockType::BoneyardStop));
-        } else if (text.left(1) == "!") { //Forced action
+        if (text.left(1) == "!") { //Forced action
             text = lines.at(i);
             text.remove(text.indexOf("!"), 1);
             text.replace("\t", "    ");
 
-            m_blocks.append(new Block(BlockType::Action, text));
+            m_content.append(new Action(text));
         } else if (text.left(3) == "===") { //Page breaks
-            m_blocks.append(new Block(BlockType::PageBreaks));
+            m_content.append(new PageBreak());
         } else if (text.left(2) == "= ") { //Synopses
-            m_blocks.append(new Block(BlockType::Synopses, text.mid(2)));
+            m_content.append(new Synopsis(text.mid(2)));
         } else if (text.left(1) == "~") { //Lyrics
-            m_blocks.append(new Block(BlockType::Lyrics, text.mid(1)));
+            m_content.append(new Lyrics(text.mid(1)));
         } else if (text.left(6) == "Title:") { //Title
-            m_blocks.append(new Block(BlockType::Title, text.mid(6)));
-            title.append(text.mid(6).trimmed());
-            parseTitlePageData(&i, &lines, &m_blocks, &title);
+            TitlePageElement *title = new Title(text.mid(6).trimmed());
+            parseTitlePageData(i, lines, title);
+            m_titlepage.addElement(title);
         } else if (text.left(7) == "Credit:") { //Credit
-            m_blocks.append(new Block(BlockType::Credit, text.mid(7)));
-            credit.append(text.mid(7).trimmed());
-            parseTitlePageData(&i, &lines, &m_blocks, &credit);
+            TitlePageElement *credit = new Credit(text.mid(7).trimmed());
+            parseTitlePageData(i, lines, credit);
         } else if (text.left(7) == "Author:") { //Author
-            m_blocks.append(new Block(BlockType::Author, text.mid(7)));
-            author.append(text.mid(7).trimmed());
-            parseTitlePageData(&i, &lines, &m_blocks, &author);
+            TitlePageElement *author = new Author(text.mid(7).trimmed());
+            parseTitlePageData(i, lines, author);
         } else if (text.left(7) == "Source:") { //Source
-            m_blocks.append(new Block(BlockType::Source, text.mid(7)));
-            source.append(text.mid(7).trimmed());
-            parseTitlePageData(&i, &lines, &m_blocks, &source);
+            TitlePageElement *source = new Source(text.mid(7).trimmed());
+            parseTitlePageData(i, lines, source);
         } else if (text.left(11) == "Draft date:") { //Draft date
-            m_blocks.append(new Block(BlockType::DraftDate, text.mid(11).trimmed()));
-            draftDate.append(text.mid(11).trimmed());
-            parseTitlePageData(&i, &lines, &m_blocks, &draftDate);
+            TitlePageElement *draftDate = new DraftDate(text.mid(11).trimmed());
+            parseTitlePageData(i, lines, draftDate);
         } else if (text.left(8) == "Contact:") { //Contact
-            m_blocks.append(new Block(BlockType::Contact, text.mid(8)));
-            contact.append(text.mid(8).trimmed());
-            parseTitlePageData(&i, &lines, &m_blocks, &contact);
+            TitlePageElement *contact = new Contact(text.mid(8).trimmed());
+            parseTitlePageData(i, lines, contact);
         } else if (text.left(4) == "### ") { //Scene
-            m_blocks.append(new Block(BlockType::Scene, text.mid(4)));
+            m_content.append(new SceneSection(text.mid(4)));
         } else if (text.left(3) == "## ") { //Sequence
-            m_blocks.append(new Block(BlockType::Sequence, text.mid(3)));
+            m_content.append(new Sequence(text.mid(3)));
         } else if (text.left(2) == "# ") { //Act
-            m_blocks.append(new Block(BlockType::Act, text.mid(2)));
+            m_content.append(new Act(text.mid(2)));
         } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
-            m_blocks.append(new Block(BlockType::SceneHeading, text));
+            m_content.append(new Scene(text));
         } else if (text.left(1) == ">") {
             if (text.right(1) == "<") { //Centered text
-                m_blocks.append(new Block(BlockType::CenteredText, text.mid(1, text.size()-2).trimmed()));
+                Action *action = new Action(text.mid(1, text.size()-2).trimmed());
+                action->setCentered(true);
+                m_content.append(action);
             } else { //Forced transition
-                m_blocks.append(new Block(BlockType::Transitions, text.mid(1)));
+                m_content.append(new Transition(text.mid(1)));
             }
         } else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
-            m_blocks.append(new Block(BlockType::Transitions, text));
+            m_content.append(new Transition(text));
         } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
-            m_blocks.append(new Block(BlockType::SceneHeading, text.mid(1)));
+            m_content.append(new Scene(text.mid(1)));
         } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
             if (text.left(1) == "@") {
                 text.remove(0, 1);
             }
 
-            BlockType characterType = BlockType::Character;
-            qint32 cursor = m_blocks.size() - 1;
+            Character *character = nullptr;
 
             if (text.right(1) == "^") { //Dual dialogue
                 text.remove(text.size() - 1, 1);
 
                 Block *block = nullptr;
 
-                while (cursor > 0 && (m_blocks.at(cursor)->getType() & (BlockType::Dialogue | BlockType::Parentheticals | BlockType::BlankLine))) {
-                    cursor--;
-                }
+                block = m_content.last();
 
-                block = m_blocks.at(cursor);
-
-                if (block->getType() == BlockType::Character) {
-                    block->setType(BlockType::CharacterLeft);
+                if (block->isCharacterBlock()) {
+                    character = dynamic_cast<Character *>(block);
+                    character->setDual(true);
                 } else {
                     //ERROR: Previous Block should be a Dialogue Block
                 }
 
-                m_blocks.append(new Block(BlockType::CharacterRight, text));
-                characterType = BlockType::CharacterRight;
+                character->setRightCharacter(text);
             } else {
-                m_blocks.append(new Block(BlockType::Character, text));
+                character = new Character(text);
+                m_content.append(character);
             }
 
             if (++i >= blockcount) {
@@ -188,11 +196,20 @@ void Script::parseFromFountain(const QString& script)
             while ((!text.isEmpty() || lines.at(i) == "  ") && i < blockcount) {
 
                 if (text.left(1) == "(" && text.right(1) == ")") { //Parenthetical
-                    m_blocks.append(new Block(BlockType::Parentheticals, text));
+                    if (character->isDual()) {
+                        character->addRightDialogueBlock(new Parenthetical(text));
+                    } else {
+                        character->addDialogueBlock(new Parenthetical(text));
+                    }
                 } else if (!text.isEmpty()) { //Dialogue
-                    m_blocks.append(new Block(BlockType::Dialogue, text));
+                    if (character->isDual()) {
+                        character->addRightDialogueBlock(new Dialogue(text));
+                    } else {
+                        character->addDialogueBlock(new Dialogue(text));
+                    }
                 } else {
-                    m_blocks.append(new Block(BlockType::BlankLine));
+                    ++i;
+                    break;
                 }
 
                 if (++i >= blockcount) {
@@ -202,18 +219,14 @@ void Script::parseFromFountain(const QString& script)
                 text = lines.at(i).trimmed();
             }
 
-            if (characterType == BlockType::CharacterRight) {
-                m_blocks.append(new Block(BlockType::DualDialogueEnd));
-            }
-
             i--;
         } else if (!lines.at(i).isEmpty()) { //Default action
             text = lines.at(i);
             text.replace("\t", "    ");
 
-            m_blocks.append(new Block(BlockType::Action, text));
+            m_content.append(new Action(text));
         } else { //Blank action
-            m_blocks.append(new Block(BlockType::BlankLine));
+            m_content.append(new BlankLine());
         }
 
         i++;
@@ -225,8 +238,8 @@ void Script::parseFromFinalDraft(const QString& script)
     QXmlStreamReader reader(script);
     QString attributeName;
 
-    qDeleteAll(m_blocks);
-    m_blocks.clear();
+    qDeleteAll(m_content);
+    m_content.clear();
 
     if (reader.readNextStartElement() && reader.name().toString() == QString("FinalDraft")) {
         if (reader.readNextStartElement() && reader.name().toString() == QString("Content")) {
@@ -238,29 +251,31 @@ void Script::parseFromFinalDraft(const QString& script)
 
                             if (type == QString("Action")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::Action, reader.readElementText()));
+                                m_content.append(new Action(reader.readElementText()));
                             } else if (type == QString("Character")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::Character, reader.readElementText()));
+                                m_content.append(new Character(reader.readElementText()));
                             } else if (type == QString("Dialogue")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::Dialogue, reader.readElementText()));
+                                m_content.append(new Dialogue(reader.readElementText()));
                             } else if (type == QString("Parenthetical")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::Parentheticals, reader.readElementText()));
+                                m_content.append(new Parenthetical(reader.readElementText()));
                             } else if (type == QString("Scene Heading")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::SceneHeading, reader.readElementText()));
+                                m_content.append(new Scene(reader.readElementText()));
                             } else if (type == QString("Transition")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::Transitions, reader.readElementText()));
+                                m_content.append(new Transition(reader.readElementText()));
                             }
                         } else if (attr.name().toString() == QString("Alignment")) {
                             QString alignment = attr.value().toString();
 
                             if (alignment == QString("Center")) {
                                 reader.readNextStartElement();
-                                m_blocks.append(new Block(BlockType::CenteredText, reader.readElementText()));
+                                Action *action = new Action(reader.readElementText());
+                                action->setCentered(true);
+                                m_content.append(action);
                                 break;
                             }
                         }
@@ -280,7 +295,7 @@ void Script::parseFromFinalDraft(const QString& script)
 
 Script::~Script()
 {
-    qDeleteAll(m_blocks);
+    qDeleteAll(m_content);
 }
 
 QString Script::toHtml()
@@ -300,19 +315,20 @@ QString Script::toHtml()
     content.append("</style></head><body><article><section>");
 
     Block *block;
-    for (qint64 i = 0; i < m_blocks.size(); ++i) {
-        block = m_blocks.at(i);
+    for (qint64 i = 0; i < m_content.size(); ++i) {
+        block = m_content.at(i);
 
-        if (block->getType() == BlockType::BoneyardStart) {
+        // TODO
+        /*if (block->getType() == BlockType::BoneyardStart) {
             while(block->getType() != BlockType::BoneyardStop) {
-                if (++i == m_blocks.size()) {
+                if (++i == m_content.size()) {
                     break;
                 }
-                block = m_blocks.at(i);
+                block = m_content.at(i);
             }
-        } else {
+        } else {*/
             content.append(block->toHtml());
-        }
+        //}
     }
 
     content.append("</section></article></body></html>");
@@ -323,41 +339,21 @@ QString Script::toFountain()
 {
     QString content;
 
-    foreach (Block* block, m_blocks) {
+    foreach (Block* block, m_content) {
         content.append(block->toFountain().append("\n"));
     }
 
     return content;
 }
 
-QList<Block *> Script::getBlocksOfType(BlockType type)
-{
-    QList<Block *> list;
-
-    foreach (Block *block, m_blocks) {
-        if (block->getType() & type) {
-            list.append(block);
-        }
-    }
-
-    return list;
-}
-
 Script& Script::operator=(const Script& other)
 {
-    title = other.title;
-    credit = other.credit;
-    author = other.author;
-    source = other.source;
-    draftDate = other.draftDate;
-    contact = other.contact;
+    m_titlepage = other.m_titlepage;
 
-    qDeleteAll(m_blocks);
-    m_blocks.clear();
+    qDeleteAll(m_content);
+    m_content.clear();
 
-    foreach (Block *block, other.m_blocks) {
-        m_blocks.append(new Block(*block));
-    }
+    m_content.fromStdList(other.m_content.toStdList());
 
     return *this;
 }

@@ -37,12 +37,59 @@ INSTALLS += target
 SOURCES += src/main.cpp\
     src/mainwindow.cpp \
     src/script.cpp \
-    src/block.cpp
+    src/block.cpp \
+    src/scene.cpp \
+    src/titlepage.cpp \
+    src/titlepageelement.cpp \
+    src/title.cpp \
+    src/credit.cpp \
+    src/author.cpp \
+    src/source.cpp \
+    src/draftdate.cpp \
+    src/contact.cpp \
+    src/section.cpp \
+    src/act.cpp \
+    src/sequence.cpp \
+    src/scenesection.cpp \
+    src/action.cpp \
+    src/synopsis.cpp \
+    src/note.cpp \
+    src/pagebreak.cpp \
+    src/transition.cpp \
+    src/lyrics.cpp \
+    src/dialogueblock.cpp \
+    src/parenthetical.cpp \
+    src/dialogue.cpp \
+    src/character.cpp \
+    src/blankline.cpp
 
-INCLUDEPATH += include/
-HEADERS  += include/mainwindow.h \
-    include/script.h \
-    include/block.h
+HEADERS  += src/mainwindow.h \
+    src/script.h \
+    src/block.h \
+    src/scene.h \
+    src/titlepage.h \
+    src/titlepageelement.h \
+    src/title.h \
+    src/credit.h \
+    src/author.h \
+    src/source.h \
+    src/draftdate.h \
+    src/contact.h \
+    src/section.h \
+    src/act.h \
+    src/sequence.h \
+    src/scenesection.h \
+    src/action.h \
+    src/synopsis.h \
+    src/note.h \
+    src/pagebreak.h \
+    src/transition.h \
+    src/lyrics.h \
+    src/dialogueblock.h \
+    src/parenthetical.h \
+    src/dialogue.h \
+    src/character.h \
+    src/blankline.h
 
 FORMS    += mainwindow.ui
 

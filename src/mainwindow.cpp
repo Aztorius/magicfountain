@@ -120,9 +120,10 @@ void MainWindow::refreshScenesView()
 {
     ui->listWidget_scenes->clear();
 
-    foreach (Block *block, currentScript.getBlocksOfType(BlockType::SceneHeading)) {
-        ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
-    }
+    // TODO
+    //foreach (Block *block, currentScript.getBlocksOfType(BlockType::SceneHeading)) {
+    //    ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
+    //}
 }
 
 void MainWindow::slot_loadSystemFont()

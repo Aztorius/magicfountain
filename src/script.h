@@ -5,6 +5,7 @@
 #include <QFile>
 
 #include "block.h"
+#include "titlepage.h"
 
 enum ScriptType {
     Unknown,
@@ -21,15 +22,15 @@ public:
     ~Script();
 
     QString toHtml();
-    QList<Block *> getBlocksOfType(BlockType type);
     void parseFromFountain(const QString& script);
     void parseFromFinalDraft(const QString& script);
     QString toFountain();
 
     Script& operator=(const Script& other);
+
 private:
-    QString title, credit, author, source, draftDate, contact;
-    QList<Block *> m_blocks;
+    TitlePage m_titlepage;
+    QList<Block *> m_content;
 };
 
 #endif // SCRIPT_H

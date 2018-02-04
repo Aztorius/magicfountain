@@ -4,36 +4,24 @@
 
 QString htmlCheckBIU(const QString &text);
 
-Block::Block(BlockType type)
+Block::Block()
 {
-    m_type = type;
+
 }
 
-Block::Block(BlockType type, const QString& data)
+Block::Block(const QString& data)
 {
-    m_type = type;
     m_data = data;
 }
 
 Block::Block(const Block &other)
 {
-    m_type = other.m_type;
     m_data = other.m_data;
 }
 
 Block::~Block()
 {
 
-}
-
-BlockType Block::getType()
-{
-    return m_type;
-}
-
-void Block::setType(const BlockType& type)
-{
-    m_type = type;
 }
 
 QString Block::getData()
@@ -46,7 +34,7 @@ void Block::appendData(const QString& data)
     m_data.append(data);
 }
 
-QString Block::toHtml()
+/* QString Block::toHtml()
 {
     QString html;
 
@@ -125,9 +113,9 @@ QString Block::toHtml()
     }
 
     return html;
-}
+} */
 
-QString Block::toFountain()
+/* QString Block::toFountain()
 {
     switch (m_type) {
     case BlockType::Act:
@@ -183,16 +171,20 @@ QString Block::toFountain()
     default :
         return m_data;
     }
-}
+} */
 
 Block& Block::operator=(const Block& other)
 {
-    m_type = other.m_type;
     m_data = other.m_data;
     return *this;
 }
 
-QString htmlCheckBIU(const QString& text)
+bool Block::isCharacterBlock()
+{
+    return false;
+}
+
+QString Block::htmlCheckBIU(const QString &text)
 {
     QStringList result = text.split("\\*");
     int firstindex = -1, secondindex = -1;
