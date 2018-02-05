@@ -11,6 +11,7 @@ public:
 
     virtual QString toHtml();
     virtual QString toFountain();
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 
     Synopsis& operator=(const Synopsis *other);
 };

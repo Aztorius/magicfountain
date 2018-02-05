@@ -19,3 +19,8 @@ QString Boneyard::toFountain()
 {
     return "/*\n" + m_data + "*/\n";
 }
+
+void Boneyard::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+
+}

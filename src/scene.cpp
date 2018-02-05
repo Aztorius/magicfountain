@@ -30,3 +30,8 @@ QString Scene::toFountain()
 {
     return "." + m_data + "\n";
 }
+
+void Scene::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}

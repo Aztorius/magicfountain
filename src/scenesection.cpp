@@ -14,3 +14,8 @@ QString SceneSection::toFountain()
 {
     return "### " + m_data;
 }
+
+void SceneSection::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}

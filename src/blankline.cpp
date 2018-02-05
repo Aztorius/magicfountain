@@ -14,3 +14,8 @@ QString BlankLine::toFountain()
 {
     return "\n";
 }
+
+void BlankLine::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+
+}

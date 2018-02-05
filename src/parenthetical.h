@@ -10,6 +10,7 @@ public:
 
     virtual QString toHtml();
     virtual QString toFountain();
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // PARENTHETICAL_H

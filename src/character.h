@@ -19,6 +19,7 @@ public:
 
     virtual QString toHtml();
     virtual QString toFountain();
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 
     virtual bool isCharacterBlock();
 private:

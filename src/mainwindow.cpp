@@ -121,9 +121,13 @@ void MainWindow::refreshScenesView()
 {
     ui->treeWidget_scenes->clear();
 
+    QTreeWidgetItem *topLevelItem = new QTreeWidgetItem(QStringList() << "Script");
+
     foreach (Block *block, currentScript.getBlocks()) {
-        ui->treeWidget_scenes->addTopLevelItem(new QTreeWidgetItem(QStringList() << block->getData()));
+        block->toTreeWidgetItem(topLevelItem);
     }
+
+    ui->treeWidget_scenes->addTopLevelItem(topLevelItem);
 }
 
 void MainWindow::slot_loadSystemFont()

@@ -14,3 +14,8 @@ QString PageBreak::toFountain()
 {
     return "===";
 }
+
+void PageBreak::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    Q_UNUSED(parent);
+}

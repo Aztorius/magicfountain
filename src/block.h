@@ -2,6 +2,7 @@
 #define BLOC_H
 
 #include <QString>
+#include <QTreeWidget>
 
 class Block
 {
@@ -16,6 +17,7 @@ public:
 
     virtual QString toHtml() = 0;
     virtual QString toFountain() = 0;
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent) = 0;
 
     virtual bool isCharacterBlock();
 

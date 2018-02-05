@@ -15,6 +15,7 @@ public:
 
     virtual QString toHtml() = 0;
     virtual QString toFountain() = 0;
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent) = 0;
 private:
     Synopsis m_synopsis;
     QList<QSharedPointer<Block>> m_content;

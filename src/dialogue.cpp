@@ -14,3 +14,8 @@ QString Dialogue::toFountain()
 {
     return m_data;
 }
+
+void Dialogue::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}

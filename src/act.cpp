@@ -14,3 +14,8 @@ QString Act::toFountain()
 {
     return "# " + m_data;
 }
+
+void Act::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}

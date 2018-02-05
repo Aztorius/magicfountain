@@ -86,6 +86,11 @@ QString Character::toFountain()
     return result;
 }
 
+void Character::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}
+
 bool Character::isCharacterBlock()
 {
     return true;

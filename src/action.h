@@ -11,6 +11,7 @@ public:
 
     virtual QString toHtml();
     virtual QString toFountain();
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
     bool m_isCentered;
 };

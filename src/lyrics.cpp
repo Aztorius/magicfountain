@@ -14,3 +14,8 @@ QString Lyrics::toFountain()
 {
     return "~" + m_data;
 }
+
+void Lyrics::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}

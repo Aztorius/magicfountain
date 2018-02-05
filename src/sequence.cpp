@@ -14,3 +14,8 @@ QString Sequence::toFountain()
 {
     return "## " + m_data;
 }
+
+void Sequence::toTreeWidgetItem(QTreeWidgetItem *parent)
+{
+    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+}

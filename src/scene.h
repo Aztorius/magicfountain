@@ -16,6 +16,7 @@ public:
 
     virtual QString toHtml();
     virtual QString toFountain();
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
     QList<QSharedPointer<Block>> m_content;
     QString m_sceneNumber;

@@ -10,6 +10,7 @@ public:
 
     virtual QString toHtml();
     virtual QString toFountain();
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // DIALOGUE_H
