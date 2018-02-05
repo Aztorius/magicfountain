@@ -25,6 +25,7 @@ public:
     void parseFromFountain(const QString& script);
     void parseFromFinalDraft(const QString& script);
     QString toFountain();
+    QList<Block *> getBlocks();
 
     Script& operator=(const Script& other);
 

@@ -323,21 +323,8 @@ QString Script::toHtml()
     content.append(cssStyle);
     content.append("</style></head><body><article><section>");
 
-    Block *block;
-    for (qint64 i = 0; i < m_content.size(); ++i) {
-        block = m_content.at(i);
-
-        // TODO
-        /*if (block->getType() == BlockType::BoneyardStart) {
-            while(block->getType() != BlockType::BoneyardStop) {
-                if (++i == m_content.size()) {
-                    break;
-                }
-                block = m_content.at(i);
-            }
-        } else {*/
-            content.append(block->toHtml());
-        //}
+    foreach (Block *block, m_content) {
+        content.append(block->toHtml());
     }
 
     content.append("</section></article></body></html>");
@@ -353,6 +340,11 @@ QString Script::toFountain()
     }
 
     return content;
+}
+
+QList<Block *> Script::getBlocks()
+{
+    return m_content;
 }
 
 Script& Script::operator=(const Script& other)
