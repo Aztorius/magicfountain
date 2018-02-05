@@ -73,7 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Qt()));
     connect(ui->actionAbout_Magic_Fountain, SIGNAL(triggered()), this, SLOT(slot_actionAbout_Magic_Fountain()));
 
-    connect(ui->listWidget_scenes, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(slot_clickScenes(QListWidgetItem*)));
+    //TODO
+    //connect(ui->treeWidget_scenes, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(slot_clickScenes(QListWidgetItem*)));
 }
 
 MainWindow::~MainWindow()
@@ -118,12 +119,11 @@ void MainWindow::refreshPreview()
 
 void MainWindow::refreshScenesView()
 {
-    ui->listWidget_scenes->clear();
+    ui->treeWidget_scenes->clear();
 
-    // TODO
-    //foreach (Block *block, currentScript.getBlocksOfType(BlockType::SceneHeading)) {
-    //    ui->listWidget_scenes->insertItem(ui->listWidget_scenes->count(), block->getData());
-    //}
+    foreach (Block *block, currentScript.getBlocks()) {
+        ui->treeWidget_scenes->addTopLevelItem(new QTreeWidgetItem(QStringList() << block->getData()));
+    }
 }
 
 void MainWindow::slot_loadSystemFont()
