@@ -8,6 +8,7 @@
 #include "action.h"
 #include "author.h"
 #include "blankline.h"
+#include "boneyard.h"
 #include "character.h"
 #include "contact.h"
 #include "credit.h"
@@ -109,7 +110,15 @@ void Script::parseFromFountain(const QString& script)
     while (i < blockcount) {
         text = lines.at(i).trimmed();
 
-        if (text.left(1) == "!") { //Forced action
+        if (text.left(2) == "/*") { //Boneyard
+            Boneyard *block = new Boneyard();
+
+            while (++i < blockcount && lines.at(i).trimmed() != "*/") {
+                block->addLine(lines.at(i));
+            }
+
+            m_content.append(block);
+        } else if (text.left(1) == "!") { //Forced action
             text = lines.at(i);
             text.remove(text.indexOf("!"), 1);
             text.replace("\t", "    ");

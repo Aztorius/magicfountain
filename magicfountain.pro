@@ -61,7 +61,8 @@ SOURCES += src/main.cpp\
     src/parenthetical.cpp \
     src/dialogue.cpp \
     src/character.cpp \
-    src/blankline.cpp
+    src/blankline.cpp \
+    src/boneyard.cpp
 
 HEADERS  += src/mainwindow.h \
     src/script.h \
@@ -89,7 +90,8 @@ HEADERS  += src/mainwindow.h \
     src/parenthetical.h \
     src/dialogue.h \
     src/character.h \
-    src/blankline.h
+    src/blankline.h \
+    src/boneyard.h
 
 FORMS    += mainwindow.ui
 
