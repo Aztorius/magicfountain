@@ -2,7 +2,7 @@
 
 Character::Character(const QString &data) : Block(data)
 {
-
+    m_isDual = false;
 }
 
 bool Character::isDual()
@@ -34,17 +34,56 @@ void Character::addRightDialogueBlock(DialogueBlock *block)
 
 QString Character::toHtml()
 {
-    if(m_isDual) {
-        return "<div class='dual-dialogue'><div class='dual-dialogue-left'><p class='character'>" + htmlCheckBIU(m_data) + "</p>";
+    QString result;
+
+    if (m_isDual) {
+        result = "<div class='dual-dialogue'><div class='dual-dialogue-left'><p class='character'>" + htmlCheckBIU(m_data) + "</p>";
+        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
+            result.append(block.data()->toHtml());
+        }
+
+        result.append("</div><div class='dual-dialogue-right'><p class='character'>" + htmlCheckBIU(m_rightCharacter) + "</p>");
+
+        foreach (QSharedPointer<DialogueBlock> block, m_rightContent) {
+            result.append(block.data()->toHtml());
+        }
+
+        result.append("</div></div>");
     } else {
-        return "<p class='character'>" + htmlCheckBIU(m_data) + "</p>";
+        result = "<p class='character'>" + htmlCheckBIU(m_data) + "</p>";
+        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
+            result.append(block.data()->toHtml());
+        }
     }
+
+    return result;
 }
 
 QString Character::toFountain()
 {
-    // TODO
-    return QString();
+    QString result;
+
+    if (m_isDual) {
+        result = m_data + "\n";
+
+        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
+            result.append(block.data()->toFountain());
+        }
+
+        result.append(m_rightCharacter + "\n");
+
+        foreach (QSharedPointer<DialogueBlock> block, m_rightContent) {
+            result.append(block.data()->toFountain());
+        }
+    } else {
+        result = m_data + "\n";
+
+        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
+            result.append(block.data()->toFountain());
+        }
+    }
+
+    return result;
 }
 
 bool Character::isCharacterBlock()
