@@ -70,6 +70,11 @@
         <height>16777215</height>
        </size>
       </property>
+      <column>
+       <property name="text">
+        <string>Script Tree</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
