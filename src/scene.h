@@ -13,12 +13,13 @@ public:
     void addBlock(Block *block);
     void setSceneNumber(QString &sceneNumber);
     void setSynopsis(Synopsis synopsis);
+    QList<Block *> *getList();
 
     virtual QString toHtml();
     virtual QString toFountain();
     virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
-    QList<QSharedPointer<Block>> m_content;
+    QList<Block *> m_content;
     QString m_sceneNumber;
     Synopsis m_synopsis;
 };

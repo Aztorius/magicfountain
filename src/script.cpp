@@ -25,6 +25,12 @@
 #include "title.h"
 #include "transition.h"
 
+/*#define BLOCK_MAIN 0
+#define BLOCK_ACT 1
+#define BLOCK_SEQUENCE 2
+#define BLOCK_SCENE 3
+#define BLOCK_SCENEHEADER 4*/
+
 Script::Script()
 {
 
@@ -107,6 +113,9 @@ void Script::parseFromFountain(const QString& script)
     qDeleteAll(m_content);
     m_content.clear();
 
+    //quint8 currentBlock = BLOCK_MAIN;
+    QList<Block *> *blocklist = &m_content;
+
     while (i < blockcount) {
         text = lines.at(i).trimmed();
 
@@ -117,19 +126,19 @@ void Script::parseFromFountain(const QString& script)
                 block->addLine(lines.at(i));
             }
 
-            m_content.append(block);
+            blocklist->append(block);
         } else if (text.left(1) == "!") { //Forced action
             text = lines.at(i);
             text.remove(text.indexOf("!"), 1);
             text.replace("\t", "    ");
 
-            m_content.append(new Action(text));
+            blocklist->append(new Action(text));
         } else if (text.left(3) == "===") { //Page breaks
-            m_content.append(new PageBreak());
+            blocklist->append(new PageBreak());
         } else if (text.left(2) == "= ") { //Synopses
-            m_content.append(new Synopsis(text.mid(2)));
+            blocklist->append(new Synopsis(text.mid(2)));
         } else if (text.left(1) == "~") { //Lyrics
-            m_content.append(new Lyrics(text.mid(1)));
+            blocklist->append(new Lyrics(text.mid(1)));
         } else if (text.left(6) == "Title:") { //Title
             TitlePageElement *title = new Title(text.mid(6).trimmed());
             parseTitlePageData(i, lines, title);
@@ -150,25 +159,27 @@ void Script::parseFromFountain(const QString& script)
             TitlePageElement *contact = new Contact(text.mid(8).trimmed());
             parseTitlePageData(i, lines, contact);
         } else if (text.left(4) == "### ") { //Scene
-            m_content.append(new SceneSection(text.mid(4)));
+            blocklist->append(new SceneSection(text.mid(4)));
         } else if (text.left(3) == "## ") { //Sequence
-            m_content.append(new Sequence(text.mid(3)));
+            blocklist->append(new Sequence(text.mid(3)));
         } else if (text.left(2) == "# ") { //Act
-            m_content.append(new Act(text.mid(2)));
+            blocklist->append(new Act(text.mid(2)));
         } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
-            m_content.append(new Scene(text));
+            Scene *scene = new Scene(text);
+            m_content.append(scene);
+            blocklist = scene->getList();
         } else if (text.left(1) == ">") {
             if (text.right(1) == "<") { //Centered text
                 Action *action = new Action(text.mid(1, text.size()-2).trimmed());
                 action->setCentered(true);
-                m_content.append(action);
+                blocklist->append(action);
             } else { //Forced transition
-                m_content.append(new Transition(text.mid(1)));
+                blocklist->append(new Transition(text.mid(1)));
             }
         } else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
-            m_content.append(new Transition(text));
+            blocklist->append(new Transition(text));
         } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
-            m_content.append(new Scene(text.mid(1)));
+            blocklist->append(new Scene(text.mid(1)));
         } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
             if (text.left(1) == "@") {
                 text.remove(0, 1);
@@ -182,7 +193,7 @@ void Script::parseFromFountain(const QString& script)
                 if (m_content.size() < 2) {
                     // Treat that as a classic Dialogue
                     character = new Character(text);
-                    m_content.append(character);
+                    blocklist->append(character);
                 } else {
                     Block *block = m_content.at(m_content.size() - 2);
 
@@ -191,7 +202,7 @@ void Script::parseFromFountain(const QString& script)
                     if (character == nullptr) {
                         // Treat that as a classic Dialogue
                         character = new Character(text);
-                        m_content.append(character);
+                        blocklist->append(character);
                     } else {
                         character->setDual(true);
                         character->setRightCharacter(text);
@@ -199,7 +210,7 @@ void Script::parseFromFountain(const QString& script)
                 }
             } else {
                 character = new Character(text);
-                m_content.append(character);
+                blocklist->append(character);
             }
 
             if (++i >= blockcount) {
@@ -239,9 +250,9 @@ void Script::parseFromFountain(const QString& script)
             text = lines.at(i);
             text.replace("\t", "    ");
 
-            m_content.append(new Action(text));
+            blocklist->append(new Action(text));
         } else { //Blank action
-            m_content.append(new BlankLine());
+            blocklist->append(new BlankLine());
         }
 
         i++;

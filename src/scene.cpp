@@ -7,8 +7,7 @@ Scene::Scene(const QString &sceneheader) : Block(sceneheader)
 
 void Scene::addBlock(Block *block)
 {
-    QSharedPointer<Block> ptr(block);
-    m_content.append(ptr);
+    m_content.append(block);
 }
 
 void Scene::setSceneNumber(QString &sceneNumber)
@@ -19,6 +18,11 @@ void Scene::setSceneNumber(QString &sceneNumber)
 void Scene::setSynopsis(Synopsis synopsis)
 {
     m_synopsis = synopsis;
+}
+
+QList<Block *> *Scene::getList()
+{
+    return &m_content;
 }
 
 QString Scene::toHtml()
@@ -33,5 +37,11 @@ QString Scene::toFountain()
 
 void Scene::toTreeWidgetItem(QTreeWidgetItem *parent)
 {
-    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+    QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << m_data);
+
+    foreach (Block *block, m_content) {
+        block->toTreeWidgetItem(item);
+    }
+
+    parent->addChild(item);
 }
