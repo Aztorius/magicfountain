@@ -25,11 +25,11 @@
 #include "title.h"
 #include "transition.h"
 
-/*#define BLOCK_MAIN 0
+#define BLOCK_MAIN 0
 #define BLOCK_ACT 1
 #define BLOCK_SEQUENCE 2
 #define BLOCK_SCENE 3
-#define BLOCK_SCENEHEADER 4*/
+#define BLOCK_SCENEHEADER 4
 
 Script::Script()
 {
@@ -113,7 +113,7 @@ void Script::parseFromFountain(const QString& script)
     qDeleteAll(m_content);
     m_content.clear();
 
-    //quint8 currentBlock = BLOCK_MAIN;
+    quint8 currentBlock = BLOCK_MAIN;
     QList<Block *> *blocklist = &m_content;
 
     while (i < blockcount) {

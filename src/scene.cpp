@@ -27,12 +27,24 @@ QList<Block *> *Scene::getList()
 
 QString Scene::toHtml()
 {
-    return "<p class='scene-heading'>" + htmlCheckBIU(m_data) + "</p>";
+    QString result = "<p class='scene-heading'>" + htmlCheckBIU(m_data) + "</p>";
+
+    foreach (Block *block, m_content) {
+        result.append(block->toHtml());
+    }
+
+    return result;
 }
 
 QString Scene::toFountain()
 {
-    return "." + m_data + "\n";
+    QString result = "." + m_data + "\n";
+
+    foreach (Block *block, m_content) {
+        result.append(block->toFountain());
+    }
+
+    return result;
 }
 
 void Scene::toTreeWidgetItem(QTreeWidgetItem *parent)
