@@ -12,12 +12,24 @@ void Action::setCentered(bool isCentered)
 
 QString Action::toHtml()
 {
-    return m_data;
+    QString result = "<p>" + htmlCheckBIU(m_data) + "</p>";
+
+    if (m_isCentered) {
+        result = "<p style='text-align: center !important; '>" + htmlCheckBIU(m_data) + "</p>";
+    }
+
+    return result;
 }
 
 QString Action::toFountain()
 {
-    return m_data;
+    QString result = m_data;
+
+    if (m_isCentered) {
+        result = "> " + m_data + " <";
+    }
+
+    return result;
 }
 
 void Action::toTreeWidgetItem(QTreeWidgetItem *parent)
