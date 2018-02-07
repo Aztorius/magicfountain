@@ -1,8 +1,6 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <QSharedPointer>
-
 #include "block.h"
 #include "dialogueblock.h"
 
@@ -24,9 +22,9 @@ public:
     virtual bool isCharacterBlock();
 private:
     bool m_isDual;
-    QList<QSharedPointer<DialogueBlock>> m_leftContent;
+    QList<DialogueBlock *> m_leftContent;
     QString m_rightCharacter;
-    QList<QSharedPointer<DialogueBlock>> m_rightContent;
+    QList<DialogueBlock *> m_rightContent;
 };
 
 #endif // CHARACTER_H

@@ -17,8 +17,7 @@ void Character::setDual(bool isDual)
 
 void Character::addDialogueBlock(DialogueBlock *block)
 {
-    QSharedPointer<DialogueBlock> ptr(block);
-    m_leftContent.append(ptr);
+    m_leftContent.append(block);
 }
 
 void Character::setRightCharacter(const QString &data)
@@ -28,8 +27,7 @@ void Character::setRightCharacter(const QString &data)
 
 void Character::addRightDialogueBlock(DialogueBlock *block)
 {
-    QSharedPointer<DialogueBlock> ptr(block);
-    m_rightContent.append(ptr);
+    m_rightContent.append(block);
 }
 
 QString Character::toHtml()
@@ -38,21 +36,21 @@ QString Character::toHtml()
 
     if (m_isDual) {
         result = "<div class='dual-dialogue'><div class='dual-dialogue-left'><p class='character'>" + htmlCheckBIU(m_data) + "</p>";
-        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
-            result.append(block.data()->toHtml());
+        foreach (DialogueBlock *block, m_leftContent) {
+            result.append(block->toHtml());
         }
 
         result.append("</div><div class='dual-dialogue-right'><p class='character'>" + htmlCheckBIU(m_rightCharacter) + "</p>");
 
-        foreach (QSharedPointer<DialogueBlock> block, m_rightContent) {
-            result.append(block.data()->toHtml());
+        foreach (DialogueBlock *block, m_rightContent) {
+            result.append(block->toHtml());
         }
 
         result.append("</div></div>");
     } else {
         result = "<p class='character'>" + htmlCheckBIU(m_data) + "</p>";
-        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
-            result.append(block.data()->toHtml());
+        foreach (DialogueBlock *block, m_leftContent) {
+            result.append(block->toHtml());
         }
     }
 
@@ -66,20 +64,20 @@ QString Character::toFountain()
     if (m_isDual) {
         result = m_data + "\n";
 
-        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
-            result.append(block.data()->toFountain());
+        foreach (DialogueBlock *block, m_leftContent) {
+            result.append(block->toFountain());
         }
 
         result.append(m_rightCharacter + "\n");
 
-        foreach (QSharedPointer<DialogueBlock> block, m_rightContent) {
-            result.append(block.data()->toFountain());
+        foreach (DialogueBlock *block, m_rightContent) {
+            result.append(block->toFountain());
         }
     } else {
         result = m_data + "\n";
 
-        foreach (QSharedPointer<DialogueBlock> block, m_leftContent) {
-            result.append(block.data()->toFountain());
+        foreach (DialogueBlock *block, m_leftContent) {
+            result.append(block->toFountain());
         }
     }
 
@@ -88,7 +86,21 @@ QString Character::toFountain()
 
 void Character::toTreeWidgetItem(QTreeWidgetItem *parent)
 {
-    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+    QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << m_data);
+
+    foreach (DialogueBlock *block, m_leftContent) {
+        block->toTreeWidgetItem(item);
+    }
+
+    if (m_isDual) {
+        item->addChild(new QTreeWidgetItem(QStringList() << m_rightCharacter));
+
+        foreach (DialogueBlock *block, m_rightContent) {
+            block->toTreeWidgetItem(item);
+        }
+    }
+
+    parent->addChild(item);
 }
 
 bool Character::isCharacterBlock()
