@@ -5,23 +5,17 @@ SceneSection::SceneSection(const QString &m_data) : Section(m_data)
 
 }
 
-QString SceneSection::toHtml()
-{
-    //TODO Print internal blocks
-
-    return QString();
-}
-
 QString SceneSection::toFountain()
 {
-    //TODO Print internal blocks
+    QString result = "### " + m_data + "\n";
 
-    return "### " + m_data;
-}
+    if (!getSynopsis()->getData().isEmpty()) {
+        result.append(getSynopsis()->toFountain());
+    }
 
-void SceneSection::toTreeWidgetItem(QTreeWidgetItem *parent)
-{
-    //TODO Add internal blocks to tree
+    foreach (Block *block, *getList()) {
+        result.append(block->toFountain());
+    }
 
-    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
+    return result;
 }

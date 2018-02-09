@@ -5,25 +5,17 @@ Act::Act(const QString &m_data) : Section(m_data)
 
 }
 
-QString Act::toHtml()
-{
-    //TODO Print internal blocks
-
-    return QString();
-}
-
 QString Act::toFountain()
 {
-    //TODO Print internal blocks
+    QString result = "# " + m_data + "\n";
 
-    return "# " + m_data;
-}
+    if (!getSynopsis()->getData().isEmpty()) {
+        result.append(getSynopsis()->toFountain());
+    }
 
-void Act::toTreeWidgetItem(QTreeWidgetItem *parent)
-{
-    QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << m_data);
+    foreach (Block *block, *getList()) {
+        result.append(block->toFountain());
+    }
 
-    //TODO Add internal blocks to tree
-
-    parent->addChild(item);
+    return result;
 }

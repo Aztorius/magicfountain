@@ -1,8 +1,6 @@
 #ifndef SECTION_H
 #define SECTION_H
 
-#include <QSharedPointer>
-
 #include "block.h"
 #include "synopsis.h"
 
@@ -11,14 +9,16 @@ class Section : public Block
 public:
     Section(const QString &m_data);
     void setSynopsis(Synopsis *synopsis);
+    Synopsis *getSynopsis();
     void addBlock(Block *block);
+    QList<Block *> *getList();
 
-    virtual QString toHtml() = 0;
+    virtual QString toHtml();
     virtual QString toFountain() = 0;
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent) = 0;
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
     Synopsis m_synopsis;
-    QList<QSharedPointer<Block>> m_content;
+    QList<Block *> m_content;
 };
 
 #endif // SECTION_H

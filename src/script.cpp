@@ -25,11 +25,11 @@
 #include "title.h"
 #include "transition.h"
 
-#define BLOCK_MAIN 0
-#define BLOCK_ACT 1
-#define BLOCK_SEQUENCE 2
-#define BLOCK_SCENE 3
-#define BLOCK_SCENEHEADER 4
+#define BLOCK_MAIN 1
+#define BLOCK_ACT 2
+#define BLOCK_SEQUENCE 4
+#define BLOCK_SCENESECTION 8
+#define BLOCK_SCENE 16
 
 Script::Script()
 {
@@ -113,7 +113,7 @@ void Script::parseFromFountain(const QString& script)
     qDeleteAll(m_content);
     m_content.clear();
 
-    quint8 currentBlock = BLOCK_MAIN;
+    quint8 currentBlockType = BLOCK_MAIN;
     QList<Block *> *blocklist = &m_content;
 
     while (i < blockcount) {
@@ -158,16 +158,71 @@ void Script::parseFromFountain(const QString& script)
         } else if (text.left(8) == "Contact:") { //Contact
             TitlePageElement *contact = new Contact(text.mid(8).trimmed());
             parseTitlePageData(i, lines, contact);
-        } else if (text.left(4) == "### ") { //Scene
-            blocklist->append(new SceneSection(text.mid(4)));
+        } else if (text.left(4) == "### ") { //Scene Section
+            SceneSection *scenesection = new SceneSection(text.mid(4));
+
+            if (currentBlockType & (BLOCK_SCENE | BLOCK_SCENESECTION)) {
+                Act *act = dynamic_cast<Act*>(m_content.last());
+
+                if (act != nullptr) {
+                    if (act->getList()->size() > 0) {
+                        Sequence *sequence = dynamic_cast<Sequence*>(act->getList()->last());
+
+                        if (sequence != nullptr) {
+                            sequence->addBlock(scenesection);
+                        } else {
+                            act->addBlock(scenesection);
+                        }
+                    } else {
+                        act->addBlock(scenesection);
+                    }
+                } else {
+                    Sequence *sequence = dynamic_cast<Sequence*>(m_content.last());
+
+                    if (sequence != nullptr) {
+                        sequence->addBlock(scenesection);
+                    } else {
+                        m_content.append(scenesection);
+                    }
+                }
+            } else {
+                blocklist->append(scenesection);
+            }
+
+            blocklist = scenesection->getList();
+            currentBlockType = BLOCK_SCENESECTION;
         } else if (text.left(3) == "## ") { //Sequence
-            blocklist->append(new Sequence(text.mid(3)));
+            Sequence *sequence = new Sequence(text.mid(3));
+
+            if (currentBlockType & (BLOCK_SEQUENCE | BLOCK_SCENE | BLOCK_SCENESECTION)) {
+                Act *act = dynamic_cast<Act*>(m_content.last());
+                if (act != nullptr) {
+                    act->addBlock(sequence);
+                } else {
+                    m_content.append(sequence);
+                }
+            } else {
+                blocklist->append(sequence);
+            }
+
+            blocklist = sequence->getList();
+            currentBlockType = BLOCK_SEQUENCE;
         } else if (text.left(2) == "# ") { //Act
-            blocklist->append(new Act(text.mid(2)));
+            Act *act = new Act(text.mid(2));
+            m_content.append(act);
+            blocklist = act->getList();
+            currentBlockType = BLOCK_ACT;
         } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
             Scene *scene = new Scene(text);
-            m_content.append(scene);
+
+            if (currentBlockType != BLOCK_SCENE) {
+                blocklist->append(scene);
+            } else {
+                m_content.append(scene);
+            }
+
             blocklist = scene->getList();
+            currentBlockType = BLOCK_SCENE;
         } else if (text.left(1) == ">") {
             if (text.right(1) == "<") { //Centered text
                 Action *action = new Action(text.mid(1, text.size()-2).trimmed());
