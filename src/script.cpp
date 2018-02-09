@@ -190,12 +190,12 @@ void Script::parseFromFountain(const QString& script)
             if (text.right(1) == "^") { //Dual dialogue
                 text.remove(text.size() - 1, 1);
 
-                if (m_content.size() < 2) {
+                if (blocklist->size() < 2) {
                     // Treat that as a classic Dialogue
                     character = new Character(text);
                     blocklist->append(character);
                 } else {
-                    Block *block = m_content.at(m_content.size() - 2);
+                    Block *block = blocklist->at(blocklist->size() - 2);
 
                     character = dynamic_cast<Character *>(block);
 
