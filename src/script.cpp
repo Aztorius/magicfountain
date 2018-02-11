@@ -404,6 +404,8 @@ QString Script::toHtml()
 
     content.append(m_titlepage.toHtml());
 
+    content.append("<p class='page-break'>1.</p>\n");
+
     foreach (Block *block, m_content) {
         content.append(block->toHtml());
     }

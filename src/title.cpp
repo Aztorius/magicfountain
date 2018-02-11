@@ -18,7 +18,7 @@ QString Title::toFountain()
 
 QString Title::toHtml()
 {
-    QString result = "<p id='script-title' class='title'>";
+    QString result = "<p class='title'>";
 
     foreach (QString line, getData()) {
         result.append(htmlCheckBIU(line) + "<br/>");

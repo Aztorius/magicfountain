@@ -152,4 +152,5 @@ p.page-break {
     border-top: 1px solid #ccc;
     padding-top: 20px;
     margin-top: 20px;
+    page-break-before: always;
 }

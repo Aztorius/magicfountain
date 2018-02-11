@@ -35,12 +35,12 @@ QString TitlePage::toFoutain()
 
 QString TitlePage::toHtml()
 {
-    QString result = "<p id='script-title'>";
+    QString result = "<div id='script-title'>";
 
     foreach (TitlePageElement *element, m_content) {
         result.append(element->toHtml());
     }
 
-    result.append("</p>");
+    result.append("</div>");
     return result;
 }
