@@ -7,6 +7,9 @@ class DraftDate : public TitlePageElement
 {
 public:
     DraftDate(const QString &firstLine);
+
+    virtual QString toFountain();
+    virtual QString toHtml();
 };
 
 #endif // DRAFTDATE_H

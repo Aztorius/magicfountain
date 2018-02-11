@@ -113,6 +113,8 @@ void Script::parseFromFountain(const QString& script)
     qDeleteAll(m_content);
     m_content.clear();
 
+    m_titlepage.clear();
+
     quint8 currentBlockType = BLOCK_MAIN;
     QList<Block *> *blocklist = &m_content;
 
@@ -146,18 +148,23 @@ void Script::parseFromFountain(const QString& script)
         } else if (text.left(7) == "Credit:") { //Credit
             TitlePageElement *credit = new Credit(text.mid(7).trimmed());
             parseTitlePageData(i, lines, credit);
+            m_titlepage.addElement(credit);
         } else if (text.left(7) == "Author:") { //Author
             TitlePageElement *author = new Author(text.mid(7).trimmed());
             parseTitlePageData(i, lines, author);
+            m_titlepage.addElement(author);
         } else if (text.left(7) == "Source:") { //Source
             TitlePageElement *source = new Source(text.mid(7).trimmed());
             parseTitlePageData(i, lines, source);
+            m_titlepage.addElement(source);
         } else if (text.left(11) == "Draft date:") { //Draft date
             TitlePageElement *draftDate = new DraftDate(text.mid(11).trimmed());
             parseTitlePageData(i, lines, draftDate);
+            m_titlepage.addElement(draftDate);
         } else if (text.left(8) == "Contact:") { //Contact
             TitlePageElement *contact = new Contact(text.mid(8).trimmed());
             parseTitlePageData(i, lines, contact);
+            m_titlepage.addElement(contact);
         } else if (text.left(4) == "### ") { //Scene Section
             SceneSection *scenesection = new SceneSection(text.mid(4));
 
@@ -395,6 +402,8 @@ QString Script::toHtml()
     content.append(cssStyle);
     content.append("</style></head><body><article><section>");
 
+    content.append(m_titlepage.toHtml());
+
     foreach (Block *block, m_content) {
         content.append(block->toHtml());
     }
@@ -406,6 +415,8 @@ QString Script::toHtml()
 QString Script::toFountain()
 {
     QString content;
+
+    content.append(m_titlepage.toFoutain());
 
     foreach (Block* block, m_content) {
         content.append(block->toFountain().append("\n"));

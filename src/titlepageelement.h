@@ -8,6 +8,13 @@ class TitlePageElement
 public:
     TitlePageElement(const QString &firstLine);
     void addLine(const QString &line);
+    QStringList getData();
+
+    virtual QString toFountain() = 0;
+    virtual QString toHtml() = 0;
+
+    static QString htmlCheckBIU(const QString &text);
+
 private:
     QStringList m_data;
 };
