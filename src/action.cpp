@@ -2,7 +2,7 @@
 
 Action::Action(const QString &data) : Block(data)
 {
-
+    m_isCentered = false;
 }
 
 void Action::setCentered(bool isCentered)
