@@ -12,6 +12,7 @@ public:
     void addElement(TitlePageElement *element);
     QString toFoutain();
     QString toHtml();
+    bool isEmpty();
 
 private:
     QList<TitlePageElement *> m_content;

@@ -44,3 +44,8 @@ QString TitlePage::toHtml()
     result.append("</div>");
     return result;
 }
+
+bool TitlePage::isEmpty()
+{
+    return m_content.isEmpty();
+}

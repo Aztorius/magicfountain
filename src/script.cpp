@@ -402,9 +402,10 @@ QString Script::toHtml()
     content.append(cssStyle);
     content.append("</style></head><body><article><section>");
 
-    content.append(m_titlepage.toHtml());
-
-    content.append("<p class='page-break'>1.</p>\n");
+    if (!m_titlepage.isEmpty()) {
+        content.append(m_titlepage.toHtml());
+        content.append("<p class='page-break'>1.</p>\n");
+    }
 
     foreach (Block *block, m_content) {
         content.append(block->toHtml());
