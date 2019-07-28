@@ -6,11 +6,11 @@
 class Parenthetical : public DialogueBlock
 {
 public:
-    Parenthetical(const QString &m_data);
+    Parenthetical(const QString &data);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // PARENTHETICAL_H

@@ -7,11 +7,12 @@ class Boneyard : public Block
 {
 public:
     Boneyard();
+
     void addLine(QString line);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // BONEYARD_H

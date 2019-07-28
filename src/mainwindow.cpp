@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    if (m_settings != 0) {
+    if (m_settings != nullptr) {
         delete m_settings;
     }
 

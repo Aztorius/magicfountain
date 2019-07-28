@@ -8,9 +8,9 @@ class BlankLine : public Block
 public:
     BlankLine();
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // BLANKLINE_H

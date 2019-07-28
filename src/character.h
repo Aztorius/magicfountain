@@ -15,11 +15,10 @@ public:
     void setRightCharacter(const QString &data);
     void addRightDialogueBlock(DialogueBlock *block);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
-
-    virtual bool isCharacterBlock();
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
+    bool isCharacterBlock();
 private:
     bool m_isDual;
     QList<DialogueBlock *> m_leftContent;

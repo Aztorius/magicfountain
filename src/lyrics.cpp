@@ -1,6 +1,6 @@
 #include "lyrics.h"
 
-Lyrics::Lyrics(const QString &m_data) : Block(m_data)
+Lyrics::Lyrics(const QString &data) : Block(data)
 {
 
 }

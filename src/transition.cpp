@@ -1,6 +1,6 @@
 #include "transition.h"
 
-Transition::Transition(const QString &m_data) : Block(m_data)
+Transition::Transition(const QString &data) : Block(data)
 {
 
 }

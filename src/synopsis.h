@@ -7,11 +7,11 @@ class Synopsis : public Block
 {
 public:
     Synopsis();
-    Synopsis(const QString &m_data);
+    Synopsis(const QString &data);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 
     Synopsis& operator=(const Synopsis *other);
 };

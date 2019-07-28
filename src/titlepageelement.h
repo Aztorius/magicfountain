@@ -7,6 +7,8 @@ class TitlePageElement
 {
 public:
     TitlePageElement(const QString &firstLine);
+    virtual ~TitlePageElement();
+
     void addLine(const QString &line);
     QStringList getData();
 

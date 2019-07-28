@@ -17,5 +17,5 @@ QString BlankLine::toFountain()
 
 void BlankLine::toTreeWidgetItem(QTreeWidgetItem *parent)
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 }

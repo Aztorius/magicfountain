@@ -8,9 +8,9 @@ class PageBreak : public Block
 public:
     PageBreak();
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // PAGEBREAK_H

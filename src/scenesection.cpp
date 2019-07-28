@@ -1,6 +1,6 @@
 #include "scenesection.h"
 
-SceneSection::SceneSection(const QString &m_data) : Section(m_data)
+SceneSection::SceneSection(const QString &data) : Section(data)
 {
 
 }

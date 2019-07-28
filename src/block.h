@@ -10,7 +10,7 @@ public:
     Block();
     Block(const QString &data);
     Block(const Block& other);
-    ~Block();
+    virtual ~Block();
 
     QString getData();
     void appendData(const QString& data);

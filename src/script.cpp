@@ -47,7 +47,7 @@ Script::Script(const QString &script, ScriptType type)
         break;
     default:
         break;
-    };
+    }
 }
 
 Script::Script(QFile file, ScriptType type)
@@ -77,9 +77,9 @@ bool static isABlankLine(int i, QStringList lines)
     return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
 }
 
-void static parseTitlePageData(quint32 &i, QStringList &lines, TitlePageElement *element)
+void static parseTitlePageData(qint32 &i, QStringList &lines, TitlePageElement *element)
 {
-    quint32 blockcount = lines.size();
+    qint32 blockcount = lines.size();
 
     if (++i >= blockcount) {
         return;
@@ -107,8 +107,8 @@ void Script::parseFromFountain(const QString& script)
     QStringList validStartHeaders;
     validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I/E";
 
-    quint32 blockcount = lines.size();
-    quint32 i = 0;
+    qint32 blockcount = lines.size();
+    qint32 i = 0;
 
     qDeleteAll(m_content);
     m_content.clear();

@@ -1,6 +1,6 @@
 #include "section.h"
 
-Section::Section(const QString &m_data) : Block(m_data)
+Section::Section(const QString &data) : Block(data)
 {
 
 }
