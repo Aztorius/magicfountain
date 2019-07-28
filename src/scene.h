@@ -10,14 +10,15 @@ class Scene : public Block
 {
 public:
     Scene(const QString &sceneheader);
+
     void addBlock(Block *block);
     void setSceneNumber(QString &sceneNumber);
     void setSynopsis(Synopsis synopsis);
     QList<Block *> *getList();
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
     QList<Block *> m_content;
     QString m_sceneNumber;

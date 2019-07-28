@@ -7,6 +7,11 @@ TitlePageElement::TitlePageElement(const QString &firstLine)
     m_data.append(firstLine);
 }
 
+TitlePageElement::~TitlePageElement()
+{
+
+}
+
 void TitlePageElement::addLine(const QString &line)
 {
     m_data.append(line);

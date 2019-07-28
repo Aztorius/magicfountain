@@ -5,7 +5,7 @@ Synopsis::Synopsis()
 
 }
 
-Synopsis::Synopsis(const QString &m_data) : Block(m_data)
+Synopsis::Synopsis(const QString &data) : Block(data)
 {
 
 }

@@ -1,6 +1,6 @@
 #include "sequence.h"
 
-Sequence::Sequence(const QString &m_data) : Section(m_data)
+Sequence::Sequence(const QString &data) : Section(data)
 {
 
 }

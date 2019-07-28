@@ -6,9 +6,9 @@
 class SceneSection : public Section
 {
 public:
-    SceneSection(const QString &m_data);
+    SceneSection(const QString &data);
 
-    virtual QString toFountain();
+    QString toFountain();
 };
 
 #endif // SCENESECTION_H

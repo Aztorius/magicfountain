@@ -8,6 +8,7 @@ class TitlePage
 public:
     TitlePage();
     ~TitlePage();
+
     void clear();
     void addElement(TitlePageElement *element);
     QString toFoutain();

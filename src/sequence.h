@@ -6,9 +6,9 @@
 class Sequence : public Section
 {
 public:
-    Sequence(const QString &m_data);
+    Sequence(const QString &data);
 
-    virtual QString toFountain();
+    QString toFountain();
 };
 
 #endif // SEQUENCE_H

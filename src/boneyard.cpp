@@ -22,5 +22,5 @@ QString Boneyard::toFountain()
 
 void Boneyard::toTreeWidgetItem(QTreeWidgetItem *parent)
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 }

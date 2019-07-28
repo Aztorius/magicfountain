@@ -1,6 +1,6 @@
 #include "dialogue.h"
 
-Dialogue::Dialogue(const QString &m_data) : DialogueBlock(m_data)
+Dialogue::Dialogue(const QString &data) : DialogueBlock(data)
 {
 
 }

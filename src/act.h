@@ -6,9 +6,9 @@
 class Act : public Section
 {
 public:
-    Act(const QString &m_data);
+    Act(const QString &data);
 
-    virtual QString toFountain();
+    QString toFountain();
 };
 
 #endif // ACT_H

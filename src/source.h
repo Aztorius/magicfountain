@@ -8,8 +8,8 @@ class Source : public TitlePageElement
 public:
     Source(const QString &firstLine);
 
-    virtual QString toFountain();
-    virtual QString toHtml();
+    QString toFountain();
+    QString toHtml();
 };
 
 #endif // SOURCE_H

@@ -1,6 +1,6 @@
 #include "act.h"
 
-Act::Act(const QString &m_data) : Section(m_data)
+Act::Act(const QString &data) : Section(data)
 {
 
 }

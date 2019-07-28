@@ -6,11 +6,11 @@
 class Dialogue : public DialogueBlock
 {
 public:
-    Dialogue(const QString &m_data);
+    Dialogue(const QString &data);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // DIALOGUE_H

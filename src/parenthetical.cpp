@@ -1,6 +1,6 @@
 #include "parenthetical.h"
 
-Parenthetical::Parenthetical(const QString &m_data) : DialogueBlock(m_data)
+Parenthetical::Parenthetical(const QString &data) : DialogueBlock(data)
 {
 
 }

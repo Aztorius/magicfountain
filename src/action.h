@@ -7,11 +7,12 @@ class Action : public Block
 {
 public:
     Action(const QString &data);
+
     void setCentered(bool isCentered);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
     bool m_isCentered;
 };

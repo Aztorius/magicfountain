@@ -6,11 +6,11 @@
 class Lyrics : public Block
 {
 public:
-    Lyrics(const QString &m_data);
+    Lyrics(const QString &data);
 
-    virtual QString toHtml();
-    virtual QString toFountain();
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
+    QString toHtml();
+    QString toFountain();
+    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // LYRICS_H

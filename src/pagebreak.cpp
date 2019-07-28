@@ -17,5 +17,5 @@ QString PageBreak::toFountain()
 
 void PageBreak::toTreeWidgetItem(QTreeWidgetItem *parent)
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 }
