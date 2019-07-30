@@ -106,7 +106,7 @@ void Script::parseFromFountain(const QString& script)
     QString text;
     QRegExp regAlphaNumeric("[A-Z]|[a-z]|[0-9]*");
     QStringList validStartHeaders;
-    validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I/E";
+    validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I./E" << "I/E";
 
     qint32 blockcount = lines.size();
     qint32 i = 0;
