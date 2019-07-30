@@ -15,6 +15,7 @@
 #include "dialogue.h"
 #include "draftdate.h"
 #include "lyrics.h"
+#include "note.h"
 #include "pagebreak.h"
 #include "parenthetical.h"
 #include "scene.h"
@@ -132,6 +133,18 @@ void Script::parseFromFountain(const QString& script)
             }
 
             blocklist->append(block);
+        } else if (text.left(2) == "[[") { //Note
+            Note *block = nullptr;
+            if (text.right(2) == "]]") { //Inline
+                block = new Note(text.mid(2, text.size() - 4), NoteInline);
+                blocklist->append(block);
+            } else { //Multi-line
+                QString string_note = text.mid(2);
+                while (++i < blockcount && lines.at(i).trimmed().right(2) != "]]") {
+                    string_note.append("\n" + lines.at(i));
+                }
+                block = new Note(string_note, NoteMultiline);
+            }
         } else if (text.left(1) == "!") { //Forced action
             text = lines.at(i);
             text.remove(text.indexOf("!"), 1);
