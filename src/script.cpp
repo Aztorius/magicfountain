@@ -112,7 +112,6 @@ void Script::parseFromFountain(const QString& script)
 
     qDeleteAll(m_content);
     m_content.clear();
-
     m_titlepage.clear();
 
     quint8 currentBlockType = BLOCK_MAIN;
@@ -124,8 +123,12 @@ void Script::parseFromFountain(const QString& script)
         if (text.left(2) == "/*") { //Boneyard
             Boneyard *block = new Boneyard();
 
-            while (++i < blockcount && lines.at(i).trimmed() != "*/") {
-                block->addLine(lines.at(i));
+            if (text.right(2) == "*/") { //inline Boneyard
+                block->addLine(text.mid(2, text.size() - 4));
+            } else { //multi-line or internal Boneyard
+                while (++i < blockcount && lines.at(i).trimmed().right(2) != "*/") {
+                    block->addLine(lines.at(i));
+                }
             }
 
             blocklist->append(block);
@@ -219,7 +222,8 @@ void Script::parseFromFountain(const QString& script)
             m_content.append(act);
             blocklist = act->getList();
             currentBlockType = BLOCK_ACT;
-        } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
+        } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) &&
+                   isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
             Scene *scene = new Scene(text);
 
             if (currentBlockType != BLOCK_SCENE) {
@@ -238,11 +242,14 @@ void Script::parseFromFountain(const QString& script)
             } else { //Forced transition
                 blocklist->append(new Transition(text.mid(1)));
             }
-        } else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
+        } else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text &&
+                   isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
             blocklist->append(new Transition(text));
-        } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1)) && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
+        } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1))
+                   && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
             blocklist->append(new Scene(text.mid(1)));
-        } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) || text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
+        } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) ||
+                    text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
             if (text.left(1) == "@") {
                 text.remove(0, 1);
             }
