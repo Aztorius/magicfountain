@@ -35,6 +35,8 @@ unix {
 INSTALLS += target
 
 SOURCES += src/main.cpp\
+    src/chapter.cpp \
+    src/formatdialog.cpp \
     src/mainwindow.cpp \
     src/script.cpp \
     src/block.cpp \
@@ -65,6 +67,9 @@ SOURCES += src/main.cpp\
     src/boneyard.cpp
 
 HEADERS  += src/mainwindow.h \
+    src/chapter.h \
+    src/editormode.h \
+    src/formatdialog.h \
     src/script.h \
     src/block.h \
     src/scene.h \
@@ -93,7 +98,8 @@ HEADERS  += src/mainwindow.h \
     src/blankline.h \
     src/boneyard.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    formatdialog.ui
 
 RESOURCES += ressources.qrc
 

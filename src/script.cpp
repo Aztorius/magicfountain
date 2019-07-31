@@ -9,6 +9,7 @@
 #include "author.h"
 #include "blankline.h"
 #include "boneyard.h"
+#include "chapter.h"
 #include "character.h"
 #include "contact.h"
 #include "credit.h"
@@ -34,82 +35,115 @@
 
 Script::Script()
 {
-
+    m_sourceFormat = SourceFormat::Unknown;
 }
 
-Script::Script(const QString &script, ScriptType type)
+Script::Script(QString& script, SourceFormat format)
 {
-    switch(type) {
-    case ScriptType::Fountain:
-        this->parseFromFountain(script);
+    this->parse(script, format);
+}
+
+Script::Script(QFile& file, SourceFormat format)
+{
+    this->parse(file, format);
+}
+
+void Script::parse(QString& script, SourceFormat format)
+{
+    m_sourceFormat = format;
+    QTextStream stream(&script);
+    switch(format) {
+    case SourceFormat::Fountain:
+        this->parseFromFountain(stream);
         break;
-    case ScriptType::FinalDraft:
-        this->parseFromFinalDraft(script);
+    case SourceFormat::River:
+        this->parseFromRiver(stream);
         break;
-    default:
+    case SourceFormat::FinalDraft:
+    case SourceFormat::Unknown:
         break;
     }
 }
 
-Script::Script(QFile file, ScriptType type)
+void Script::parse(QFile& file, SourceFormat format)
 {
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return;
     }
 
+    m_sourceFormat = format;
     QTextStream in(&file);
-
-    switch(type) {
-    case ScriptType::Fountain:
-        this->parseFromFountain(in.readAll());
+    switch(format) {
+    case SourceFormat::Fountain:
+        this->parseFromFountain(in);
         break;
-    case ScriptType::FinalDraft:
-        this->parseFromFinalDraft(in.readAll());
+    case SourceFormat::FinalDraft:
+        this->parseFromFinalDraft(file);
         break;
-    default:
+    case SourceFormat::River:
+        this->parseFromRiver(in);
+        break;
+    case SourceFormat::Unknown:
         break;
     }
 
     file.close();
 }
 
-bool static isABlankLine(int i, QStringList lines)
+void static parseTitlePageData(QTextStream &stream, QString &rawText, QString &text, TitlePageElement *element)
 {
-    return (i >= lines.size() || i < 0 || lines.at(i).isEmpty());
-}
-
-void static parseTitlePageData(qint32 &i, QStringList &lines, TitlePageElement *element)
-{
-    qint32 blockcount = lines.size();
-
-    if (++i >= blockcount) {
+    if (stream.atEnd()) {
         return;
     }
 
-    QString text = lines.at(i);
+    rawText = stream.readLine();
+    text = rawText.trimmed();
 
-    while ((text.left(1) == "\t" || text.left(3) == "   ") && i < blockcount) {
-        element->addLine(text.trimmed());
+    while (rawText.left(1) == "\t" || rawText.left(3) == "   ") {
+        element->addLine(text);
 
-        if (++i >= blockcount) {
+        if (stream.atEnd()) {
             break;
         }
 
-        text = lines.at(i);
+        rawText = stream.readLine();
+        text = rawText.trimmed();
     }
-    --i;
 }
 
-void Script::parseFromFountain(const QString& script)
+void Script::parseFromRiver(QTextStream& stream)
 {
-    QStringList lines = script.split("\n");
-    QString text;
+    QString text, rawText;
+
+    qDeleteAll(m_content);
+    m_content.clear();
+    m_titlepage.clear();
+
+    //TODO: quint8 currentBlockType = BLOCK_MAIN;
+    QList<Block *> *blocklist = &m_content;
+
+    while (!stream.atEnd()) {
+        rawText = stream.readLine();
+        text = text.trimmed();
+
+        if (text.left(3) == "===") { //Page breaks
+            blocklist->append(new PageBreak());
+        } else if (text.left(2) == "= ") { //Synopses
+            blocklist->append(new Synopsis(text.mid(2)));
+        } else if (text.left(2) == "## ") { //Chapter
+            blocklist->append(new Chapter(text.mid(2)));
+        } else if (text.left(1) == "# ") { //Title
+            //blocklist->append(new Title(text.mid(2)));
+        }
+    }
+}
+
+void Script::parseFromFountain(QTextStream& stream)
+{
+    QString text, rawText;
     QRegExp regAlphaNumeric("[A-Z]|[a-z]|[0-9]*");
     QStringList validStartHeaders;
     validStartHeaders << "INT" << "EXT" << "EST" << "INT./EXT" << "INT/EXT" << "I./E" << "I/E";
-
-    qint32 blockcount = lines.size();
-    qint32 i = 0;
 
     qDeleteAll(m_content);
     m_content.clear();
@@ -118,17 +152,27 @@ void Script::parseFromFountain(const QString& script)
     quint8 currentBlockType = BLOCK_MAIN;
     QList<Block *> *blocklist = &m_content;
 
-    while (i < blockcount) {
-        text = lines.at(i).trimmed();
+    if (stream.atEnd()) {
+        return;
+    }
 
+    rawText = stream.readLine();
+    text = rawText.trimmed();
+
+    while (!stream.atEnd()) {
         if (text.left(2) == "/*") { //Boneyard
             Boneyard *block = new Boneyard();
 
             if (text.right(2) == "*/") { //inline Boneyard
                 block->addLine(text.mid(2, text.size() - 4));
             } else { //multi-line or internal Boneyard
-                while (++i < blockcount && lines.at(i).trimmed().right(2) != "*/") {
-                    block->addLine(lines.at(i));
+                while (!stream.atEnd()) {
+                    rawText = stream.readLine();
+                    text = rawText.trimmed();
+                    block->addLine(rawText);
+                    if (text.right(2) == "*/") {
+                        break;
+                    }
                 }
             }
 
@@ -140,47 +184,57 @@ void Script::parseFromFountain(const QString& script)
                 blocklist->append(block);
             } else { //Multi-line
                 QString string_note = text.mid(2);
-                while (++i < blockcount && lines.at(i).trimmed().right(2) != "]]") {
-                    string_note.append("\n" + lines.at(i));
+                while (!stream.atEnd()) {
+                    rawText = stream.readLine();
+                    text = rawText.trimmed();
+                    string_note.append("\n" + rawText);
+                    if (text.right(2) == "]]") {
+                        break;
+                    }
                 }
                 block = new Note(string_note, NoteMultiline);
             }
         } else if (text.left(1) == "!") { //Forced action
-            text = lines.at(i);
-            text.remove(text.indexOf("!"), 1);
-            text.replace("\t", "    ");
+            rawText.remove(text.indexOf("!"), 1);
+            rawText.replace("\t", "    ");
 
-            blocklist->append(new Action(text));
+            blocklist->append(new Action(rawText));
         } else if (text.left(3) == "===") { //Page breaks
             blocklist->append(new PageBreak());
-        } else if (text.left(2) == "= ") { //Synopses
+        } else if (text.left(2) == "= ") { //Synopsis
             blocklist->append(new Synopsis(text.mid(2)));
         } else if (text.left(1) == "~") { //Lyrics
             blocklist->append(new Lyrics(text.mid(1)));
         } else if (text.left(6) == "Title:") { //Title
             TitlePageElement *title = new Title(text.mid(6).trimmed());
-            parseTitlePageData(i, lines, title);
+            parseTitlePageData(stream, rawText, text, title);
             m_titlepage.addElement(title);
+            continue;
         } else if (text.left(7) == "Credit:") { //Credit
             TitlePageElement *credit = new Credit(text.mid(7).trimmed());
-            parseTitlePageData(i, lines, credit);
+            parseTitlePageData(stream, rawText, text, credit);
             m_titlepage.addElement(credit);
+            continue;
         } else if (text.left(7) == "Author:") { //Author
             TitlePageElement *author = new Author(text.mid(7).trimmed());
-            parseTitlePageData(i, lines, author);
+            parseTitlePageData(stream, rawText, text, author);
             m_titlepage.addElement(author);
+            continue;
         } else if (text.left(7) == "Source:") { //Source
             TitlePageElement *source = new Source(text.mid(7).trimmed());
-            parseTitlePageData(i, lines, source);
+            parseTitlePageData(stream, rawText, text, source);
             m_titlepage.addElement(source);
+            continue;
         } else if (text.left(11) == "Draft date:") { //Draft date
             TitlePageElement *draftDate = new DraftDate(text.mid(11).trimmed());
-            parseTitlePageData(i, lines, draftDate);
+            parseTitlePageData(stream, rawText, text, draftDate);
             m_titlepage.addElement(draftDate);
+            continue;
         } else if (text.left(8) == "Contact:") { //Contact
             TitlePageElement *contact = new Contact(text.mid(8).trimmed());
-            parseTitlePageData(i, lines, contact);
+            parseTitlePageData(stream, rawText, text, contact);
             m_titlepage.addElement(contact);
+            continue;
         } else if (text.left(4) == "### ") { //Scene Section
             SceneSection *scenesection = new SceneSection(text.mid(4));
 
@@ -235,8 +289,8 @@ void Script::parseFromFountain(const QString& script)
             m_content.append(act);
             blocklist = act->getList();
             currentBlockType = BLOCK_ACT;
-        } else if ((validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 || validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) &&
-                   isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Scene heading
+        } else if (validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 ||
+                   validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) { //Scene heading
             Scene *scene = new Scene(text);
 
             if (currentBlockType != BLOCK_SCENE) {
@@ -255,14 +309,14 @@ void Script::parseFromFountain(const QString& script)
             } else { //Forced transition
                 blocklist->append(new Transition(text.mid(1)));
             }
-        } else if (lines.at(i).right(3) == "TO:" && text.toUpper() == text &&
-                   isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Transition
+        } else if (rawText.right(3) == "TO:" && text.toUpper() == text) { //Transition
             blocklist->append(new Transition(text));
-        } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1))
-                   && isABlankLine(i-1, lines) && isABlankLine(i+1, lines)) { //Forced scene heading
+        } else if (text.left(1) == "." && regAlphaNumeric.exactMatch(text.mid(1, 1))) { //Forced scene heading
             blocklist->append(new Scene(text.mid(1)));
-        } else if (((text.split("(").first().toUpper() == text.split("(").first() && !text.isEmpty() && text.split("(").first().toLong() == 0) ||
-                    text.left(1) == "@") && isABlankLine(i-1, lines) && !isABlankLine(i+1, lines)) { //Dialogue and forced dialogue
+        } else if ((text.split("(").first().toUpper() == text.split("(").first() &&
+                    !text.isEmpty() &&
+                    text.split("(").first().toLong() == 0) ||
+                    text.left(1) == "@") { //Dialogue and forced dialogue
             if (text.left(1) == "@") {
                 text.remove(0, 1);
             }
@@ -295,13 +349,14 @@ void Script::parseFromFountain(const QString& script)
                 blocklist->append(character);
             }
 
-            if (++i >= blockcount) {
+            if (stream.atEnd()) {
                 break;
             }
 
-            text = lines.at(i).trimmed();
+            rawText = stream.readLine();
+            text = rawText.trimmed();
 
-            while ((!text.isEmpty() || lines.at(i) == "  ") && i < blockcount) {
+            while (!text.isEmpty() || rawText == "  ") {
 
                 if (text.left(1) == "(" && text.right(1) == ")") { //Parenthetical
                     if (character->isDual()) {
@@ -316,34 +371,32 @@ void Script::parseFromFountain(const QString& script)
                         character->addDialogueBlock(new Dialogue(text));
                     }
                 } else {
-                    ++i;
                     break;
                 }
 
-                if (++i >= blockcount) {
+                if (stream.atEnd()) {
                     break;
                 }
 
-                text = lines.at(i).trimmed();
+                rawText = stream.readLine();
+                text = rawText.trimmed();
             }
+        } else if (!rawText.isEmpty()) { //Default action
+            rawText.replace("\t", "    ");
 
-            i--;
-        } else if (!lines.at(i).isEmpty()) { //Default action
-            text = lines.at(i);
-            text.replace("\t", "    ");
-
-            blocklist->append(new Action(text));
+            blocklist->append(new Action(rawText));
         } else { //Blank action
             blocklist->append(new BlankLine());
         }
 
-        i++;
+        rawText = stream.readLine();
+        text = rawText.trimmed();
     }
 }
 
-void Script::parseFromFinalDraft(const QString& script)
+void Script::parseFromFinalDraft(QIODevice &script)
 {
-    QXmlStreamReader reader(script);
+    QXmlStreamReader reader(&script);
     QString attributeName;
 
     qDeleteAll(m_content);

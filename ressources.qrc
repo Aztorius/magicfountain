@@ -25,5 +25,9 @@
         <file>data/default_fr.fountain</file>
         <file>data/default_de.fountain</file>
         <file>data/style.css</file>
+        <file>data/fountain.png</file>
+        <file>data/default_de.md</file>
+        <file>data/default_en.md</file>
+        <file>data/default_fr.md</file>
     </qresource>
 </RCC>

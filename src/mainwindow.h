@@ -7,6 +7,7 @@
 #include <QListWidgetItem>
 
 #include "script.h"
+#include "editormode.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +31,7 @@ private:
     QTranslator m_translator;
     QSettings *m_settings;
     QString m_language;
+    EditorMode m_editorMode;
 
 public slots:
     void refreshTitleBar(bool modified);
@@ -59,6 +61,9 @@ private slots:
 
     void slot_loadSystemFont();
     void slot_loadCustomFont();
+
+private:
+    void openFormatDialog();
 
 protected:
     void changeEvent(QEvent *event);

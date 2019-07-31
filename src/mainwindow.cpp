@@ -13,6 +13,7 @@
 #include <QTextStream>
 
 #include "block.h"
+#include "formatdialog.h"
 
 #define GLOBAL_VERSION "1.0.0"
 
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     slot_loadCustomFont();
 
     m_settings = new QSettings("MagicFountain", "MagicFountain");
+    m_editorMode = EditorMode::FountainMode;
 
     QLocale locale;
 
@@ -109,7 +111,12 @@ void MainWindow::refreshTitleBar(bool modified)
 
 void MainWindow::refreshPreview()
 {
-    currentScript.parseFromFountain(ui->plainTextEdit_fountaineditor->toPlainText());
+    QTextStream stream(ui->plainTextEdit_fountaineditor->toPlainText().toUtf8());
+    if (m_editorMode == EditorMode::FountainMode) {
+        currentScript.parseFromFountain(stream);
+    } else if (m_editorMode == EditorMode::RiverMode) {
+        currentScript.parseFromRiver(stream);
+    }
 
     ui->webEngineView_preview->setHtml(currentScript.toHtml());
     ui->plainTextEdit_fountaineditor->setFocus();
@@ -227,10 +234,16 @@ void MainWindow::print() {
 void MainWindow::newFile() {
     slot_checkAndSaveScript();
 
-    QFile file(":/data/default_" + m_language + ".fountain");
+    this->openFormatDialog();
+
+    QString extension = ".fountain";
+    if (m_editorMode == EditorMode::RiverMode) {
+        extension = ".md";
+    }
+    QFile file(":/data/default_" + m_language + extension);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        file.setFileName(":/data/default_en.fountain");
+        file.setFileName(":/data/default_en" + extension);
 
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             // Error
@@ -262,6 +275,11 @@ void MainWindow::openFile() {
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        if (filename.endsWith(".fountain")) {
+            m_editorMode = FountainMode;
+        } else {
+            this->openFormatDialog();
+        }
         filepath = filename;
         ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());
         ui->plainTextEdit_fountaineditor->document()->setModified(false);
@@ -444,7 +462,7 @@ void MainWindow::import()
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         filepath = QString();
-        currentScript.parseFromFinalDraft(file.readAll());
+        currentScript.parseFromFinalDraft(file);
         file.close();
 
         ui->plainTextEdit_fountaineditor->setPlainText(currentScript.toFountain());
@@ -454,4 +472,11 @@ void MainWindow::import()
         cursor.movePosition(QTextCursor::Start);
         ui->plainTextEdit_fountaineditor->setTextCursor(cursor);
     }
+}
+
+void MainWindow::openFormatDialog()
+{
+    FormatDialog dialog(this);
+    dialog.exec();
+    m_editorMode = dialog.getEditorMode();
 }
