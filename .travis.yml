@@ -11,7 +11,7 @@ matrix:
 addons:
   apt:
     sources:
-    - ppa:beineri/opt-qt597-xenial
+    - sourceline: 'ppa:beineri/opt-qt597-xenial'
     packages:
     - qttools5-dev-tools qt59base qt59webengine
 
