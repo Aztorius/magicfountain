@@ -13,11 +13,12 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - qt5-default qttools5-dev-tools qtwebengine5-dev
+    - qt5-default qttools5-dev-tools qtbase5-dev qtwebengine5-dev
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install qt5 ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force qt5 ; fi
+- id [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CPLUS_INCLUDE_PATH=/usr/include/x86_64-linux-gnu/qt5 ; fi
 - qmake -v
 
 script:
