@@ -31,8 +31,3 @@ QString Action::toFountain()
 
     return result;
 }
-
-void Action::toTreeWidgetItem(QTreeWidgetItem *parent)
-{
-    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
-}

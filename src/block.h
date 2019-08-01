@@ -17,8 +17,8 @@ public:
 
     virtual QString toHtml() = 0;
     virtual QString toFountain() = 0;
-    virtual void toTreeWidgetItem(QTreeWidgetItem *parent) = 0;
 
+    virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
     virtual bool isCharacterBlock();
 
     Block& operator=(const Block& block);

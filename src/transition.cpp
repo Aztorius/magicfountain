@@ -14,8 +14,3 @@ QString Transition::toFountain()
 {
     return "> " + m_data;
 }
-
-void Transition::toTreeWidgetItem(QTreeWidgetItem *parent)
-{
-    parent->addChild(new QTreeWidgetItem(QStringList() << m_data));
-}

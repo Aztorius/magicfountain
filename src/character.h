@@ -17,7 +17,6 @@ public:
 
     QString toHtml();
     QString toFountain();
-    void toTreeWidgetItem(QTreeWidgetItem *parent);
     bool isCharacterBlock();
 private:
     bool m_isDual;

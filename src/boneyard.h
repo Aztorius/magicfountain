@@ -12,7 +12,6 @@ public:
 
     QString toHtml();
     QString toFountain();
-    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // BONEYARD_H

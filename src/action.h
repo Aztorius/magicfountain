@@ -12,7 +12,7 @@ public:
 
     QString toHtml();
     QString toFountain();
-    void toTreeWidgetItem(QTreeWidgetItem *parent);
+
 private:
     bool m_isCentered;
 };

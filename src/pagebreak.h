@@ -10,7 +10,6 @@ public:
 
     QString toHtml();
     QString toFountain();
-    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // PAGEBREAK_H

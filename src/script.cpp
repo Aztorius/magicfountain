@@ -425,6 +425,9 @@ void Script::parseFromFinalDraft(QIODevice &script)
                             m_content.append(new Parenthetical(reader.readElementText()));
                         } else if (type == QString("Scene Heading")) {
                             reader.readNextStartElement();
+                            while(!reader.atEnd() && reader.name().toString() != "Text") {
+                                reader.readNext();
+                            }
                             m_content.append(new Scene(reader.readElementText()));
                         } else if (type == QString("Transition")) {
                             reader.readNextStartElement();

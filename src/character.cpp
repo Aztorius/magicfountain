@@ -61,9 +61,13 @@ QString Character::toFountain()
 {
     QString result;
 
-    if (m_isDual) {
+    if (!m_data.isUpper()) { // Force Character with @
+        result = "@" + m_data + "\n";
+    } else {
         result = m_data + "\n";
+    }
 
+    if (m_isDual) {
         foreach (DialogueBlock *block, m_leftContent) {
             result.append(block->toFountain());
         }
@@ -74,33 +78,12 @@ QString Character::toFountain()
             result.append(block->toFountain());
         }
     } else {
-        result = m_data + "\n";
-
         foreach (DialogueBlock *block, m_leftContent) {
             result.append(block->toFountain());
         }
     }
 
     return result;
-}
-
-void Character::toTreeWidgetItem(QTreeWidgetItem *parent)
-{
-    QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << m_data);
-
-    foreach (DialogueBlock *block, m_leftContent) {
-        block->toTreeWidgetItem(item);
-    }
-
-    if (m_isDual) {
-        item->addChild(new QTreeWidgetItem(QStringList() << m_rightCharacter));
-
-        foreach (DialogueBlock *block, m_rightContent) {
-            block->toTreeWidgetItem(item);
-        }
-    }
-
-    parent->addChild(item);
 }
 
 bool Character::isCharacterBlock()

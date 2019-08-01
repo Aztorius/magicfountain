@@ -21,8 +21,3 @@ QString Note::toFountain()
     }
     return result;
 }
-
-void Note::toTreeWidgetItem(QTreeWidgetItem *parent)
-{
-    Q_UNUSED(parent)
-}

@@ -17,7 +17,6 @@ public:
 
     QString toHtml();
     QString toFountain();
-    void toTreeWidgetItem(QTreeWidgetItem *parent);
 };
 
 #endif // NOTE_H
