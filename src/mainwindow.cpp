@@ -236,10 +236,18 @@ void MainWindow::newFile() {
 
     this->openFormatDialog();
 
-    QString extension = ".fountain";
-    if (m_editorMode == EditorMode::RiverMode) {
+    QString extension;
+    switch (m_editorMode) {
+    case EditorMode::None:
+        return;
+    case EditorMode::FountainMode:
+        extension = ".fountain";
+        break;
+    case EditorMode::RiverMode:
         extension = ".md";
+        break;
     }
+
     QFile file(":/data/default_" + m_language + extension);
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -279,6 +287,9 @@ void MainWindow::openFile() {
             m_editorMode = FountainMode;
         } else {
             this->openFormatDialog();
+            if (m_editorMode == EditorMode::None) {
+                return;
+            }
         }
         filepath = filename;
         ui->plainTextEdit_fountaineditor->setPlainText(file.readAll());

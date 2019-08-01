@@ -2,8 +2,9 @@
 #define EDITORMODE_H
 
 enum EditorMode {
-    FountainMode = 0x1,
-    RiverMode = 0x2
+    None = 0x1,
+    FountainMode = 0x2,
+    RiverMode = 0x4
 };
 
 #endif // EDITORMODE_H
