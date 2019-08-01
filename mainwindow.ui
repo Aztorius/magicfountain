@@ -372,7 +372,7 @@
   </action>
   <action name="actionImport">
    <property name="text">
-    <string>&amp;Import (.fdx) experimental</string>
+    <string>&amp;Import (.fdx)</string>
    </property>
   </action>
  </widget>
