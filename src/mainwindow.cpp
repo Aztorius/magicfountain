@@ -476,6 +476,7 @@ void MainWindow::import()
         currentScript.parseFromFinalDraft(file);
         file.close();
 
+        m_editorMode = EditorMode::FountainMode;
         ui->plainTextEdit_fountaineditor->setPlainText(currentScript.toFountain());
         ui->plainTextEdit_fountaineditor->document()->setModified(false);
 
