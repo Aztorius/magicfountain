@@ -404,6 +404,8 @@ void Script::parseFromFinalDraft(QIODevice &script)
 
     while (reader.readNextStartElement() && reader.name().toString() != "FinalDraft");
 
+    Character* lastCharacterBlock = nullptr;
+
     if (reader.readNextStartElement() && reader.name().toString() == "Content") {
         reader.readNext();
         while(!reader.atEnd()) {
@@ -416,10 +418,11 @@ void Script::parseFromFinalDraft(QIODevice &script)
                             m_content.append(new Action(reader.readElementText()));
                         } else if (type == QString("Character")) {
                             reader.readNextStartElement();
-                            m_content.append(new Character(reader.readElementText()));
+                            lastCharacterBlock = new Character(reader.readElementText());
+                            m_content.append(lastCharacterBlock);
                         } else if (type == QString("Dialogue")) {
                             reader.readNextStartElement();
-                            m_content.append(new Dialogue(reader.readElementText()));
+                            lastCharacterBlock->addDialogueBlock(new Dialogue(reader.readElementText()));
                         } else if (type == QString("Parenthetical")) {
                             reader.readNextStartElement();
                             m_content.append(new Parenthetical(reader.readElementText()));

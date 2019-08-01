@@ -83,6 +83,10 @@ QString Character::toFountain()
         }
     }
 
+    if (!result.endsWith("\n")) {
+        result.append("\n");
+    }
+
     return result;
 }
 
