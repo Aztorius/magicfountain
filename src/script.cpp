@@ -401,6 +401,7 @@ void Script::parseFromFinalDraft(QIODevice &script)
 
     qDeleteAll(m_content);
     m_content.clear();
+    m_titlepage.clear();
 
     while (reader.readNextStartElement() && reader.name().toString() != "FinalDraft");
 
