@@ -402,49 +402,48 @@ void Script::parseFromFinalDraft(QIODevice &script)
     qDeleteAll(m_content);
     m_content.clear();
 
-    if (reader.readNextStartElement() && reader.name().toString() == QString("FinalDraft")) {
-        if (reader.readNextStartElement() && reader.name().toString() == QString("Content")) {
-            while(reader.readNextStartElement()) {
-                if (reader.name().toString() == QString("Paragraph")) {
-                    foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
-                        if (attr.name().toString() == QString("Type")) {
-                            QString type = attr.value().toString();
+    while (reader.readNextStartElement() && reader.name().toString() != "FinalDraft");
 
-                            if (type == QString("Action")) {
-                                reader.readNextStartElement();
-                                m_content.append(new Action(reader.readElementText()));
-                            } else if (type == QString("Character")) {
-                                reader.readNextStartElement();
-                                m_content.append(new Character(reader.readElementText()));
-                            } else if (type == QString("Dialogue")) {
-                                reader.readNextStartElement();
-                                m_content.append(new Dialogue(reader.readElementText()));
-                            } else if (type == QString("Parenthetical")) {
-                                reader.readNextStartElement();
-                                m_content.append(new Parenthetical(reader.readElementText()));
-                            } else if (type == QString("Scene Heading")) {
-                                reader.readNextStartElement();
-                                m_content.append(new Scene(reader.readElementText()));
-                            } else if (type == QString("Transition")) {
-                                reader.readNextStartElement();
-                                m_content.append(new Transition(reader.readElementText()));
-                            }
-                        } else if (attr.name().toString() == QString("Alignment")) {
-                            QString alignment = attr.value().toString();
+    if (reader.readNextStartElement() && reader.name().toString() == "Content") {
+        reader.readNext();
+        while(!reader.atEnd()) {
+            if (reader.name().toString() == "Paragraph") {
+                foreach(const QXmlStreamAttribute &attr, reader.attributes()) {
+                    if (attr.name().toString() == "Type") {
+                        QString type = attr.value().toString();
+                        if (type == "Action") {
+                            reader.readNextStartElement();
+                            m_content.append(new Action(reader.readElementText()));
+                        } else if (type == QString("Character")) {
+                            reader.readNextStartElement();
+                            m_content.append(new Character(reader.readElementText()));
+                        } else if (type == QString("Dialogue")) {
+                            reader.readNextStartElement();
+                            m_content.append(new Dialogue(reader.readElementText()));
+                        } else if (type == QString("Parenthetical")) {
+                            reader.readNextStartElement();
+                            m_content.append(new Parenthetical(reader.readElementText()));
+                        } else if (type == QString("Scene Heading")) {
+                            reader.readNextStartElement();
+                            m_content.append(new Scene(reader.readElementText()));
+                        } else if (type == QString("Transition")) {
+                            reader.readNextStartElement();
+                            m_content.append(new Transition(reader.readElementText()));
+                        }
+                    } else if (attr.name().toString() == QString("Alignment")) {
+                        QString alignment = attr.value().toString();
 
-                            if (alignment == QString("Center")) {
-                                reader.readNextStartElement();
-                                Action *action = new Action(reader.readElementText());
-                                action->setCentered(true);
-                                m_content.append(action);
-                                break;
-                            }
+                        if (alignment == QString("Center")) {
+                            reader.readNextStartElement();
+                            Action *action = new Action(reader.readElementText());
+                            action->setCentered(true);
+                            m_content.append(action);
+                            break;
                         }
                     }
                 }
-
-                while(reader.readNextStartElement());
             }
+            reader.readNext();
         }
     }
 
