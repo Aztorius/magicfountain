@@ -3,6 +3,7 @@ host = https://www.transifex.com
 
 [magicfountain.magicfountain_en]
 file_filter = locales/magicfountain_<lang>.ts
+minimum_perc = 0
 source_file = locales/magicfountain_en.ts
 source_lang = en
 type = QT
