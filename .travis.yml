@@ -3,7 +3,7 @@ language: cpp
 matrix:
   include:
     - os: linux
-      dist: bionic
+      dist: xenial
       sudo: required
     - os: osx
       osx_image: xcode8.3
@@ -11,14 +11,14 @@ matrix:
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+    - ppa:beineri/opt-qt597-xenial
     packages:
-    - qt5-default qttools5-dev-tools qtbase5-dev qtwebengine5-dev
+    - qttools5-dev-tools qt59base qt59webengine
 
 before_script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install qt5 ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --force qt5 ; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CPLUS_INCLUDE_PATH=/usr/include/x86_64-linux-gnu/qt5 ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source /opt/qt59/bin/qt59-env.sh ; fi
 - qmake -v
 
 script:
