@@ -61,7 +61,7 @@ QString Character::toFountain()
 {
     QString result;
 
-    if (!m_data.isUpper()) { // Force Character with @
+    if (m_data != m_data.toUpper()) { // Force Character with @
         result = "@" + m_data + "\n";
     } else {
         result = m_data + "\n";
