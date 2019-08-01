@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->plainTextEdit_fountaineditor->setFocus();
 
+    connect(ui->tabWidget_menus, SIGNAL(currentChanged(int)), this, SLOT(refreshPreview(int)));
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(textChanged()), this, SLOT(refreshPreview()));
     connect(ui->plainTextEdit_fountaineditor, SIGNAL(modificationChanged(bool)), this, SLOT(refreshTitleBar(bool)));
     connect(ui->actionExport_as_PDF, SIGNAL(triggered()), this, SLOT(exportAsPDF()));
@@ -111,6 +112,11 @@ void MainWindow::refreshTitleBar(bool modified)
 
 void MainWindow::refreshPreview()
 {
+    this->refreshPreview(0);
+}
+
+void MainWindow::refreshPreview(int index)
+{
     QTextStream stream(ui->plainTextEdit_fountaineditor->toPlainText().toUtf8());
     if (m_editorMode == EditorMode::FountainMode) {
         currentScript.parseFromFountain(stream);
@@ -118,7 +124,10 @@ void MainWindow::refreshPreview()
         currentScript.parseFromRiver(stream);
     }
 
-    ui->webEngineView_preview->setHtml(currentScript.toHtml());
+    if (index == 1) {
+        ui->webEngineView_preview->setHtml(currentScript.toHtml());
+    }
+
     ui->plainTextEdit_fountaineditor->setFocus();
 
     refreshScenesView();

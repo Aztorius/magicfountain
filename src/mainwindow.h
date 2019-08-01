@@ -36,6 +36,7 @@ private:
 public slots:
     void refreshTitleBar(bool modified);
     void refreshPreview();
+    void refreshPreview(int index);
     void refreshScenesView();
     void exportAsPDF();
     void exportAsHTML();
