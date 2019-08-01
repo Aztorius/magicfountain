@@ -15,7 +15,7 @@
 #include "block.h"
 #include "formatdialog.h"
 
-#define GLOBAL_VERSION "1.0.0"
+#define GLOBAL_VERSION "1.1.0-git"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
