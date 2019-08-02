@@ -426,7 +426,7 @@ void Script::parseFromFinalDraft(QIODevice &script)
                             lastCharacterBlock->addDialogueBlock(new Dialogue(reader.readElementText()));
                         } else if (type == QString("Parenthetical")) {
                             reader.readNextStartElement();
-                            m_content.append(new Parenthetical(reader.readElementText()));
+                            lastCharacterBlock->addDialogueBlock(new Parenthetical(reader.readElementText()));
                         } else if (type == QString("Scene Heading")) {
                             reader.readNextStartElement();
                             while(!reader.atEnd() && reader.name().toString() != "Text") {
