@@ -12,5 +12,11 @@ QString Chapter::toFountain()
 
 QString Chapter::toHtml()
 {
-    return "<h2>" + htmlCheckBIU(m_data) + "</h2>";
+    QString result = "<h2>" + htmlCheckBIU(m_data) + "</h2>";
+
+    foreach (Block *block, *getList()) {
+        result.append(block->toHtml());
+    }
+
+    return result;
 }

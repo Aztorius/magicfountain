@@ -12,7 +12,13 @@ QString TitleSection::toFountain()
 
 QString TitleSection::toHtml()
 {
-    return "<h1>" + m_data + "</h1>";
+    QString result = "<h1>" + htmlCheckBIU(m_data) + "</h1>";
+
+    foreach (Block *block, *getList()) {
+        result.append(block->toHtml());
+    }
+
+    return result;
 }
 
 QString TitleSection::toRiver()
