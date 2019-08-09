@@ -25,13 +25,16 @@
 #include "source.h"
 #include "synopsis.h"
 #include "title.h"
+#include "titlesection.h"
 #include "transition.h"
 
-#define BLOCK_MAIN 1
-#define BLOCK_ACT 2
-#define BLOCK_SEQUENCE 4
-#define BLOCK_SCENESECTION 8
-#define BLOCK_SCENE 16
+enum BlockType {
+    Level0 = (2 << 0),
+    Level1 = (2 << 1),
+    Level2 = (2 << 2),
+    Level3 = (2 << 3),
+    Level4 = (2 << 4)
+};
 
 Script::Script()
 {
@@ -119,21 +122,36 @@ void Script::parseFromRiver(QTextStream& stream)
     m_content.clear();
     m_titlepage.clear();
 
-    //TODO: quint8 currentBlockType = BLOCK_MAIN;
+    enum BlockType currentBlockType = BlockType::Level0;
     QList<Block *> *blocklist = &m_content;
 
     while (!stream.atEnd()) {
         rawText = stream.readLine();
-        text = text.trimmed();
+        text = rawText.trimmed();
 
         if (text.left(3) == "===") { //Page breaks
             blocklist->append(new PageBreak());
-        } else if (text.left(2) == "= ") { //Synopses
+        } else if (text.left(2) == "= ") { //Synopsis
             blocklist->append(new Synopsis(text.mid(2)));
-        } else if (text.left(2) == "## ") { //Chapter
-            blocklist->append(new Chapter(text.mid(2)));
-        } else if (text.left(1) == "# ") { //Title
-            //blocklist->append(new Title(text.mid(2)));
+        } else if (text.left(3) == "## ") { //Chapter
+            Chapter *chapter = new Chapter(text.mid(2));
+            if (currentBlockType >= BlockType::Level2) {
+                TitleSection *titleSection = dynamic_cast<TitleSection*>(m_content.last());
+                if (titleSection != nullptr) {
+                    titleSection->addBlock(chapter);
+                } else {
+                    m_content.append(chapter);
+                }
+            } else {
+                blocklist->append(chapter);
+            }
+            blocklist = chapter->getList();
+            currentBlockType = BlockType::Level2;
+        } else if (text.left(2) == "# ") { //Title
+            TitleSection *titleSection = new TitleSection(text.mid(2));
+            m_content.append(titleSection);
+            blocklist = titleSection->getList();
+            currentBlockType = BlockType::Level1;
         }
     }
 }
@@ -149,7 +167,7 @@ void Script::parseFromFountain(QTextStream& stream)
     m_content.clear();
     m_titlepage.clear();
 
-    quint8 currentBlockType = BLOCK_MAIN;
+    enum BlockType currentBlockType = BlockType::Level0;
     QList<Block *> *blocklist = &m_content;
 
     if (stream.atEnd()) {
@@ -238,7 +256,7 @@ void Script::parseFromFountain(QTextStream& stream)
         } else if (text.left(4) == "### ") { //Scene Section
             SceneSection *scenesection = new SceneSection(text.mid(4));
 
-            if (currentBlockType & (BLOCK_SCENE | BLOCK_SCENESECTION)) {
+            if (currentBlockType >= BlockType::Level3) {
                 Act *act = dynamic_cast<Act*>(m_content.last());
 
                 if (act != nullptr) {
@@ -267,11 +285,11 @@ void Script::parseFromFountain(QTextStream& stream)
             }
 
             blocklist = scenesection->getList();
-            currentBlockType = BLOCK_SCENESECTION;
+            currentBlockType = BlockType::Level3;
         } else if (text.left(3) == "## ") { //Sequence
             Sequence *sequence = new Sequence(text.mid(3));
 
-            if (currentBlockType & (BLOCK_SEQUENCE | BLOCK_SCENE | BLOCK_SCENESECTION)) {
+            if (currentBlockType >= BlockType::Level2) {
                 Act *act = dynamic_cast<Act*>(m_content.last());
                 if (act != nullptr) {
                     act->addBlock(sequence);
@@ -283,24 +301,24 @@ void Script::parseFromFountain(QTextStream& stream)
             }
 
             blocklist = sequence->getList();
-            currentBlockType = BLOCK_SEQUENCE;
+            currentBlockType = BlockType::Level2;
         } else if (text.left(2) == "# ") { //Act
             Act *act = new Act(text.mid(2));
             m_content.append(act);
             blocklist = act->getList();
-            currentBlockType = BLOCK_ACT;
+            currentBlockType = BlockType::Level1;
         } else if (validStartHeaders.indexOf(text.split(".").first().toUpper()) >= 0 ||
                    validStartHeaders.indexOf(text.split(" ").first().toUpper()) >= 0) { //Scene heading
             Scene *scene = new Scene(text);
 
-            if (currentBlockType != BLOCK_SCENE) {
+            if (currentBlockType != BlockType::Level4) {
                 blocklist->append(scene);
             } else {
                 m_content.append(scene);
             }
 
             blocklist = scene->getList();
-            currentBlockType = BLOCK_SCENE;
+            currentBlockType = BlockType::Level4;
         } else if (text.left(1) == ">") {
             if (text.right(1) == "<") { //Centered text
                 Action *action = new Action(text.mid(1, text.size()-2).trimmed());

@@ -36,6 +36,16 @@ QString Section::toHtml()
     return result;
 }
 
+QString Section::toFountain()
+{
+    return QString();
+}
+
+QString Section::toRiver()
+{
+    return QString();
+}
+
 void Section::toTreeWidgetItem(QTreeWidgetItem *parent)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << m_data);
@@ -45,4 +55,5 @@ void Section::toTreeWidgetItem(QTreeWidgetItem *parent)
     }
 
     parent->addChild(item);
+    item->setExpanded(true);
 }

@@ -17,6 +17,7 @@ public:
 
     virtual QString toHtml() = 0;
     virtual QString toFountain() = 0;
+    virtual QString toRiver();
 
     virtual void toTreeWidgetItem(QTreeWidgetItem *parent);
     virtual bool isCharacterBlock();

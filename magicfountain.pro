@@ -55,6 +55,7 @@ SOURCES += src/main.cpp\
     src/synopsis.cpp \
     src/note.cpp \
     src/pagebreak.cpp \
+    src/titlesection.cpp \
     src/transition.cpp \
     src/lyrics.cpp \
     src/dialogueblock.cpp \
@@ -87,6 +88,7 @@ HEADERS  += src/mainwindow.h \
     src/synopsis.h \
     src/note.h \
     src/pagebreak.h \
+    src/titlesection.h \
     src/transition.h \
     src/lyrics.h \
     src/dialogueblock.h \

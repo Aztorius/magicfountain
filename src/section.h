@@ -14,8 +14,9 @@ public:
     void addBlock(Block *block);
     QList<Block *> *getList();
 
-    QString toHtml();
-    QString toFountain() = 0;
+    virtual QString toHtml();
+    virtual QString toFountain();
+    virtual QString toRiver();
     void toTreeWidgetItem(QTreeWidgetItem *parent);
 private:
     Synopsis m_synopsis;

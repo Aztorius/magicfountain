@@ -140,12 +140,12 @@ void MainWindow::refreshScenesView()
     QFileInfo fileinfo(filepath);
     QTreeWidgetItem *topLevelItem = new QTreeWidgetItem(QStringList() << fileinfo.fileName());
 
+    ui->treeWidget_scenes->addTopLevelItem(topLevelItem);
+    topLevelItem->setExpanded(true);
+
     foreach (Block *block, currentScript.getBlocks()) {
         block->toTreeWidgetItem(topLevelItem);
     }
-
-    ui->treeWidget_scenes->addTopLevelItem(topLevelItem);
-    topLevelItem->setExpanded(true);
 }
 
 void MainWindow::slot_loadSystemFont()

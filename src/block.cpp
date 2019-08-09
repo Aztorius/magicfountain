@@ -40,6 +40,11 @@ Block& Block::operator=(const Block& other)
     return *this;
 }
 
+QString Block::toRiver()
+{
+    return QString();
+}
+
 bool Block::isCharacterBlock()
 {
     return false;
