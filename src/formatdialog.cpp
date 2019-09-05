@@ -7,6 +7,8 @@ FormatDialog::FormatDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowTitle("Choose format");
+
     m_editorMode = EditorMode::None;
 
     connect(ui->pushButton_fountain, SIGNAL(clicked()), this, SLOT(setFountain()));
