@@ -60,6 +60,61 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QListWidget" name="listWidget_elementType">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string>SCENE HEADING</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Action</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>CHARACTER</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Dialogue</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>(Parenthetical)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>TRANSITION:</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ACT START</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>ACT END</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>[[NOTE]]</string>
+           </property>
+          </item>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_preview">
@@ -88,7 +143,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>29</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
