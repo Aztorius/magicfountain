@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QMarginsF>
 
 #include "block.h"
 #include "formatdialog.h"
@@ -191,11 +192,11 @@ void MainWindow::exportAsPDF() {
 
         QPrinter *printer = new QPrinter();
         printer->setOutputFormat(QPrinter::PdfFormat);
-        printer->setPageSize(QPrinter::Letter);
+        printer->setPageSize(QPageSize(QPageSize::Letter));
         printer->setColorMode(QPrinter::GrayScale);
         printer->setFullPage(true);
         printer->setResolution(96);
-        printer->setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
+        printer->setPageMargins(QMarginsF(1.0, 1.0, 1.0, 1.0), QPageLayout::Inch);
         printer->setOutputFileName(fileName);
 
         ui->webEngineView_preview->page()->print(printer, [printer](bool){ delete printer; });
@@ -224,11 +225,11 @@ void MainWindow::exportAsHTML() {
 
 void MainWindow::print() {
         QPrinter *printer = new QPrinter();
-        printer->setPageSize(QPrinter::Letter);
+        printer->setPageSize(QPageSize(QPageSize::Letter));
         printer->setColorMode(QPrinter::GrayScale);
         printer->setFullPage(true);
         printer->setResolution(96);
-        printer->setPageMargins(1.0, 1.0, 1.0, 1.0, QPrinter::Inch);
+        printer->setPageMargins(QMarginsF(1.0, 1.0, 1.0, 1.0), QPageLayout::Inch);
 
         QPrintDialog dialog(printer, this);
         dialog.setWindowTitle(tr("Print Document"));
