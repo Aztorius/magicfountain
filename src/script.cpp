@@ -211,6 +211,7 @@ void Script::parseFromFountain(QTextStream& stream)
                     }
                 }
                 block = new Note(string_note, NoteMultiline);
+                blocklist->append(block);
             }
         } else if (text.left(1) == "!") { //Forced action
             rawText.remove(text.indexOf("!"), 1);
