@@ -537,8 +537,7 @@ Script& Script::operator=(const Script& other)
 
     qDeleteAll(m_content);
     m_content.clear();
-
-    m_content.fromStdList(other.m_content.toStdList());
+    m_content = QList<Block *>(other.m_content);
 
     return *this;
 }
